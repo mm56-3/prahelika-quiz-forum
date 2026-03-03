@@ -155,3 +155,38 @@ function startQuiz() {
 
   loadQuestion();
 }
+function saveScore() {
+
+  let leaderboard =
+    JSON.parse(localStorage.getItem("leaderboard")) || [];
+
+  leaderboard.push({
+    name: player,
+    score: score
+  });
+
+  leaderboard.sort((a, b) => b.score - a.score);
+
+  localStorage.setItem(
+    "leaderboard",
+    JSON.stringify(leaderboard)
+  );
+
+  showLeaderboard();
+}
+function showLeaderboard() {
+
+  let leaderboard =
+    JSON.parse(localStorage.getItem("leaderboard")) || [];
+
+  let list = document.getElementById("leaderboard");
+  list.innerHTML = "";
+
+  leaderboard.slice(0,10).forEach(user => {
+    let li = document.createElement("li");
+    li.textContent =
+      `${user.name} - ${user.score}`;
+    list.appendChild(li);
+  });
+}
+saveScore();
