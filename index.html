@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prahelika Quiz Forum Darrang</title>
+
+<style>
+body{
+font-family:Arial;
+margin:0;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+text-align:center;
+}
+
+nav{
+background:#111;
+padding:15px;
+}
+
+nav button{
+margin:5px;
+padding:10px 15px;
+border:none;
+background:#ff9800;
+color:white;
+cursor:pointer;
+}
+
+section{display:none;padding:30px;}
+.active{display:block;}
+
+.card{
+background:white;
+color:black;
+padding:20px;
+margin:10px auto;
+width:80%;
+border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Prahelika Quiz Forum Darrang</h1>
+
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('quiz')">Daily Quiz</button>
+<button onclick="show('leaderboard')">Leaderboard</button>
+<button onclick="show('admin')">Admin</button>
+</nav>
+
+<section id="home" class="active">
+<h2>Welcome to Prahelika Quiz Forum</h2>
+<p>Digital Quiz Platform</p>
+</section>
+
+<section id="quiz">
+<div class="card">
+<h2 id="q"></h2>
+<div id="options"></div>
+<button onclick="next()">Next</button>
+</div>
+</section>
+
+<section id="leaderboard">
+<h2>Leaderboard</h2>
+<div id="scores"></div>
+</section>
+
+<section id="admin">
+<h2>Admin Panel</h2>
+<input id="question" placeholder="Question"><br><br>
+<input id="A" placeholder="Option A"><br>
+<input id="B" placeholder="Option B"><br>
+<input id="C" placeholder="Option C"><br>
+<input id="D" placeholder="Option D"><br>
+<input id="ans" placeholder="Correct Option"><br><br>
+<button onclick="addQ()">Add Question</button>
+</section>
+
+<script src="app.js"></script>
+
+</body>
+</html>
