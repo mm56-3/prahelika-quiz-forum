@@ -125,3 +125,18 @@ scores.innerHTML=r
 
 load();
 display();
+let player = "";
+
+function startQuiz() {
+  player = document.getElementById("playerName").value;
+
+  if(player === "") {
+    alert("Please enter your name");
+    return;
+  }
+
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("quiz-container").style.display = "block";
+
+  loadQuestion();
+}
