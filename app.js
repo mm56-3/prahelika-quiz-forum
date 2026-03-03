@@ -1,4 +1,4 @@
-let timeLeft = 15;
+let userAnswers = [];let timeLeft = 15;
 let timer;<div id="quiz-container">
   <h2 id="question"></h2>
   <div id="options"></div>
@@ -75,6 +75,7 @@ B:B.value,
 C:C.value,
 D:D.value,
 ans:ans.value.toUpperCase()
+nextQuestion();
 });
 localStorage.setItem("quiz",JSON.stringify(quiz));
 alert("Question Added");
@@ -92,7 +93,11 @@ ${o}. ${quiz[i][o]}
 </button><br><br>`;
 });
 }
-
+userAnswers.push({
+  question: quizQuestions[currentQuestion].question,
+  selected: selectedOption,
+  correct: quizQuestions[currentQuestion].answer
+});
 function check(o){
 if(o===quiz[i].ans)score++;
 }
@@ -208,3 +213,24 @@ function showLeaderboard() {
   });
 }
 saveScore();
+function showResult(){
+
+let resultHTML = `<h2>${player}, Your Score: ${score}/${quizQuestions.length}</h2>`;
+
+userAnswers.forEach(q => {
+
+resultHTML += `
+<p>
+<b>Q:</b> ${q.question}<br>
+Your Answer: ${q.selected}<br>
+Correct Answer: ${q.correct}
+</p><hr>
+`;
+
+});
+
+document.getElementById("quiz-container").innerHTML = resultHTML;
+
+saveScore();
+}
+showResult();
