@@ -1,4 +1,63 @@
-function show(id){
+<div id="quiz-container">
+  <h2 id="question"></h2>
+  <div id="options"></div>
+</div>
+
+<script>
+  loadQuestion();
+</script>function checkAnswer(selected) {
+  if (selected === quizQuestions[currentQuestion].answer) {
+    score++;
+  }
+
+  currentQuestion++;
+
+  if (currentQuestion < quizQuestions.length) {
+    loadQuestion();
+  } else {
+    document.getElementById("quiz-container").innerHTML =
+      `<h2>Your Score: ${score}/${quizQuestions.length}</h2>`;
+  }
+}let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion() {
+  const q = quizQuestions[currentQuestion];
+
+  document.getElementById("question").innerText = q.question;
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  q.options.forEach(option => {
+    const btn = document.createElement("button");
+    btn.innerText = option;
+    btn.onclick = () => checkAnswer(option);
+    optionsDiv.appendChild(btn);
+  });
+}// Quiz Questions Database
+const quizQuestions = [
+  {
+    question: "What is the SI unit of electric resistance?",
+    options: ["Volt", "Ampere", "Ohm", "Watt"],
+    answer: "Ohm"
+  },
+  {
+    question: "Who discovered the Raman Effect?",
+    options: [
+      "Isaac Newton",
+      "C. V. Raman",
+      "Albert Einstein",
+      "Nikola Tesla"
+    ],
+    answer: "C. V. Raman"
+  },
+  {
+    question: "Which gas is essential for photosynthesis?",
+    options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"],
+    answer: "Carbon Dioxide"
+  }
+];function show(id){
 document.querySelectorAll("section")
 .forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
