@@ -16,7 +16,7 @@
     loadQuestion();
   } else {
     document.getElementById("quiz-container").innerHTML =
-      `<h2>Your Score: ${score}/${quizQuestions.length}</h2>`;
+`<h2>${player}, Your Score: ${score}/${quizQuestions.length}</h2>`;
   }
 }let currentQuestion = 0;
 let score = 0;
