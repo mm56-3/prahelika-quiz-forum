@@ -1,4 +1,5 @@
-<div id="quiz-container">
+let timeLeft = 15;
+let timer;<div id="quiz-container">
   <h2 id="question"></h2>
   <div id="options"></div>
 </div>
@@ -78,7 +79,7 @@ ans:ans.value.toUpperCase()
 localStorage.setItem("quiz",JSON.stringify(quiz));
 alert("Question Added");
 }
-
+clearInterval(timer);
 function load(){
 if(!quiz.length)return;
 q.innerText=quiz[i].q;
@@ -126,10 +127,27 @@ scores.innerHTML=r
 load();
 display();
 let player = "";
+function startTimer() {
 
+  timeLeft = 15;
+  document.getElementById("timer").textContent = timeLeft;
+
+  timer = setInterval(() => {
+
+    timeLeft--;
+    document.getElementById("timer").textContent = timeLeft;
+
+    if(timeLeft === 0){
+      clearInterval(timer);
+      nextQuestion();
+    }
+
+  },1000);
+}
 function startQuiz() {
   player = document.getElementById("playerName").value;
-
+clearInterval(timer);
+startTimer();
   if(player === "") {
     alert("Please enter your name");
     return;
