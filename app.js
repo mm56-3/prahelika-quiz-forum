@@ -234,3 +234,32 @@ document.getElementById("quiz-container").innerHTML = resultHTML;
 saveScore();
 }
 showResult();
+function loginAdmin(){
+
+let pass =
+document.getElementById("adminPass").value;
+
+if(pass === "prahelika123"){
+document.getElementById("adminPanel").style.display="block";
+}else{
+alert("Wrong Password");
+}
+}
+function addQuestion(){
+
+let newQ = {
+question: document.getElementById("q").value,
+options: [
+document.getElementById("o1").value,
+document.getElementById("o2").value,
+document.getElementById("o3").value,
+document.getElementById("o4").value
+],
+answer: document.getElementById("ans").value
+};
+
+quizQuestions.push(newQ);
+
+alert("Question Added Successfully!");
+
+}
