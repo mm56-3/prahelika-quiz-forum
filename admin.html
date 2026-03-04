@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+<style>
+
+body{
+font-family:Arial;
+background:#222;
+color:white;
+text-align:center;
+}
+
+button{
+padding:10px 20px;
+margin:10px;
+border:none;
+background:#ff9800;
+color:white;
+cursor:pointer;
+}
+
+input{
+padding:8px;
+margin:5px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Prahelika Quiz Forum Admin</h1>
+
+<h3>Add Question</h3>
+
+<input id="q" placeholder="Question"><br>
+<input id="o1" placeholder="Option 1"><br>
+<input id="o2" placeholder="Option 2"><br>
+<input id="o3" placeholder="Option 3"><br>
+<input id="o4" placeholder="Option 4"><br>
+<input id="ans" placeholder="Correct Answer"><br>
+
+<button onclick="addQuestion()">Add Question</button>
+
+<hr>
+
+<h3>Leaderboard Control</h3>
+
+<button onclick="resetBoard()">Reset Leaderboard</button>
+
+<h3>Participants</h3>
+<ul id="players"></ul>
+
+<script src="admin.js"></script>
+
+</body>
+</html>
