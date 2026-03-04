@@ -114,6 +114,11 @@ let results=
 JSON.parse(localStorage.getItem("results"))||[];
 
 results.push({mobile,score});
+resultHTML += `
+<button onclick="downloadCertificate()">
+Download Certificate
+</button>
+`;
 localStorage.setItem("results",
 JSON.stringify(results));
 
@@ -262,4 +267,52 @@ quizQuestions.push(newQ);
 
 alert("Question Added Successfully!");
 
+}
+function downloadCertificate(){
+
+let canvas = document.createElement("canvas");
+canvas.width = 800;
+canvas.height = 600;
+
+let ctx = canvas.getContext("2d");
+
+/* Background */
+ctx.fillStyle = "#f5f5dc";
+ctx.fillRect(0,0,800,600);
+
+/* Title */
+ctx.fillStyle = "#000";
+ctx.font = "40px Arial";
+ctx.fillText("Certificate of Participation",120,120);
+
+/* Organization */
+ctx.font = "25px Arial";
+ctx.fillText("Prahelika Quiz Forum Darrang",180,180);
+
+/* Name */
+ctx.font = "30px Arial";
+ctx.fillText(player,300,260);
+
+/* Text */
+ctx.font = "22px Arial";
+ctx.fillText(
+"has successfully participated in Daily Quiz",
+140,320
+);
+
+/* Score */
+ctx.fillText(
+"Score: "+score+"/"+quizQuestions.length,
+300,380
+);
+
+/* Date */
+let date = new Date().toLocaleDateString();
+ctx.fillText("Date: "+date,320,450);
+
+/* Download */
+let link = document.createElement("a");
+link.download = "certificate.png";
+link.href = canvas.toDataURL();
+link.click();
 }
