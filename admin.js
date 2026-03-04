@@ -1,6 +1,6 @@
 function addQuestion(){
-const adminUsername = "admin";
-const adminPassword = "784125";
+const adminUsername = "mynewadmin";
+const adminPassword = "mypassword123";
 let questions =
 JSON.parse(localStorage.getItem("quizQuestions")) || [];
 
