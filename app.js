@@ -36,28 +36,8 @@ function loadQuestion() {
     btn.onclick = () => checkAnswer(option);
     optionsDiv.appendChild(btn);
   });
-}// Quiz Questions Database
-const quizQuestions = [
-  {
-    question: "What is the SI unit of electric resistance?",
-    options: ["Volt", "Ampere", "Ohm", "Watt"],
-    answer: "Ohm"
-  },
-  {
-    question: "Who discovered the Raman Effect?",
-    options: [
-      "Isaac Newton",
-      "C. V. Raman",
-      "Albert Einstein",
-      "Nikola Tesla"
-    ],
-    answer: "C. V. Raman"
-  },
-  {
-    question: "Which gas is essential for photosynthesis?",
-    options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"],
-    answer: "Carbon Dioxide"
-  }
+let quizQuestions =
+JSON.parse(localStorage.getItem("quizQuestions")) || [];
 ];function show(id){
 document.querySelectorAll("section")
 .forEach(s=>s.classList.remove("active"));
