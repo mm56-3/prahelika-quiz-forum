@@ -97,3 +97,24 @@ border-radius:10px;
 </html>
 <h2>Leaderboard</h2>
 <ul id="leaderboard"></ul>
+<hr>
+<h2>Admin Panel</h2>
+
+<input type="password" id="adminPass" placeholder="Enter Admin Password">
+<button onclick="loginAdmin()">Login</button>
+
+<div id="adminPanel" style="display:none;">
+
+<h3>Add New Question</h3>
+
+<input id="q" placeholder="Question"><br><br>
+<input id="o1" placeholder="Option 1"><br>
+<input id="o2" placeholder="Option 2"><br>
+<input id="o3" placeholder="Option 3"><br>
+<input id="o4" placeholder="Option 4"><br><br>
+
+<input id="ans" placeholder="Correct Answer"><br><br>
+
+<button onclick="addQuestion()">Add Question</button>
+
+</div>
