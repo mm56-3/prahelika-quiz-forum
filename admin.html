@@ -1,45 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Admin Dashboard</title>
-<link rel="stylesheet" href="style.css">
-</head>
+<body class="bg-gray-900 text-white p-10">
+    <div id="admin-auth" class="max-w-sm mx-auto">
+        <h1 class="text-2xl mb-4">Admin Secure Access</h1>
+        <input type="text" id="user" placeholder="Username" class="block w-full mb-2 p-2 text-black">
+        <input type="password" id="pass" placeholder="Password" class="block w-full mb-4 p-2 text-black">
+        <button onclick="checkAdmin()" class="bg-blue-600 px-6 py-2">Login</button>
+    </div>
 
-<body>
+    <div id="cms-panel" class="hidden">
+        <h2 class="text-3xl font-bold mb-8">CMS Dashboard</h2>
+        
+        <div class="bg-gray-800 p-6 rounded-lg mb-6">
+            <h3>Add New Question</h3>
+            <input type="text" id="q-text" placeholder="Question" class="w-full mt-2 p-2 text-black">
+            <button class="mt-4 bg-green-500 p-2 rounded">Upload to Firebase</button>
+        </div>
+    </div>
 
-<h1>Prahelika Quiz Forum Admin</h1>
-
-<input id="username" placeholder="Username">
-<input id="password" placeholder="Password" type="password">
-
-<button onclick="login()">Login</button>
-
-<div id="dashboard" style="display:none">
-
-<h2>Add Quiz Question</h2>
-
-<input id="q">
-<input id="a">
-<input id="b">
-<input id="c">
-<input id="d">
-<input id="ans">
-
-<button onclick="addQuestion()">Save Question</button>
-
-<h2>Upload Gallery Image</h2>
-
-<input type="file" id="galleryUpload">
-
-<h2>Add Executive Member</h2>
-
-<input id="memberName">
-<input id="memberPost">
-<input type="file" id="memberPhoto">
-
-</div>
-
-<script src="admin.js"></script>
-
+    <script>
+        function checkAdmin() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u === "VIKRAM784125" && p === "#UDSB784125781005") {
+                document.getElementById('admin-auth').classList.add('hidden');
+                document.getElementById('cms-panel').classList.remove('hidden');
+            } else {
+                alert("Unauthorized!");
+            }
+        }
+    </script>
 </body>
-</html>
