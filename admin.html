@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Admin Dashboard</title>
+<title>Prahelika Quiz Forum Admin</title>
+
 <style>
 
 body{
@@ -9,13 +10,13 @@ font-family:Arial;
 background:#0f2027;
 color:white;
 text-align:center;
-padding:40px;
+padding:30px;
 }
 
-input{
+input,textarea{
 padding:10px;
 margin:5px;
-width:250px;
+width:260px;
 }
 
 button{
@@ -24,13 +25,20 @@ background:#ff9800;
 border:none;
 color:white;
 cursor:pointer;
+margin-top:10px;
 }
 
 .panel{
-margin-top:30px;
+background:white;
+color:black;
+padding:20px;
+margin:20px auto;
+width:350px;
+border-radius:10px;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -38,6 +46,8 @@ margin-top:30px;
 <h1>Prahelika Quiz Forum Admin</h1>
 
 <div id="login">
+
+<h3>Admin Login</h3>
 
 <input type="text" id="user" placeholder="Username"><br>
 <input type="password" id="pass" placeholder="Password"><br>
@@ -48,7 +58,23 @@ margin-top:30px;
 
 <div id="dashboard" style="display:none">
 
-<h2>Admin Dashboard</h2>
+<h2>Admin Control Dashboard</h2>
+
+
+<!-- HOME EDITOR -->
+
+<div class="panel">
+
+<h3>Edit Homepage Description</h3>
+
+<textarea id="homeText" placeholder="Write homepage description"></textarea><br>
+
+<button onclick="saveHome()">Save Homepage</button>
+
+</div>
+
+
+<!-- ADD QUIZ QUESTIONS -->
 
 <div class="panel">
 
@@ -59,13 +85,41 @@ margin-top:30px;
 <input id="o2" placeholder="Option 2"><br>
 <input id="o3" placeholder="Option 3"><br>
 <input id="o4" placeholder="Option 4"><br>
+
 <input id="ans" placeholder="Correct Answer"><br>
 
 <button onclick="addQuestion()">Add Question</button>
 
 </div>
 
+
+<!-- ADD EVENT -->
+
+<div class="panel">
+
+<h3>Add Event</h3>
+
+<input id="eventText" placeholder="Event Name"><br>
+
+<button onclick="addEvent()">Add Event</button>
+
 </div>
+
+
+<!-- ADD GALLERY IMAGE -->
+
+<div class="panel">
+
+<h3>Add Gallery Image</h3>
+
+<input id="imgURL" placeholder="Image URL"><br>
+
+<button onclick="addGallery()">Add Image</button>
+
+</div>
+
+</div>
+
 
 <script>
 
@@ -80,11 +134,88 @@ document.getElementById("login").style.display="none";
 document.getElementById("dashboard").style.display="block";
 
 }
+
 else{
 
 alert("Wrong Login");
 
 }
+
+}
+
+
+
+function addQuestion(){
+
+let question=document.getElementById("q").value;
+
+let o1=document.getElementById("o1").value;
+let o2=document.getElementById("o2").value;
+let o3=document.getElementById("o3").value;
+let o4=document.getElementById("o4").value;
+
+let ans=document.getElementById("ans").value;
+
+firebase.firestore().collection("questions").add({
+
+question:question,
+o1:o1,
+o2:o2,
+o3:o3,
+o4:o4,
+answer:ans
+
+})
+
+alert("Question Added Successfully");
+
+}
+
+
+
+function saveHome(){
+
+let text=document.getElementById("homeText").value;
+
+firebase.firestore().collection("site").doc("home").set({
+
+description:text
+
+})
+
+alert("Homepage Updated");
+
+}
+
+
+
+function addEvent(){
+
+let e=document.getElementById("eventText").value;
+
+firebase.firestore().collection("events").add({
+
+name:e
+
+})
+
+alert("Event Added");
+
+}
+
+
+
+function addGallery(){
+
+let img=document.getElementById("imgURL").value;
+
+firebase.firestore().collection("gallery").add({
+
+url:img
+
+})
+
+alert("Image Added");
 
 }
 
