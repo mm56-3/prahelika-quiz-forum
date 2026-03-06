@@ -1,97 +1,96 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prahelika Quiz Forum | Darrang</title>
+    <title>Prahelika Quiz Forum</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        body { background: radial-gradient(circle at top right, #1e3a8a, #020617 80%); color: white; min-height: 100vh; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
 </head>
-<body class="bg-slate-900 text-white font-sans overflow-x-hidden">
+<body>
 
-    <nav class="fixed top-0 w-full z-50 bg-blue-900/40 backdrop-blur-xl border-b border-white/10 px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-2">
-            <div class="w-10 h-10 bg-gradient-to-tr from-cyan-400 to-blue-600 rounded-lg animate-pulse flex items-center justify-center font-bold">P</div>
-            <span class="text-xl font-black tracking-widest">PRAHELIKA</span>
+    <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <span class="text-xl font-black text-cyan-400">PRAHELIKA</span>
         </div>
-        <div class="hidden md:flex gap-8 text-sm font-bold uppercase tracking-widest">
-            <a href="#home" class="hover:text-cyan-400 transition">Home</a>
-            <a href="#gallery" class="hover:text-cyan-400 transition">Gallery</a>
-            <a href="#executives" class="hover:text-cyan-400 transition">Executives</a>
-            <a href="#leaderboard" class="hover:text-cyan-400 transition">Leaderboard</a>
-            <a href="#contact" class="hover:text-cyan-400 transition">Contact</a>
+        <div class="hidden md:flex gap-6 text-xs font-bold uppercase">
+            <a href="#home">Home</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#executives">Executives</a>
+            <a href="#leaderboard">Leaderboard</a>
         </div>
-        <button onclick="showLogin()" class="bg-cyan-500 hover:bg-white hover:text-blue-900 text-blue-900 px-6 py-2 rounded-full font-bold transition-all transform hover:scale-105 shadow-lg shadow-cyan-500/20">START QUIZ</button>
+        <button id="quiz-trigger" class="bg-cyan-500 text-blue-950 px-5 py-2 rounded-full font-bold">START QUIZ</button>
     </nav>
 
-    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-4 pt-20">
-        <div class="animate__animated animate__fadeInUp">
-            <h1 class="text-6xl md:text-8xl font-black mb-6 bg-gradient-to-r from-white via-cyan-300 to-blue-500 bg-clip-text text-transparent">DARRANG QUIZ HUB</h1>
-            <p class="text-gray-400 max-w-xl mx-auto mb-8">Unleash your intellect with Prahelika. The premier quiz forum for thinkers and dreamers.</p>
-            <img src="https://via.placeholder.com/1200x600" id="team-img" class="rounded-3xl shadow-2xl border border-white/10 hover:scale-[1.02] transition duration-700">
-        </div>
+    <section id="home" class="pt-40 pb-20 px-6 text-center">
+        <h1 id="hero-title" class="text-5xl md:text-7xl font-black mb-6">Loading Title...</h1>
+        <p id="hero-desc" class="text-gray-400 max-w-2xl mx-auto mb-10">Loading description from admin panel...</p>
+        <img id="special-team-img" src="" class="w-full max-w-4xl mx-auto rounded-3xl shadow-2xl border border-white/10">
     </section>
 
-    <div id="quiz-overlay" class="fixed inset-0 bg-blue-950/95 z-[60] hidden flex items-center justify-center p-4">
-        <div id="login-card" class="glass-card p-10 max-w-md w-full rounded-3xl text-center">
-            <h2 class="text-3xl font-bold mb-6">Enter the Arena</h2>
-            <input type="text" id="username" placeholder="Your Name" class="w-full bg-white/5 border border-white/20 p-4 rounded-xl mb-4 outline-none focus:border-cyan-400">
-            <input type="tel" id="userphone" placeholder="Phone Number" class="w-full bg-white/5 border border-white/20 p-4 rounded-xl mb-6 outline-none focus:border-cyan-400">
-            <button onclick="initiateQuiz()" class="w-full bg-cyan-500 py-4 rounded-xl font-bold text-blue-950">ENTER</button>
-        </div>
-        
-        <div id="quiz-container" class="hidden w-full max-w-2xl bg-white/5 p-8 rounded-3xl border border-white/10 relative">
-            <div id="timer-bar" class="absolute top-0 left-0 h-1 bg-cyan-400 transition-all duration-1000"></div>
-            <div class="flex justify-between mb-8">
-                <span id="timer-text" class="text-cyan-400 font-mono text-2xl">15s</span>
-                <span id="question-count">Question 1/15</span>
-            </div>
-            <h3 id="question-text" class="text-2xl font-bold mb-8">Loading question...</h3>
-            <div id="options-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-        </div>
-    </div>
-
-    <section id="executives" class="py-20 overflow-hidden">
-        <h2 class="text-center text-4xl font-bold mb-12">Executive Members</h2>
-        <div class="flex gap-8 animate-marquee" id="exec-container">
+    <section id="executives" class="py-20 px-6">
+        <h2 class="text-3xl font-bold text-center mb-10">Executive Members</h2>
+        <div id="exec-list" class="flex flex-wrap justify-center gap-8">
             </div>
     </section>
 
-    <section id="leaderboard" class="py-20 max-w-4xl mx-auto px-6">
-        <div class="glass-card p-8 rounded-3xl">
-            <h2 class="text-3xl font-bold mb-8 text-center">Top Scorers</h2>
-            <div id="leaderboard-list" class="space-y-4"></div>
-        </div>
-    </section>
+    <footer id="contact" class="p-10 text-center glass mt-20">
+        <p id="contact-info">Contact: prahelika@darrang.com</p>
+    </footer>
 
-    <script type="module" src="app.js"></script>
+    <script type="module">
+        import { db } from './firebase.js';
+        import { doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    import { db } from './firebase.js';
-import { doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        // --- 1. LOGIN / BUTTON HANDLERS ---
+        // We use window. functionName so the HTML buttons can "see" them
+        window.openQuiz = () => {
+            alert("Quiz initializing...");
+            // Add your quiz modal logic here
+        };
 
-// LISTEN TO HERO CHANGES
-onSnapshot(doc(db, "site_content", "homepage"), (doc) => {
-    const data = doc.data();
-    if(data) {
-        document.getElementById('hero-title').innerText = data.title;
-        document.getElementById('hero-desc').innerText = data.description;
-    }
-});
+        document.getElementById('quiz-trigger').onclick = window.openQuiz;
 
-// LISTEN TO EXECUTIVE LIST CHANGES
-onSnapshot(collection(db, "executives"), (querySnapshot) => {
-    const list = document.getElementById('exec-list');
-    list.innerHTML = '';
-    querySnapshot.forEach((doc) => {
-        const d = doc.data();
-        list.innerHTML += `<div class="glass-card p-4 rounded-xl">
-            <img src="${d.url}" class="w-20 h-20 rounded-full mx-auto">
-            <h3>${d.name}</h3>
-            <p>${d.pos}</p>
-        </div>`;
-    });
-});
+        // --- 2. THE LISTENERS (The "Whole Control" Logic) ---
 
+        // Listen for Homepage Content (Title, Description, Hero Image)
+        onSnapshot(doc(db, "site_content", "homepage"), (snapshot) => {
+            const data = snapshot.data();
+            if (data) {
+                if(data.title) document.getElementById('hero-title').innerText = data.title;
+                if(data.description) document.getElementById('hero-desc').innerText = data.description;
+                if(data.teamImg) document.getElementById('special-team-img').src = data.teamImg;
+            }
+        });
+
+        // Listen for Executive Member Updates
+        onSnapshot(collection(db, "executives"), (querySnapshot) => {
+            const list = document.getElementById('exec-list');
+            list.innerHTML = ''; // Clear current display
+            querySnapshot.forEach((doc) => {
+                const member = doc.data();
+                list.innerHTML += `
+                    <div class="glass p-6 rounded-2xl text-center w-64 animate__animated animate__fadeIn">
+                        <img src="${member.url}" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-cyan-400 object-cover">
+                        <h3 class="font-bold text-lg">${member.name}</h3>
+                        <p class="text-cyan-400 text-sm">${member.pos}</p>
+                        <p class="text-xs text-gray-400 mt-2">${member.desc || ''}</p>
+                    </div>`;
+            });
+        });
+
+        // Listen for Contact Info Changes
+        onSnapshot(doc(db, "site_content", "contact"), (snapshot) => {
+            const data = snapshot.data();
+            if(data && data.text) {
+                document.getElementById('contact-info').innerText = data.text;
+            }
+        });
+
+    </script>
 </body>
 </html>
