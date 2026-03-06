@@ -1,21 +1,33 @@
-import { db } from "./firebase.js";
-import {
-collection,
-getDocs,
-addDoc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
 let questions=[]
-let index=0
+let current=0
 let score=0
+let timer=15
+let interval
 
-window.startQuiz=async function(){
+function show(id){
 
-const snap=await getDocs(collection(db,"questions"))
+document.querySelectorAll("section").forEach(s=>{
+s.classList.remove("active")
+})
 
-questions=snap.docs.map(d=>d.data())
+document.getElementById(id).classList.add("active")
 
-index=0
+}
+
+function startQuiz(){
+
+let name=document.getElementById("name").value
+let phone=document.getElementById("phone").value
+
+if(!name || !phone){
+alert("Enter name and phone")
+return
+}
+
+document.getElementById("login").style.display="none"
+document.getElementById("quizBox").style.display="block"
+
+current=0
 score=0
 
 showQuestion()
@@ -24,9 +36,9 @@ showQuestion()
 
 function showQuestion(){
 
-const q=questions[index]
+let q=questions[current]
 
-document.getElementById("question").innerText=q.question
+document.getElementById("question").innerText=q.q
 
 let html=""
 
@@ -40,28 +52,110 @@ startTimer()
 
 }
 
-window.answer=function(a){
+function answer(a){
 
-if(a===questions[index].answer){
+if(a===questions[current].answer){
 score++
 }
 
 }
 
-window.nextQuestion=function(){
+function next(){
 
-index++
+current++
 
-if(index<questions.length){
+if(current<questions.length){
 showQuestion()
 }else{
-finishQuiz()
+finish()
 }
 
 }
 
-function finishQuiz(){
+function startTimer(){
+
+timer=15
+
+document.getElementById("timer").innerText=timer
+
+clearInterval(interval)
+
+interval=setInterval(()=>{
+
+timer--
+
+document.getElementById("timer").innerText=timer
+
+if(timer==0){
+next()
+}
+
+},1000)
+
+}
+
+function finish(){
 
 alert("Quiz finished. Score: "+score)
+
+let name=document.getElementById("name").value
+
+let scores=JSON.parse(localStorage.getItem("scores")||"[]")
+
+scores.push({name,score})
+
+localStorage.setItem("scores",JSON.stringify(scores))
+
+showLeaderboard()
+
+}
+
+function showLeaderboard(){
+
+let scores=JSON.parse(localStorage.getItem("scores")||"[]")
+
+let html=""
+
+scores.forEach(s=>{
+html+=`<li>${s.name} - ${s.score}</li>`
+})
+
+document.getElementById("scores").innerHTML=html
+
+}
+
+function loginAdmin(){
+
+let u=document.getElementById("adminUser").value
+let p=document.getElementById("adminPass").value
+
+if(u==="VIKRAM784125" && p==="#UDSB784125781005"){
+
+document.getElementById("adminPanel").style.display="block"
+
+}else{
+
+alert("Wrong login")
+
+}
+
+}
+
+function addQuestion(){
+
+let q=document.getElementById("q").value
+
+let options=[
+document.getElementById("o1").value,
+document.getElementById("o2").value,
+document.getElementById("o3").value,
+document.getElementById("o4").value
+]
+
+let ans=document.getElementById("ans").value
+
+questions.push({q,options,answer:ans})
+
+alert("Question added")
 
 }
