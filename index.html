@@ -28,7 +28,6 @@ border:none;
 background:#ff9800;
 color:white;
 cursor:pointer;
-border-radius:5px;
 }
 
 section{
@@ -44,104 +43,202 @@ display:block;
 background:white;
 color:black;
 padding:20px;
-margin:20px auto;
+margin:10px auto;
 width:80%;
 border-radius:10px;
-}
-
-input{
-padding:8px;
-margin:5px;
 }
 
 .gallery{
 width:200px;
 margin:10px;
-border-radius:8px;
+border-radius:10px;
 }
 </style>
+
 </head>
 
 <body>
 
-<h1>Prahelika Quiz Forum Darrang</h1>
-
-<nav>
-<button onclick="show('home')">Home</button>
-<button onclick="show('quiz')">Daily Quiz</button>
-<button onclick="show('leaderboard')">Leaderboard</button>
-<button onclick="show('admin')">Admin</button>
-<button onclick="show('gallery')">Gallery</button>
-<button onclick="show('events')">Events</button>
-</nav>
-
-<section id="home" class="active">
-<h2>Welcome to Prahelika Quiz Forum</h2>
+<header class="hero">
+<h1 style="color:blue;">Welcome to the Prahelika Quiz Forum!</h1>
 <p>Knowledge • Competition • Excellence</p>
+
+<button onclick="document.getElementById('start-screen').scrollIntoView({behavior:'smooth'})">
+Start Quiz
+</button>
+</header>
+
+
+<!-- EXECUTIVES -->
+
+<section id="executives" class="active">
+
+<h2>Executive Members</h2>
 
 <div class="card">
 <img src="president.jpg" width="150">
 <h3>Mritunjoy Kumar Dev Sharma</h3>
 <p>President</p>
 </div>
+
 </section>
+
+
+<!-- START SCREEN -->
+
+<div id="start-screen">
+
+<h2>Prahelika Quiz Forum</h2>
+
+<input type="text" id="playerName" placeholder="Enter Your Name">
+
+<button onclick="startQuiz()">Start Quiz</button>
+
+</div>
+
+
+<!-- QUIZ CONTAINER -->
+
+<div id="quiz-container" style="display:none;">
+
+<h2 id="quizQuestion"></h2>
+
+<div id="options"></div>
+
+</div>
+
+
+<h1>Prahelika Quiz Forum Darrang</h1>
+
+
+<!-- NAVIGATION -->
+
+<nav>
+
+<button onclick="show('home')">Home</button>
+
+<button onclick="show('quiz')">Daily Quiz</button>
+
+<button onclick="show('leaderboard')">Leaderboard</button>
+
+<button onclick="show('admin')">Admin</button>
+
+<button onclick="show('gallery')">Gallery</button>
+
+<button onclick="show('events')">Events</button>
+
+</nav>
+
+
+<!-- HOME -->
+
+<section id="home">
+
+<h2>Welcome to Prahelika Quiz Forum</h2>
+
+<p>Digital Quiz Platform</p>
+
+</section>
+
+
+<!-- QUIZ -->
 
 <section id="quiz">
+
 <div class="card">
+
 <h2 id="q"></h2>
-<div id="options"></div>
+
+<div id="quizOptions"></div>
+
 <button onclick="next()">Next</button>
+
 </div>
+
 </section>
+
+
+<!-- LEADERBOARD -->
 
 <section id="leaderboard">
+
 <h2>Leaderboard</h2>
+
 <div id="scores"></div>
+
+<h3>Time Left: <span id="timer">15</span> sec</h3>
+
+<ul id="leaderboardList"></ul>
+
 </section>
 
+
+<!-- ADMIN PANEL -->
+
 <section id="admin">
-<h2>Admin Login</h2>
+
+<h2>Admin Panel</h2>
 
 <input type="password" id="adminPass" placeholder="Enter Admin Password">
+
 <button onclick="loginAdmin()">Login</button>
 
 <div id="adminPanel" style="display:none;">
 
 <h3>Add New Question</h3>
 
-<input id="question" placeholder="Question"><br><br>
+<input id="adminQuestion" placeholder="Question"><br><br>
 
 <input id="A" placeholder="Option A"><br>
+
 <input id="B" placeholder="Option B"><br>
+
 <input id="C" placeholder="Option C"><br>
+
 <input id="D" placeholder="Option D"><br><br>
 
-<input id="ans" placeholder="Correct Option (A/B/C/D)"><br><br>
+<input id="ans" placeholder="Correct Option"><br><br>
 
 <button onclick="addQ()">Add Question</button>
 
 </div>
+
 </section>
+
+
+<!-- GALLERY -->
 
 <section id="gallery">
+
 <h2>Gallery</h2>
 
-<img src="gallery1.JPG" class="gallery">
-<img src="gallery2.JPG" class="gallery">
-<img src="gallery3.JPG" class="gallery">
+<img src="gallery1.jpg" class="gallery">
+
+<img src="gallery2.jpg" class="gallery">
+
+<img src="gallery3.jpg" class="gallery">
 
 </section>
 
+
+<!-- EVENTS -->
+
 <section id="events">
+
 <h2>Upcoming Events</h2>
 
 <ul>
+
 <li>District Level Quiz Competition</li>
+
 <li>Daily Online Quiz</li>
+
 <li>Science Quiz Festival</li>
+
 </ul>
 
 </section>
+
 
 <script src="app.js"></script>
 
