@@ -1,205 +1,190 @@
-// ---------- SECTION NAVIGATION ----------
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"
 
-function show(section){
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
 
-let sections = document.querySelectorAll("section")
-
-sections.forEach(function(sec){
-sec.style.display="none"
-})
-
-let active=document.getElementById(section)
-
-if(active){
-active.style.display="block"
-}
-
-}
+import {
+getStorage,
+ref,
+uploadBytes,
+getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"
 
 
-// ---------- ADMIN LOGIN ----------
+const firebaseConfig = {
 
-function adminLogin(){
-
-let user=document.getElementById("adminUser")
-let pass=document.getElementById("adminPass")
-let dash=document.getElementById("dashboard")
-
-if(!user || !pass) return
-
-if(user.value==="VIKRAM784125" && pass.value==="#UDSB784125781005"){
-
-dash.style.display="block"
-
-alert("Admin Login Successful")
-
-}else{
-
-alert("Wrong username or password")
+apiKey: "AIzaSyCy2BYWDIcbczywlT2UAV7BX8XAqChah88",
+authDomain: "prahelika-quiz-forum.firebaseapp.com",
+projectId: "prahelika-quiz-forum",
+storageBucket: "prahelika-quiz-forum.firebasestorage.app",
+messagingSenderId: "593115491592",
+appId: "1:593115491592:web:242cb215013a3bdab850bd"
 
 }
 
+const app = initializeApp(firebaseConfig)
+
+const db = getFirestore(app)
+
+const storage = getStorage(app)
+
+
+
+window.show = function(id){
+
+document.querySelectorAll("section").forEach(s=>s.classList.remove("active"))
+
+document.getElementById(id).classList.add("active")
+
 }
 
 
-// ---------- QUIZ SYSTEM ----------
 
 let questions=[]
-let currentQuestion=0
+let index=0
 let score=0
+let timer
 
 
-function startQuiz(){
+window.startQuiz=async function(){
 
-let name=document.getElementById("playerName")
-let phone=document.getElementById("playerPhone")
+document.getElementById("quizArea").style.display="block"
 
-if(!name || !phone){
+const qSnap=await getDocs(collection(db,"questions"))
 
-alert("Enter name and phone")
+questions=qSnap.docs.map(d=>d.data())
 
-return
+index=0
 
-}
-
-show("quiz")
-
-currentQuestion=0
-score=0
-
-loadQuestion()
+showQuestion()
 
 }
 
 
-function loadQuestion(){
 
-let q=document.getElementById("q")
-let options=document.getElementById("options")
+function showQuestion(){
 
-if(!q || !options) return
+let q=questions[index]
 
-if(currentQuestion>=questions.length){
+document.getElementById("question").innerText=q.question
 
-finishQuiz()
-return
+let opt=""
 
-}
+q.options.forEach(o=>{
 
-let question=questions[currentQuestion]
-
-q.innerText=question.q
-
-options.innerHTML=""
-
-let opts=["a","b","c","d"]
-
-opts.forEach(function(opt){
-
-let btn=document.createElement("button")
-
-btn.innerText=question[opt]
-
-btn.onclick=function(){
-
-checkAnswer(opt)
-
-}
-
-options.appendChild(btn)
+opt+=`<button onclick="check('${o}')">${o}</button>`
 
 })
 
-}
+document.getElementById("options").innerHTML=opt
 
-
-function checkAnswer(answer){
-
-if(answer===questions[currentQuestion].ans){
-
-score++
-
-}
-
-currentQuestion++
-
-loadQuestion()
+startTimer()
 
 }
 
 
-function finishQuiz(){
 
-alert("Quiz Finished! Your Score: "+score)
+window.check=function(o){
+
+if(o===questions[index].answer)score++
+
+}
+
+
+
+window.nextQuestion=function(){
+
+index++
+
+if(index<questions.length){
+
+showQuestion()
+
+}
+
+else{
 
 saveScore()
 
-show("leaderboard")
+}
 
 }
 
 
-// ---------- LEADERBOARD ----------
 
-function saveScore(){
+function startTimer(){
 
-let name=document.getElementById("playerName").value
+let t=15
 
-let data=JSON.parse(localStorage.getItem("scores")||"[]")
+document.getElementById("timer").innerText=t
 
-data.push({name:name,score:score})
+timer=setInterval(()=>{
 
-localStorage.setItem("scores",JSON.stringify(data))
+t--
 
-renderScores()
+document.getElementById("timer").innerText=t
+
+if(t<=0){
+
+clearInterval(timer)
+
+nextQuestion()
+
+}
+
+},1000)
 
 }
 
 
-function renderScores(){
 
-let box=document.getElementById("scores")
+async function saveScore(){
 
-if(!box) return
+await addDoc(collection(db,"scores"),{
 
-let data=JSON.parse(localStorage.getItem("scores")||"[]")
+name:document.getElementById("playerName").value,
 
-box.innerHTML=""
+phone:document.getElementById("playerPhone").value,
 
-data.forEach(function(s){
-
-let p=document.createElement("p")
-
-p.innerText=s.name+" : "+s.score
-
-box.appendChild(p)
+score:score
 
 })
 
+alert("Quiz Finished")
+
 }
 
 
-// ---------- ADD QUIZ QUESTION ----------
 
-function addQuestion(){
+window.adminLogin=function(){
 
-let q=document.getElementById("q")
-let a=document.getElementById("a")
-let b=document.getElementById("b")
-let c=document.getElementById("c")
-let d=document.getElementById("d")
-let ans=document.getElementById("ans")
+let u=document.getElementById("adminUser").value
 
-if(!q) return
+let p=document.getElementById("adminPass").value
 
-questions.push({
+if(u==="VIKRAM784125" && p==="#UDSB784125781005"){
 
-q:q.value,
-a:a.value,
-b:b.value,
-c:c.value,
-d:d.value,
-ans:ans.value
+document.getElementById("adminPanel").style.display="block"
+
+}
+
+}
+
+
+
+window.addQuestion=async function(){
+
+await addDoc(collection(db,"questions"),{
+
+question:q.value,
+
+options:[o1.value,o2.value,o3.value,o4.value],
+
+answer:ans.value
 
 })
 
@@ -208,123 +193,57 @@ alert("Question Added")
 }
 
 
-// ---------- GALLERY ----------
 
-let gallery=[]
+window.uploadGallery=async function(){
 
-function uploadGallery(){
+let file=galleryUpload.files[0]
 
-let input=document.getElementById("galleryUpload")
+let r=ref(storage,"gallery/"+file.name)
 
-if(!input) return
+await uploadBytes(r,file)
 
-let file=input.files[0]
-
-let reader=new FileReader()
-
-reader.onload=function(){
-
-gallery.push(reader.result)
-
-renderGallery()
-
-}
-
-reader.readAsDataURL(file)
+alert("Uploaded")
 
 }
 
 
-function renderGallery(){
 
-let g=document.getElementById("gallerySlider")
+window.uploadAchievement=async function(){
 
-if(!g) return
+let file=achieveUpload.files[0]
 
-g.innerHTML=""
+let r=ref(storage,"achievements/"+file.name)
 
-gallery.forEach(function(img){
+await uploadBytes(r,file)
 
-let i=document.createElement("img")
-
-i.src=img
-i.className="animImg"
-
-g.appendChild(i)
-
-})
+alert("Uploaded")
 
 }
 
 
-// ---------- MEMBERS ----------
 
-let members=[]
+window.uploadLogo=async function(){
 
-function addMember(){
+let file=logoUpload.files[0]
 
-let name=document.getElementById("mname")
-let role=document.getElementById("mrole")
-let photo=document.getElementById("memberPhoto")
+let r=ref(storage,"logo/"+file.name)
 
-if(!name) return
+await uploadBytes(r,file)
 
-let file=photo.files[0]
-
-let reader=new FileReader()
-
-reader.onload=function(){
-
-members.push({
-
-name:name.value,
-role:role.value,
-photo:reader.result
-
-})
-
-renderMembers()
-
-}
-
-reader.readAsDataURL(file)
+alert("Logo Updated")
 
 }
 
 
-function renderMembers(){
 
-let box=document.getElementById("membersList")
+window.addExecutive=async function(){
 
-if(!box) return
+let file=exPhoto.files[0]
 
-box.innerHTML=""
+let r=ref(storage,"executives/"+file.name)
 
-members.forEach(function(m){
+await uploadBytes(r,file)
 
-let div=document.createElement("div")
-
-div.className="memberCard"
-
-div.innerHTML=`
-
-<img src="${m.photo}" width="100">
-<h3>${m.name}</h3>
-<p>${m.role}</p>
-
-`
-
-box.appendChild(div)
-
-})
-
-}
-
-
-// ---------- AUTO LOAD LEADERBOARD ----------
-
-window.onload=function(){
-
-renderScores()
+alert("Executive Added")
 
 }
