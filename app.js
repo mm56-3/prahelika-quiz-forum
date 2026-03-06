@@ -1,16 +1,17 @@
 // Admin Password
 const adminPassword = "prahelika123";
 
-// Admin Login
-function loginAdmin() {
-    const pass = document.getElementById("adminPassword").value;
+function loginAdmin(){
+const pass = document.getElementById("adminPass").value;
 
-    if (pass === adminPassword) {
-        alert("Admin Login Successful");
-        window.location.href = "admin.html";
-    } else {
-        alert("Incorrect Password");
-    }
+if(pass === adminPassword){
+alert("Admin Login Successful");
+
+document.getElementById("adminPanel").style.display="block";
+
+}else{
+alert("Incorrect Password");
+}
 }
 
 // Quiz Data
