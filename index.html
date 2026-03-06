@@ -7,22 +7,31 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        /* Your original radial gradient background */
+        /* 1. RESTORING THE RADIAL GRADIENT & SMOOTHNESS */
         body { 
             background: radial-gradient(circle at top right, #1e3a8a, #020617 80%); 
             color: white; 
             min-height: 100vh; 
         }
+
         .glass { 
             background: rgba(255, 255, 255, 0.05); 
             backdrop-filter: blur(15px); 
             border: 1px solid rgba(255, 255, 255, 0.1); 
-            transition: all 0.3s ease; /* Added smooth transition */
+            /* This makes the hover effect smooth */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
         }
-        /* Forces Title to stay Capital and look clean */
+
+        .glass:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+
+        /* 2. FORCING CAPITAL TITLES */
         #hero-title {
             text-transform: uppercase;
-            transition: all 0.5s ease-in-out;
+            letter-spacing: 2px;
         }
     </style>
 </head>
@@ -30,6 +39,7 @@
 
     <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
+            <img src="logo.png" id="nav-logo" class="w-10 h-10 object-contain" onerror="this.style.display='none'">
             <span class="text-xl font-black text-cyan-400">PRAHELIKA</span>
         </div>
         <div class="hidden md:flex gap-6 text-xs font-bold uppercase">
@@ -38,31 +48,28 @@
             <a href="#executives">Executives</a>
             <a href="#leaderboard">Leaderboard</a>
         </div>
-        <button id="quiz-trigger" class="bg-cyan-500 text-blue-950 px-5 py-2 rounded-full font-bold hover:scale-105 transition">START QUIZ</button>
+        <button id="quiz-trigger" class="bg-cyan-500 text-blue-950 px-5 py-2 rounded-full font-bold hover:bg-cyan-400 transition-colors">START QUIZ</button>
     </nav>
 
     <section id="home" class="pt-40 pb-20 px-6 text-center">
-        <h1 id="hero-title" class="text-5xl md:text-7xl font-black mb-6 animate__animated animate__fadeIn">PRAHELIKA QUIZ FORUM DARRANG</h1>
-        <p id="hero-desc" class="text-gray-400 max-w-2xl mx-auto mb-10">Unleash your intellect with Prahelika.</p>
-        <img id="special-team-img" src="" class="w-full max-w-4xl mx-auto rounded-3xl shadow-2xl border border-white/10">
+        <h1 id="hero-title" class="text-5xl md:text-7xl font-black mb-6 animate__animated animate__fadeInDown">
+            PRAHELIKA QUIZ FORUM DARRANG
+        </h1>
+        <p id="hero-desc" class="text-gray-400 max-w-2xl mx-auto mb-10">Loading description from admin panel...</p>
+        <img id="special-team-img" src="" class="w-full max-w-4xl mx-auto rounded-3xl shadow-2xl border border-white/10 animate__animated animate__zoomIn">
     </section>
 
     <section id="executives" class="py-20 px-6">
         <h2 class="text-3xl font-bold text-center mb-10 uppercase tracking-widest">Executive Members</h2>
-        <div id="exec-list" class="flex flex-wrap justify-center gap-8">
-            </div>
+        <div id="exec-list" class="flex flex-wrap justify-center gap-8"></div>
     </section>
 
-    <footer id="contact" class="p-10 text-center glass mt-20">
-        <p id="contact-info">Contact: prahelika@darrang.com</p>
-    </footer>
-
     <script type="module">
-        // 1. FIXED IMPORTS (Uses CDN so Vercel doesn't crash)
+        // 1. IMPORT FIX (Using CDN to prevent 'Failed to resolve module' error)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // 2. YOUR FIREBASE CONFIG (Add your actual keys here)
+        // 2. CONFIG (Paste your real keys here)
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -74,25 +81,17 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- 3. BUTTON HANDLER ---
-        document.getElementById('quiz-trigger').onclick = () => {
-            alert("Quiz initializing...");
-        };
-
-        // --- 4. THE LISTENERS (Updated to match your admin field names) ---
-
-        // Listen for Homepage Content
+        // 3. LISTENERS
         onSnapshot(doc(db, "site_content", "homepage"), (snapshot) => {
             const data = snapshot.data();
             if (data) {
-                // We use .toUpperCase() here to force Capitals even if you type lowercase in admin
+                // Forces UpperCase even if admin types lowercase
                 if(data.title) document.getElementById('hero-title').innerText = data.title.toUpperCase();
                 if(data.desc) document.getElementById('hero-desc').innerText = data.desc;
                 if(data.heroImg) document.getElementById('special-team-img').src = data.heroImg;
             }
         });
 
-        // Listen for Executive Member Updates
         onSnapshot(collection(db, "executives"), (querySnapshot) => {
             const list = document.getElementById('exec-list');
             list.innerHTML = ''; 
@@ -100,12 +99,14 @@
                 const member = doc.data();
                 list.innerHTML += `
                     <div class="glass p-6 rounded-2xl text-center w-64 animate__animated animate__fadeInUp">
-                        <img src="${member.url || ''}" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-cyan-400 object-cover">
+                        <img src="${member.url}" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-cyan-400 object-cover">
                         <h3 class="font-bold text-lg uppercase">${member.name}</h3>
-                        <p class="text-cyan-400 text-sm font-bold">${member.pos}</p>
+                        <p class="text-cyan-400 text-sm">${member.pos}</p>
                     </div>`;
             });
         });
+
+        document.getElementById('quiz-trigger').onclick = () => alert("Quiz Starting...");
     </script>
 </body>
 </html>
