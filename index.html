@@ -1,143 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Prahelika Quiz Forum</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prahelika Quiz Forum Darrang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
 </head>
+<body class="bg-gradient-to-br from-blue-900 via-blue-700 to-cyan-500 min-h-screen text-white">
 
-<body>
+    <nav class="p-4 flex justify-between items-center bg-black/20 backdrop-blur-md sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <img src="logo.png" alt="Logo" class="w-10 h-10 animate-pulse">
+            <span class="font-bold text-xl tracking-widest">PRAHELIKA</span>
+        </div>
+        <div class="space-x-6">
+            <a href="#home" class="hover:text-cyan-300 transition">Home</a>
+            <a href="#quiz" class="hover:text-cyan-300 transition">Quiz</a>
+            <a href="#gallery" class="hover:text-cyan-300 transition">Gallery</a>
+        </div>
+    </nav>
 
-<header>
-<img src="logo.png" class="logo">
-<h1>Prahelika Quiz Forum</h1>
-</header>
+    <section id="home" class="text-center py-20 px-4">
+        <h1 class="text-5xl font-extrabold mb-4 animate-bounce">Welcome to Darrang's Brain Hub</h1>
+        <p class="max-w-2xl mx-auto opacity-90">Engage, Compete, and Lead. Join the ultimate quiz experience.</p>
+        <img src="team-special.jpg" alt="Team" class="mt-8 mx-auto rounded-2xl shadow-2xl border-4 border-white/20 w-full max-w-4xl hover:scale-105 transition duration-500">
+    </section>
 
-<nav>
-<button onclick="show('home')">Home</button>
-<button onclick="show('quiz')">Start Quiz</button>
-<button onclick="show('leaderboard')">Leaderboard</button>
-<button onclick="show('gallery')">Gallery</button>
-<button onclick="show('members')">Executives</button>
-<button onclick="show('contact')">Contact</button>
-<button onclick="show('admin')">Admin</button>
-</nav>
+    <div id="quiz-login" class="max-w-md mx-auto bg-white/10 p-8 rounded-3xl backdrop-blur-xl border border-white/20">
+        <h2 class="text-2xl font-bold mb-4">Participant Entry</h2>
+        <input type="text" id="p-name" placeholder="Full Name" class="w-full p-3 mb-3 rounded bg-black/30 border-none outline-none">
+        <input type="tel" id="p-phone" placeholder="Phone Number" class="w-full p-3 mb-6 rounded bg-black/30 border-none outline-none">
+        <button onclick="startQuiz()" class="w-full bg-cyan-400 hover:bg-cyan-300 text-blue-900 font-bold py-3 rounded-xl transition">Start Quiz</button>
+    </div>
 
-<section id="home" class="active">
+    <div id="quiz-box" class="hidden max-w-2xl mx-auto mt-10 p-6 bg-white/10 rounded-xl">
+        <div class="flex justify-between mb-4">
+            <span id="timer" class="text-yellow-400 font-bold text-2xl">15s</span>
+            <span id="score">Score: 0</span>
+        </div>
+        <h3 id="question" class="text-xl mb-6">Question text goes here?</h3>
+        <div id="options" class="grid grid-cols-1 gap-4">
+            </div>
+    </div>
 
-<h2>Welcome to Prahelika Quiz Forum</h2>
-
-<p>
-Established in 2021 during the height of the COVID-19 pandemic, the Prahelika Quiz Forum has rapidly emerged as a beacon of intellectual resilience...
-</p>
-
-<img src="hero.jpg" class="hero">
-
-<h2>Achievements</h2>
-
-<div class="slider">
-<img src="ach1.jpg">
-<img src="ach2.jpg">
-<img src="ach3.jpg">
-</div>
-
-</section>
-
-<section id="quiz">
-
-<div id="login">
-
-<h3>Participant Login</h3>
-
-<input id="name" placeholder="Name">
-<input id="phone" placeholder="Phone Number">
-
-<button onclick="startQuiz()">Start Quiz</button>
-
-</div>
-
-<div id="quizBox" style="display:none">
-
-<h2 id="question"></h2>
-
-<div id="options"></div>
-
-<p>Time Left: <span id="timer">15</span></p>
-
-<button onclick="next()">Next</button>
-
-</div>
-
-</section>
-
-<section id="leaderboard">
-
-<h2>Leaderboard</h2>
-
-<ul id="scores"></ul>
-
-</section>
-
-<section id="gallery">
-
-<h2>Gallery</h2>
-
-<div class="slider">
-<img src="g1.jpg">
-<img src="g2.jpg">
-<img src="g3.jpg">
-</div>
-
-</section>
-
-<section id="members">
-
-<h2>Executive Members</h2>
-
-<div class="member">
-<img src="president.jpg">
-<h3>Mritunjoy Kumar Dev Sharma</h3>
-<p>President</p>
-</div>
-
-</section>
-
-<section id="contact">
-
-<h2>Contact</h2>
-
-<p>Email: prahelikaquizforum@gmail.com</p>
-<p>Phone: +91 XXXXX XXXXX</p>
-
-</section>
-
-<section id="admin">
-
-<h2>Admin Login</h2>
-
-<input id="adminUser" placeholder="Username">
-<input id="adminPass" placeholder="Password">
-
-<button onclick="loginAdmin()">Login</button>
-
-<div id="adminPanel" style="display:none">
-
-<h3>Add Question</h3>
-
-<input id="q">
-<input id="o1">
-<input id="o2">
-<input id="o3">
-<input id="o4">
-<input id="ans">
-
-<button onclick="addQuestion()">Add</button>
-
-</div>
-
-</section>
-
-<script src="app.js"></script>
-
+    <script type="module" src="app.js"></script>
 </body>
 </html>
