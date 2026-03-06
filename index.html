@@ -1,97 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prahelika Quiz Forum Darrang</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <style>
-        /* This is the exact dark blue background from your screenshot */
-        body { 
-            background: #0d122b; 
-            background: linear-gradient(-45deg, #0d122b, #1e3a8a, #1e40af, #0891b2);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            min-height: 100vh;
-            color: white;
-            font-family: 'Inter', sans-serif;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        /* Matching the 'prahelika-quiz-forum.vercel.app' style */
-        .glass-card { 
-            background: rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .animate-marquee { display: flex; width: 200%; animation: marquee 25s linear infinite; }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
 </head>
-<body>
+<body class="bg-gradient-to-br from-blue-900 via-blue-700 to-cyan-500 min-h-screen text-white">
 
-    <nav class="fixed top-0 w-full z-50 bg-black/20 backdrop-blur-sm px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <span class="text-xl font-bold uppercase tracking-widest text-cyan-400">Prahelika</span>
+    <nav class="p-4 flex justify-between items-center bg-black/20 backdrop-blur-md sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <img src="logo.png" alt="Logo" class="w-10 h-10 animate-pulse">
+            <span class="font-bold text-xl tracking-widest">PRAHELIKA</span>
         </div>
-        <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest text-white/90">
-            <a href="#home" class="hover:text-white transition">Home</a>
-            <a href="#gallery" class="hover:text-white transition">Gallery</a>
-            <a href="#executives" class="hover:text-white transition">Executives</a>
-            <a href="#leaderboard" class="hover:text-white transition">Leaderboard</a>
+        <div class="space-x-6">
+            <a href="#home" class="hover:text-cyan-300 transition">Home</a>
+            <a href="#quiz" class="hover:text-cyan-300 transition">Quiz</a>
+            <a href="#gallery" class="hover:text-cyan-300 transition">Gallery</a>
         </div>
-        <button id="start-quiz-btn" class="bg-cyan-500 text-blue-900 px-6 py-2 rounded-full font-bold shadow-lg hover:scale-105 transition">START QUIZ</button>
     </nav>
 
-    <section id="home" class="pt-40 pb-20 px-6 text-center">
-        <h1 id="hero-title" class="text-5xl md:text-8xl font-bold mb-6 animate__animated animate__zoomIn">Prahelika quiz forum Darrang</h1>
-        <p id="hero-desc" class="text-gray-300 max-w-2xl mx-auto mb-10 opacity-90">Loading description...</p>
-        <img id="special-team-img" src="special-team.jpg" class="w-full max-w-5xl mx-auto rounded-3xl shadow-2xl border-2 border-white/10 hover:scale-[1.01] transition duration-700">
+    <section id="home" class="text-center py-20 px-4">
+        <h1 class="text-5xl font-extrabold mb-4 animate-bounce">Welcome to Darrang's Brain Hub</h1>
+        <p class="max-w-2xl mx-auto opacity-90">Engage, Compete, and Lead. Join the ultimate quiz experience.</p>
+        <img src="team-special.jpg" alt="Team" class="mt-8 mx-auto rounded-2xl shadow-2xl border-4 border-white/20 w-full max-w-4xl hover:scale-105 transition duration-500">
     </section>
 
-    <section id="executives" class="py-20 px-6 text-center">
-        <h2 class="text-4xl font-semibold mb-12">Executive Members</h2>
-        <div id="exec-list" class="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto">
+    <div id="quiz-login" class="max-w-md mx-auto bg-white/10 p-8 rounded-3xl backdrop-blur-xl border border-white/20">
+        <h2 class="text-2xl font-bold mb-4">Participant Entry</h2>
+        <input type="text" id="p-name" placeholder="Full Name" class="w-full p-3 mb-3 rounded bg-black/30 border-none outline-none">
+        <input type="tel" id="p-phone" placeholder="Phone Number" class="w-full p-3 mb-6 rounded bg-black/30 border-none outline-none">
+        <button onclick="startQuiz()" class="w-full bg-cyan-400 hover:bg-cyan-300 text-blue-900 font-bold py-3 rounded-xl transition">Start Quiz</button>
+    </div>
+
+    <div id="quiz-box" class="hidden max-w-2xl mx-auto mt-10 p-6 bg-white/10 rounded-xl">
+        <div class="flex justify-between mb-4">
+            <span id="timer" class="text-yellow-400 font-bold text-2xl">15s</span>
+            <span id="score">Score: 0</span>
+        </div>
+        <h3 id="question" class="text-xl mb-6">Question text goes here?</h3>
+        <div id="options" class="grid grid-cols-1 gap-4">
             </div>
-    </section>
+    </div>
 
-    <footer id="contact" class="py-20 px-6 mt-20 text-center">
-        <p id="contact-text" class="text-cyan-300 text-lg mb-4">prahelika@darrang.com</p>
-    </footer>
-
-    <script type="module">
-        import { db } from './firebase.js';
-        import { doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        // 1. BUTTON FIX (For the 'Start Quiz' button)
-        window.startQuiz = () => {
-            alert("Quiz initializing...");
-            // Link your quiz modal here
-        };
-        document.getElementById('start-quiz-btn').onclick = window.startQuiz;
-
-        // 2. HERO LISTENER (Titles & Description)
-        // If snapshot data is found, it will overwrite 'Prahelika quiz forum Darrang'
-        onSnapshot(doc(db, "site_content", "homepage"), (snap) => {
-            const data = snap.data();
-            if (data) {
-                // If dashboard is empty, keep your required title
-                document.getElementById('hero-title').innerText = data.title || "Prahelika quiz forum Darrang";
-                document.getElementById('hero-desc').innerText = data.description || "Darrang's premier quiz platform.";
-            }
-        });
-
-        // 3. EXECUTIVES LISTENER
-        onSnapshot(collection(db, "executives"), (snap) => {
-            const list = document.getElementById('exec-list');
-            list.innerHTML = ''; // Clears the list
-            snap.forEach((doc) => {
-                const d = doc.
+    <script type="module" src="app.js"></script>
+</body>
+</html>
