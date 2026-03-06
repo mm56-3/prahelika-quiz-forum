@@ -1,3 +1,15 @@
+function show(section){
+
+let sections = document.querySelectorAll("section")
+
+sections.forEach(sec=>{
+sec.classList.remove("active")
+})
+
+document.getElementById(section).classList.add("active")
+
+}
+
 let questions=[]
 let gallery=[]
 let achievements=[]
