@@ -7,119 +7,97 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        /* Your favorite dark blue radial gradient */
-        body { 
-            background: radial-gradient(circle at top right, #1e3a8a, #020617 80%); 
-            color: white; 
-            min-height: 100vh; 
-            font-family: sans-serif;
-        }
-        .glass { 
-            background: rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-        }
+        body { background: radial-gradient(circle at top right, #1e3a8a, #020617 80%); color: white; min-height: 100vh; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
     </style>
 </head>
 <body>
 
     <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
-            <span class="text-xl font-black text-cyan-400 tracking-wider">PRAHELIKA</span>
+            <span class="text-xl font-black text-cyan-400">PRAHELIKA</span>
         </div>
-        <div class="hidden md:flex gap-6 text-xs font-bold uppercase tracking-widest">
-            <a href="#home" class="hover:text-cyan-400 transition">Home</a>
-            <a href="#gallery" class="hover:text-cyan-400 transition">Gallery</a>
-            <a href="#executives" class="hover:text-cyan-400 transition">Executives</a>
-            <a href="#leaderboard" class="hover:text-cyan-400 transition">Leaderboard</a>
+        <div class="hidden md:flex gap-6 text-xs font-bold uppercase">
+            <a href="#home">Home</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#executives">Executives</a>
+            <a href="#leaderboard">Leaderboard</a>
         </div>
-        <button id="quiz-trigger" class="bg-cyan-500 text-blue-950 px-6 py-2 rounded-full font-bold hover:scale-105 transition shadow-lg">START QUIZ</button>
+        <button id="quiz-trigger" class="bg-cyan-500 text-blue-950 px-5 py-2 rounded-full font-bold">START QUIZ</button>
     </nav>
 
-    <section id="home" class="pt-48 pb-20 px-6 text-center">
-        <h1 id="hero-title" class="text-5xl md:text-8xl font-black mb-6 animate__animated animate__fadeInDown">
-            Prahelika Quiz Forum Darrang
-        </h1>
-        <p id="hero-desc" class="text-gray-400 max-w-2xl mx-auto mb-10 text-lg">
-            Unleash your intellect. Darrang's premier quiz platform for thinkers and dreamers.
-        </p>
-        <img id="special-team-img" src="" class="w-full max-w-4xl mx-auto rounded-3xl shadow-2xl border border-white/10 hidden">
+    <section id="home" class="pt-40 pb-20 px-6 text-center">
+        <h1 id="hero-title" class="text-5xl md:text-7xl font-black mb-6">Prahelika Quiz Forum Darrang</h1>
+        <p id="hero-desc" class="text-gray-400 max-w-2xl mx-auto mb-10">Connecting minds through knowledge.</p>
+        <img id="special-team-img" src="" class="w-full max-w-4xl mx-auto rounded-3xl shadow-2xl border border-white/10">
     </section>
 
     <section id="executives" class="py-20 px-6">
-        <h2 class="text-4xl font-bold text-center mb-12">Executive Members</h2>
-        <div id="exec-list" class="flex flex-wrap justify-center gap-8">
-            </div>
+        <h2 class="text-3xl font-bold text-center mb-10">Executive Members</h2>
+        <div id="exec-list" class="flex flex-wrap justify-center gap-8"></div>
     </section>
 
     <footer id="contact" class="p-10 text-center glass mt-20">
-        <p id="contact-info" class="text-cyan-300">Contact: prahelika@darrang.com</p>
+        <p id="contact-info">Contact: prahelika@darrang.com</p>
     </footer>
 
     <script type="module">
-        // Fixing the "Failed to resolve module" by using full CDN URLs
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // REPLACE THIS WITH YOUR ACTUAL FIREBASE CONFIG
+        // YOUR ACTUAL CONFIG GOES HERE
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_PROJECT.firebaseapp.com",
             projectId: "YOUR_PROJECT_ID",
             storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
+            messagingSenderId: "YOUR_ID",
             appId: "YOUR_APP_ID"
         };
 
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- BUTTON HANDLERS ---
+        // --- 1. BUTTON HANDLER ---
         document.getElementById('quiz-trigger').onclick = () => {
-            alert("Quiz initializing... Connect your Quiz Modal here!");
+            alert("Quiz initializing...");
         };
 
-        // --- THE LISTENERS (MASTER CONTROL LOGIC) ---
+        // --- 2. THE LISTENERS (Master Control Logic) ---
 
-        // 1. Home Content Listener
+        // Listener for Homepage Content
         onSnapshot(doc(db, "site_content", "homepage"), (snapshot) => {
             const data = snapshot.data();
             if (data) {
-                // Instantly update Title, Description, and Hero Image
                 if(data.title) document.getElementById('hero-title').innerText = data.title;
                 if(data.desc) document.getElementById('hero-desc').innerText = data.desc;
-                if(data.teamImg) {
-                    const img = document.getElementById('special-team-img');
-                    img.src = data.teamImg;
-                    img.classList.remove('hidden');
-                }
+                if(data.heroImg) document.getElementById('special-team-img').src = data.heroImg;
             }
         });
 
-        // 2. Executive Members Listener
+        // Listener for Executives
         onSnapshot(collection(db, "executives"), (querySnapshot) => {
             const list = document.getElementById('exec-list');
             list.innerHTML = ''; 
             querySnapshot.forEach((doc) => {
                 const member = doc.data();
                 list.innerHTML += `
-                    <div class="glass p-8 rounded-3xl text-center w-72 animate__animated animate__fadeInUp">
-                        <img src="${member.url || 'https://via.placeholder.com/150'}" class="w-28 h-28 rounded-full mx-auto mb-4 border-2 border-cyan-400 object-cover shadow-cyan-500/20 shadow-xl">
-                        <h3 class="font-bold text-xl text-white">${member.name}</h3>
-                        <p class="text-cyan-400 font-medium text-sm mb-2">${member.pos}</p>
-                        <p class="text-xs text-gray-400 leading-relaxed">${member.desc || ''}</p>
+                    <div class="glass p-6 rounded-2xl text-center w-64 animate__animated animate__fadeIn">
+                        <img src="${member.url}" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-cyan-400 object-cover">
+                        <h3 class="font-bold text-lg">${member.name}</h3>
+                        <p class="text-cyan-400 text-sm">${member.pos}</p>
                     </div>`;
             });
         });
 
-        // 3. Contact Listener
+        // Listener for Contact Info
         onSnapshot(doc(db, "site_content", "contact"), (snapshot) => {
             const data = snapshot.data();
             if(data && data.info) {
                 document.getElementById('contact-info').innerText = data.info;
             }
         });
-
     </script>
 </body>
 </html>
