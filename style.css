@@ -1,76 +1,120 @@
 body{
-font-family: Arial, sans-serif;
+
+font-family:Arial;
 margin:0;
-padding:0;
-background: linear-gradient(135deg,#ff7e5f,#feb47b);
+background:linear-gradient(135deg,#002f6c,#005bea,#00c6fb);
+
+color:white;
 text-align:center;
-color:#333;
+
 }
 
-/* Header */
 
-header{
-background:#6a11cb;
-background:linear-gradient(90deg,#6a11cb,#2575fc);
-color:white;
-padding:40px;
+nav{
+
+background:rgba(0,0,0,0.7);
+padding:15px;
+
 }
 
-/* Navigation */
+nav button{
 
-nav a{
-margin:10px;
-text-decoration:none;
-font-weight:bold;
-color:white;
-background:#ff9800;
-padding:10px 20px;
-border-radius:20px;
-transition:0.3s;
-}
+margin:5px;
+padding:12px 18px;
 
-nav a:hover{
-background:#ff5722;
-transform:scale(1.1);
-}
-
-/* Quiz Box */
-
-#quiz-container{
-background:white;
-padding:20px;
-margin:30px auto;
-width:60%;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.3);
-}
-
-/* Buttons */
-
-button{
-padding:10px 20px;
 border:none;
-background:#2575fc;
+border-radius:8px;
+
+background:linear-gradient(45deg,#00c6fb,#005bea);
+
 color:white;
-border-radius:20px;
+
+font-weight:bold;
+
 cursor:pointer;
-transition:0.3s;
+
+transition:0.4s;
+
 }
 
-button:hover{
-background:#6a11cb;
+nav button:hover{
+
 transform:scale(1.1);
+background:linear-gradient(45deg,#ff9800,#ff5722);
+
 }
 
-/* Gallery */
 
-.gallery{
-width:220px;
-margin:10px;
+.logo{
+
+width:80px;
+margin-top:10px;
+
+}
+
+
+.hero-img{
+
+width:90%;
 border-radius:10px;
-transition:0.3s;
+
+animation:fade 4s infinite;
+
 }
 
-.gallery:hover{
-transform:scale(1.1);
+@keyframes fade{
+
+0%{opacity:0.6}
+50%{opacity:1}
+100%{opacity:0.6}
+
+}
+
+
+.slider{
+
+display:flex;
+overflow-x:auto;
+gap:20px;
+padding:20px;
+
+}
+
+.slider img{
+
+height:200px;
+border-radius:10px;
+
+animation:slide 8s infinite;
+
+}
+
+
+@keyframes slide{
+
+0%{transform:translateX(0)}
+50%{transform:translateX(20px)}
+100%{transform:translateX(0)}
+
+}
+
+
+section{
+
+display:none;
+padding:30px;
+
+}
+
+.active{
+
+display:block;
+
+}
+
+
+#quizArea{
+
+display:none;
+
 }
