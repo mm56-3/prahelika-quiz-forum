@@ -13,7 +13,7 @@
             min-height: 100vh; 
         }
 
-        /* RESTORING SMOOTH TRANSITIONS */
+        /* SMOOTH TRANSITIONS RESTORED */
         .glass { 
             background: rgba(255, 255, 255, 0.05); 
             backdrop-filter: blur(15px); 
@@ -27,17 +27,14 @@
             border: 1px solid rgba(0, 255, 255, 0.3);
         }
 
-        /* FORCING CAPITAL TITLES */
-        #hero-title {
-            text-transform: uppercase;
-        }
+        #hero-title { text-transform: uppercase; }
     </style>
 </head>
 <body>
 
     <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
-            <img src="logo.png" id="nav-logo" class="w-10 h-10 object-contain" onerror="this.src='https://via.placeholder.com/40?text=P'">
+            <img src="logo.png" id="nav-logo" class="w-10 h-10 object-contain" onerror="this.src='https://ui-avatars.com/api/?name=P&background=06b6d4&color=fff'">
             <span class="text-xl font-black text-cyan-400">PRAHELIKA</span>
         </div>
         <div class="hidden md:flex gap-6 text-xs font-bold uppercase">
@@ -50,11 +47,12 @@
     </nav>
 
     <section id="home" class="pt-40 pb-20 px-6 text-center">
-        <h1 id="hero-title" class="text-5xl md:text-7xl font-black mb-6 animate__animated animate__fadeInDown">
-            PRAHELIKA QUIZ FORUM DARRANG
-        </h1>
+        <h1 id="hero-title" class="text-5xl md:text-7xl font-black mb-6 animate__animated animate__fadeInDown">PRAHELIKA QUIZ FORUM DARRANG</h1>
         <p id="hero-desc" class="text-gray-400 max-w-2xl mx-auto mb-10">Unleash your intellect with Prahelika.</p>
-        <img id="special-team-img" src="" class="w-full max-w-4xl mx-auto rounded-3xl shadow-2xl border border-white/10 animate__animated animate__zoomIn">
+        
+        <div class="max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 animate__animated animate__zoomIn">
+            <img id="special-team-img" src="special-team.jpg" class="w-full h-auto object-cover min-h-[300px]" onerror="this.src='https://via.placeholder.com/1200x600/0d122b/06b6d4?text=Prahelika+Quiz+Forum+Darrang'">
+        </div>
     </section>
 
     <section id="executives" class="py-20 px-6">
@@ -63,11 +61,9 @@
     </section>
 
     <script type="module">
-        // FIXED CDN IMPORTS (Vercel-Safe)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // ADD YOUR REAL CONFIG HERE
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -80,21 +76,21 @@
         const db = getFirestore(app);
 
         // --- BUTTON FIX (Direct Binding) ---
-        // This is the only way to make buttons work inside a 'module' script
-        const quizButton = document.getElementById('quiz-trigger');
-        if (quizButton) {
-            quizButton.onclick = () => {
+        const btn = document.getElementById('quiz-trigger');
+        if(btn) {
+            btn.addEventListener('click', () => {
                 alert("Quiz starting... Checking database connection!");
-            };
+            });
         }
 
         // --- MASTER LISTENERS ---
         onSnapshot(doc(db, "site_content", "homepage"), (snapshot) => {
             const data = snapshot.data();
             if (data) {
-                // RESTORED CAPITAL TRANSITION
+                // Restore Uppercase logic
                 if(data.title) document.getElementById('hero-title').innerText = data.title.toUpperCase();
                 if(data.desc) document.getElementById('hero-desc').innerText = data.desc;
+                // Hero Image Update from Admin
                 if(data.heroImg) document.getElementById('special-team-img').src = data.heroImg;
             }
         });
@@ -106,9 +102,9 @@
                 const member = doc.data();
                 list.innerHTML += `
                     <div class="glass p-6 rounded-2xl text-center w-64 animate__animated animate__fadeInUp">
-                        <img src="${member.url}" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-cyan-400 object-cover">
+                        <img src="${member.url}" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-cyan-400 object-cover" onerror="this.src='https://ui-avatars.com/api/?name=${member.name}&background=random'">
                         <h3 class="font-bold text-lg uppercase">${member.name}</h3>
-                        <p class="text-cyan-400 text-sm">${member.pos}</p>
+                        <p class="text-cyan-400 text-sm font-bold">${member.pos}</p>
                     </div>`;
             });
         });
