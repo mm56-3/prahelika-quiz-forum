@@ -14,7 +14,7 @@ let pass = document.getElementById("adminPass").value;
 
 if(pass === adminPassword){
 
-alert("Admin Login Successful");
+alert("Admin Mode Activated");
 
 isAdmin = true;
 
@@ -22,7 +22,7 @@ document.getElementById("adminPanel").style.display = "block";
 
 }else{
 
-alert("Incorrect Password");
+alert("Wrong Password");
 
 }
 
@@ -30,16 +30,85 @@ alert("Incorrect Password");
 
 
 // --------------------
-// ADD QUESTION (UNLIMITED)
+// EDIT HOMEPAGE TEXT
 // --------------------
-function addQuestion(){
+function updateHome(){
 
 if(!isAdmin){
 alert("Admin login required");
 return;
 }
 
-let question = document.getElementById("q").value;
+let text = document.getElementById("homeTextInput").value;
+
+document.getElementById("homeText").innerText = text;
+
+localStorage.setItem("homeText", text);
+
+alert("Homepage Updated");
+
+}
+
+
+// --------------------
+// LOAD HOMEPAGE TEXT
+// --------------------
+window.onload = function(){
+
+let saved = localStorage.getItem("homeText");
+
+if(saved){
+document.getElementById("homeText").innerText = saved;
+}
+
+loadLeaderboard();
+
+}
+
+
+
+// --------------------
+// ADD EVENT
+// --------------------
+function addEvent(){
+
+let event = document.getElementById("eventInput").value;
+
+let events = JSON.parse(localStorage.getItem("events")) || [];
+
+events.push(event);
+
+localStorage.setItem("events",JSON.stringify(events));
+
+showEvents();
+
+}
+
+
+// --------------------
+// SHOW EVENTS
+// --------------------
+function showEvents(){
+
+let events = JSON.parse(localStorage.getItem("events")) || [];
+
+let html = "";
+
+events.forEach(e=>{
+html += "<li>"+e+"</li>";
+});
+
+document.getElementById("eventList").innerHTML = html;
+
+}
+
+
+// --------------------
+// ADD QUIZ QUESTION
+// --------------------
+function addQuestion(){
+
+let q = document.getElementById("q").value;
 let o1 = document.getElementById("o1").value;
 let o2 = document.getElementById("o2").value;
 let o3 = document.getElementById("o3").value;
@@ -49,48 +118,39 @@ let ans = document.getElementById("ans").value;
 let questions = JSON.parse(localStorage.getItem("quizQuestions")) || [];
 
 questions.push({
-q: question,
-options: [o1,o2,o3,o4],
-answer: ans
+question:q,
+options:[o1,o2,o3,o4],
+answer:ans
 });
 
-localStorage.setItem("quizQuestions", JSON.stringify(questions));
+localStorage.setItem("quizQuestions",JSON.stringify(questions));
 
-alert("Question Added Successfully");
-
-// clear input fields
-document.getElementById("q").value="";
-document.getElementById("o1").value="";
-document.getElementById("o2").value="";
-document.getElementById("o3").value="";
-document.getElementById("o4").value="";
-document.getElementById("ans").value="";
+alert("Question Added");
 
 }
+
 
 
 // --------------------
 // QUIZ SYSTEM
 // --------------------
-let questions = JSON.parse(localStorage.getItem("quizQuestions")) || [];
-
-let currentQuestion = 0;
+let questions = [];
+let current = 0;
 let score = 0;
 
 
-// --------------------
-// START QUIZ
-// --------------------
 function startQuiz(){
 
 let name = document.getElementById("playerName").value;
 
-if(name === ""){
-alert("Please enter your name");
+if(name===""){
+alert("Enter your name");
 return;
 }
 
-currentQuestion = 0;
+questions = JSON.parse(localStorage.getItem("quizQuestions")) || [];
+
+current = 0;
 score = 0;
 
 show("quiz");
@@ -100,69 +160,56 @@ loadQuestion();
 }
 
 
-// --------------------
-// LOAD QUESTION
-// --------------------
+
 function loadQuestion(){
 
-if(currentQuestion >= questions.length){
-
+if(current >= questions.length){
 finishQuiz();
 return;
-
 }
 
-let q = questions[currentQuestion];
+let q = questions[current];
 
-document.getElementById("q").innerText = q.q;
+document.getElementById("q").innerText = q.question;
 
-let optionsHTML = "";
+let html="";
 
-q.options.forEach(opt => {
+q.options.forEach(opt=>{
 
-optionsHTML += `<button onclick="answer('${opt}')">${opt}</button><br><br>`;
+html += `<button onclick="answer('${opt}')">${opt}</button><br><br>`;
 
 });
 
-document.getElementById("options").innerHTML = optionsHTML;
+document.getElementById("options").innerHTML = html;
 
 }
 
 
-// --------------------
-// ANSWER
-// --------------------
-function answer(selected){
 
-let q = questions[currentQuestion];
+function answer(opt){
 
-if(selected === q.answer){
-
+if(opt === questions[current].answer){
 score++;
-
 }
 
-currentQuestion++;
+current++;
 
 loadQuestion();
 
 }
 
 
-// --------------------
-// FINISH QUIZ
-// --------------------
+
 function finishQuiz(){
 
-alert("Quiz Finished! Score: " + score);
+alert("Your Score: "+score);
 
 saveScore();
 
 show("leaderboard");
 
-loadLeaderboard();
-
 }
+
 
 
 // --------------------
@@ -184,19 +231,18 @@ localStorage.setItem("scores",JSON.stringify(scores));
 }
 
 
+
 // --------------------
-// LOAD LEADERBOARD
+// LEADERBOARD
 // --------------------
 function loadLeaderboard(){
 
 let scores = JSON.parse(localStorage.getItem("scores")) || [];
 
-let html = "";
+let html="";
 
-scores.forEach(s => {
-
-html += `<p>${s.name} - ${s.score}</p>`;
-
+scores.forEach(s=>{
+html += `<p>${s.name} : ${s.score}</p>`;
 });
 
 document.getElementById("scores").innerHTML = html;
@@ -204,10 +250,26 @@ document.getElementById("scores").innerHTML = html;
 }
 
 
+
+// --------------------
+// RESET LEADERBOARD
+// --------------------
+function resetLeaderboard(){
+
+localStorage.removeItem("scores");
+
+alert("Leaderboard Reset");
+
+loadLeaderboard();
+
+}
+
+
+
 // --------------------
 // PAGE NAVIGATION
 // --------------------
-function show(section){
+function show(id){
 
 let sections = document.querySelectorAll("section");
 
@@ -215,10 +277,6 @@ sections.forEach(sec=>{
 sec.classList.remove("active");
 });
 
-document.getElementById(section).classList.add("active");
-
-if(section==="leaderboard"){
-loadLeaderboard();
-}
+document.getElementById(id).classList.add("active");
 
 }
