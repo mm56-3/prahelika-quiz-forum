@@ -1,75 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>Prahelika Quiz Forum</title>
-
 <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
 <header>
-
-<img id="logo" src="" class="logo">
-
-<h1 id="forumTitle">Prahelika Quiz Forum Darrang</h1>
+<img src="logo.png" class="logo">
+<h1>Prahelika Quiz Forum</h1>
+</header>
 
 <nav>
-
 <button onclick="show('home')">Home</button>
 <button onclick="show('quiz')">Start Quiz</button>
 <button onclick="show('leaderboard')">Leaderboard</button>
 <button onclick="show('gallery')">Gallery</button>
-<button onclick="show('executives')">Executives</button>
+<button onclick="show('members')">Executives</button>
+<button onclick="show('contact')">Contact</button>
 <button onclick="show('admin')">Admin</button>
-
 </nav>
-
-</header>
-
 
 <section id="home" class="active">
 
-<div class="hero">
+<h2>Welcome to Prahelika Quiz Forum</h2>
 
-<img id="heroImage" class="hero-img">
+<p>
+Established in 2021 during the height of the COVID-19 pandemic, the Prahelika Quiz Forum has rapidly emerged as a beacon of intellectual resilience...
+</p>
 
-<h2 id="homeDescription">
-
-Established in 2021 during the height of the COVID-19 pandemic,  
-Prahelika Quiz Forum became the only active quiz forum in Darrang district.
-
-</h2>
-
-</div>
+<img src="hero.jpg" class="hero">
 
 <h2>Achievements</h2>
 
-<div class="slider" id="achievementSlider"></div>
-
-<h2>Contact</h2>
-
-<p id="contactInfo">Contact: Prahelika Quiz Forum, Darrang</p>
+<div class="slider">
+<img src="ach1.jpg">
+<img src="ach2.jpg">
+<img src="ach3.jpg">
+</div>
 
 </section>
 
-
-
 <section id="quiz">
 
-<h2>Participant Login</h2>
+<div id="login">
 
-<input id="playerName" placeholder="Name">
-<input id="playerPhone" placeholder="Phone">
+<h3>Participant Login</h3>
 
-<button onclick="startQuiz()">Enter Quiz</button>
+<input id="name" placeholder="Name">
+<input id="phone" placeholder="Phone Number">
 
-<div id="quizArea">
+<button onclick="startQuiz()">Start Quiz</button>
+
+</div>
+
+<div id="quizBox" style="display:none">
 
 <h2 id="question"></h2>
 
@@ -77,117 +64,80 @@ Prahelika Quiz Forum became the only active quiz forum in Darrang district.
 
 <p>Time Left: <span id="timer">15</span></p>
 
-<button onclick="nextQuestion()">Next</button>
+<button onclick="next()">Next</button>
 
 </div>
 
 </section>
 
-
-
 <section id="leaderboard">
 
 <h2>Leaderboard</h2>
 
-<ul id="leaderboardList"></ul>
+<ul id="scores"></ul>
 
 </section>
-
-
 
 <section id="gallery">
 
 <h2>Gallery</h2>
 
-<div class="slider" id="gallerySlider"></div>
+<div class="slider">
+<img src="g1.jpg">
+<img src="g2.jpg">
+<img src="g3.jpg">
+</div>
 
 </section>
 
-
-
-<section id="executives">
+<section id="members">
 
 <h2>Executive Members</h2>
 
-<div id="executiveList"></div>
+<div class="member">
+<img src="president.jpg">
+<h3>Mritunjoy Kumar Dev Sharma</h3>
+<p>President</p>
+</div>
 
 </section>
 
+<section id="contact">
 
+<h2>Contact</h2>
+
+<p>Email: prahelikaquizforum@gmail.com</p>
+<p>Phone: +91 XXXXX XXXXX</p>
+
+</section>
 
 <section id="admin">
 
 <h2>Admin Login</h2>
 
 <input id="adminUser" placeholder="Username">
-<input id="adminPass" type="password" placeholder="Password">
+<input id="adminPass" placeholder="Password">
 
-<button onclick="adminLogin()">Login</button>
+<button onclick="loginAdmin()">Login</button>
 
-<div id="adminPanel">
+<div id="adminPanel" style="display:none">
 
-<h2>Admin Dashboard</h2>
+<h3>Add Question</h3>
 
+<input id="q">
+<input id="o1">
+<input id="o2">
+<input id="o3">
+<input id="o4">
+<input id="ans">
 
-<h3>Edit Homepage Text</h3>
-
-<textarea id="editHome"></textarea>
-
-<button onclick="updateHome()">Update</button>
-
-
-<h3>Upload Logo</h3>
-
-<input type="file" id="logoUpload">
-
-<button onclick="uploadLogo()">Upload</button>
-
-
-<h3>Add Quiz Question</h3>
-
-<input id="q" placeholder="Question">
-
-<input id="o1" placeholder="Option1">
-<input id="o2" placeholder="Option2">
-<input id="o3" placeholder="Option3">
-<input id="o4" placeholder="Option4">
-
-<input id="ans" placeholder="Correct Option">
-
-<button onclick="addQuestion()">Add Question</button>
-
-
-<h3>Upload Gallery Image</h3>
-
-<input type="file" id="galleryUpload">
-
-<button onclick="uploadGallery()">Upload</button>
-
-
-<h3>Upload Achievement Image</h3>
-
-<input type="file" id="achieveUpload">
-
-<button onclick="uploadAchievement()">Upload</button>
-
-
-<h3>Add Executive Member</h3>
-
-<input id="exName" placeholder="Name">
-
-<input id="exPos" placeholder="Position">
-
-<input type="file" id="exPhoto">
-
-<button onclick="addExecutive()">Add</button>
-
+<button onclick="addQuestion()">Add</button>
 
 </div>
 
 </section>
 
-
-<script type="module" src="app.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
