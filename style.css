@@ -1,73 +1,36 @@
-body{
-margin:0;
-font-family:Arial;
-color:white;
-background:linear-gradient(135deg,#002f6c,#004aad,#00aaff);
-text-align:center;
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
-header{
-background:#00000040;
-padding:10px;
+.animate-marquee {
+    display: flex;
+    width: 200%;
+    animation: marquee 30s linear infinite;
 }
 
-.logo{
-height:60px;
+body {
+    background: radial-gradient(circle at top right, #1e3a8a, #0f172a 60%);
+    background-attachment: fixed;
 }
 
-nav{
-padding:10px;
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-nav button{
-padding:10px 18px;
-margin:5px;
-border:none;
-border-radius:8px;
-background:#00aaff;
-color:white;
-font-weight:bold;
-cursor:pointer;
-transition:.3s;
+.option-btn {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
 }
 
-nav button:hover{
-transform:scale(1.1);
-background:#ff9800;
-}
-
-section{
-display:none;
-padding:30px;
-}
-
-.active{
-display:block;
-}
-
-.hero{
-width:80%;
-border-radius:10px;
-}
-
-.slider{
-display:flex;
-gap:15px;
-overflow:auto;
-animation:slide 25s linear infinite;
-}
-
-.slider img{
-height:200px;
-border-radius:10px;
-}
-
-.member img{
-height:120px;
-border-radius:50%;
-}
-
-@keyframes slide{
-0%{transform:translateX(0)}
-100%{transform:translateX(-50%)}
+.option-btn:hover {
+    background: rgba(34, 211, 238, 0.1);
+    border-color: #22d3ee;
+    transform: translateY(-2px);
 }
