@@ -139,6 +139,41 @@ document.getElementById('save-btn').onclick = function() {
     title: textValue
   }).then(() => { alert("Updated Live!"); });
 };
+
+    <script type="module">
+  // Paste your Firebase config here
+  const firebaseConfig = {
+    apiKey: "AIzaSyAoLQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
+    authDomain: "prahelika-fbf98.firebaseapp.com",
+    projectId: "prahelika-fbf98",
+    storageBucket: "prahelika-fbf98.firebasestorage.app",
+    messagingSenderId: "21670057223",
+    appId: "1:21670057223:web:d20225509d824505cb61a2"
+  };
+
+  // Now the Logic to make the button work
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // This connects your "UPDATE" button
+  document.getElementById('update-btn').onclick = async function() {
+      const titleValue = document.getElementById('forum-title').value;
+      const descValue = document.getElementById('homepage-desc').value;
+
+      try {
+          await setDoc(doc(db, "website", "data"), {
+              title: titleValue,
+              description: descValue
+          });
+          alert("Success! Website Updated Live.");
+      } catch (e) {
+          alert("Error updating: " + e.message);
+      }
+  };
+</script>
     
 </body>
 </html>
