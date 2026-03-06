@@ -1,132 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prahelika Quiz Forum</title>
 
-<title>Prahelika Quiz Forum Darrang</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap">
 
 <style>
 
 body{
-font-family:Arial;
+font-family:Poppins;
 margin:0;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+background:linear-gradient(120deg,#1a2a6c,#b21f1f,#fdbb2d);
 color:white;
 text-align:center;
 }
 
-.navbar{
-background:#111;
-padding:15px;
+header{
 display:flex;
 justify-content:space-between;
 align-items:center;
+padding:15px 30px;
+background:rgba(0,0,0,0.3);
 }
 
 .logo{
-color:#ff9800;
-font-size:22px;
-}
-
-.nav-buttons button{
-margin:5px;
-padding:10px 18px;
-border:none;
-background:#ff9800;
-color:white;
-cursor:pointer;
-border-radius:6px;
-transition:0.3s;
-}
-
-.nav-buttons button:hover{
-background:#ff5722;
-transform:scale(1.1);
-}
-
-section{
-display:none;
-padding:40px;
-}
-
-.active{
-display:block;
-}
-
-.hero-image{
-width:60%;
-border-radius:10px;
-margin:20px 0;
-}
-
-.description{
-max-width:900px;
-margin:auto;
-line-height:1.7;
-font-size:18px;
-}
-
-.card{
-background:white;
-color:black;
-padding:20px;
-width:60%;
-margin:auto;
-border-radius:10px;
-}
-
-.gallery-container{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:10px;
-padding:20px;
-}
-
-.gallery-container img{
-width:100%;
-border-radius:10px;
-transition:0.4s;
-}
-
-.gallery-container img:hover{
-transform:scale(1.1);
-}
-
-.members{
 display:flex;
+align-items:center;
+gap:10px;
+}
+
+.logo img{
+width:50px;
+}
+
+nav button{
+
+padding:12px 20px;
+margin:5px;
+border:none;
+border-radius:30px;
+font-weight:bold;
+cursor:pointer;
+background:linear-gradient(45deg,#ff4e50,#f9d423);
+color:white;
+transition:0.3s;
+
+}
+
+nav button:hover{
+transform:scale(1.1);
+}
+
+.section{
+padding:60px 20px;
+}
+
+.hero img{
+width:80%;
+max-width:600px;
+border-radius:20px;
+}
+
+.gallery{
+display:flex;
+overflow:hidden;
 justify-content:center;
-gap:40px;
+gap:10px;
+}
+
+.gallery img{
+width:200px;
+border-radius:15px;
+animation:slide 20s infinite linear;
+}
+
+@keyframes slide{
+0%{transform:translateX(0)}
+100%{transform:translateX(-500px)}
 }
 
 .member-card{
+
 background:white;
 color:black;
+display:inline-block;
 padding:20px;
-border-radius:10px;
+border-radius:15px;
+margin:10px;
 width:200px;
+
 }
 
-.member-card img{
-width:100%;
-border-radius:10px;
+footer{
+background:black;
+padding:20px;
 }
 
 input{
 padding:10px;
-margin:10px;
-border-radius:5px;
+margin:5px;
+border-radius:10px;
 border:none;
-}
-
-button{
-padding:10px 15px;
-border:none;
-border-radius:6px;
-background:#ff9800;
-color:white;
-cursor:pointer;
 }
 
 </style>
@@ -135,177 +110,118 @@ cursor:pointer;
 
 <body>
 
-<nav class="navbar">
+<header>
 
-<h1 class="logo">Prahelika Quiz Forum</h1>
+<div class="logo">
 
-<div class="nav-buttons">
-<button onclick="show('home')">Home</button>
-<button onclick="show('participant')">Start Quiz</button>
-<button onclick="show('leaderboard')">Leaderboard</button>
-<button onclick="show('gallery')">Gallery</button>
-<button onclick="show('members')">Members</button>
-<button onclick="show('contact')">Contact</button>
-<button onclick="show('admin')">Admin</button>
+<img src="logo.png">
+
+<h2>Prahelika Quiz Forum</h2>
+
 </div>
+
+<nav>
+
+<button onclick="showSection('home')">Home</button>
+<button onclick="showSection('quiz')">Start Quiz</button>
+<button onclick="showSection('leaderboard')">Leaderboard</button>
+<button onclick="showSection('members')">Members</button>
+<button onclick="showSection('gallery')">Gallery</button>
+<button onclick="showSection('login')">Participant Login</button>
 
 </nav>
 
+</header>
 
-<!-- HOME PAGE -->
+<!-- HOME -->
 
-<section id="home" class="active">
+<div id="home" class="section">
 
-<h1>Welcome to the Prahelika Quiz Forum</h1>
+<div class="hero">
 
-<img src="forum.jpg" class="hero-image">
+<img src="special.jpg">
 
-<p class="description">
+</div>
 
-Established in 2021 during the height of the COVID-19 pandemic, the Prahelika Quiz Forum has rapidly emerged as a beacon of intellectual resilience, standing today as the only active quiz forum in the Darrang district and arguably Assam’s most prominent organization in the field. Although it is rooted in Darrang, the forum has expanded its mission to serve the entire state of Assam, dedicated to fostering a culture of curiosity and lifelong learning by organizing high-caliber events like its renowned annual Northeast India Quiz.
+<h2>About Prahelika Quiz Forum</h2>
 
-By transforming information into a competitive sport during a time of global isolation, Prahelika successfully bridged the gap between academic education and general awareness, solidifying its reputation as a premier destination for the state's brightest minds to gather, compete, and grow.
+<p>
+
+Established in 2021 during the height of the COVID-19 pandemic, the Prahelika Quiz Forum has rapidly emerged as a beacon of intellectual resilience, standing today as the only active quiz forum in the Darrang district and arguably Assam’s most prominent organization in the field.
+
+Although it is rooted in Darrang, the forum has expanded its mission to serve the entire state of Assam, dedicated to fostering a culture of curiosity and lifelong learning by organizing high-caliber events like its renowned annual Northeast India Quiz.
+
+By transforming information into a competitive sport during a time of global isolation, Prahelika successfully bridged the gap between academic education and general awareness.
 
 </p>
 
-</section>
+</div>
 
+<!-- LOGIN -->
 
-<!-- PARTICIPANT LOGIN -->
-
-<section id="participant">
+<div id="login" class="section" style="display:none">
 
 <h2>Participant Login</h2>
 
-<input id="pname" placeholder="Enter Name"><br>
+<input id="name" placeholder="Your Name">
 
-<input id="pphone" placeholder="Enter Phone Number"><br>
+<input id="phone" placeholder="Phone Number">
 
-<button onclick="startQuiz()">Start Daily Quiz</button>
+<br><br>
 
-</section>
-
-
-<!-- QUIZ SECTION -->
-
-<section id="quiz">
-
-<div class="card">
-
-<h2 id="question">Question</h2>
-
-<div id="options"></div>
-
-<h3>Time Left: <span id="timer">15</span> sec</h3>
-
-<button onclick="next()">Next</button>
+<button onclick="saveParticipant()">Enter Quiz</button>
 
 </div>
 
-</section>
+<!-- QUIZ -->
 
+<div id="quiz" class="section" style="display:none">
+
+<h2>Daily Quiz Competition</h2>
+
+<h3 id="timer">Timer: 60</h3>
+
+<div id="questionBox"></div>
+
+<button onclick="submitQuiz()">Submit Quiz</button>
+
+</div>
 
 <!-- LEADERBOARD -->
 
-<section id="leaderboard">
+<div id="leaderboard" class="section" style="display:none">
 
 <h2>Leaderboard</h2>
 
-<ul id="scores"></ul>
-
-</section>
-
-
-<!-- GALLERY -->
-
-<section id="gallery">
-
-<h2>Gallery</h2>
-
-<div class="gallery-container">
-
-<img src="gallery1.jpg">
-<img src="gallery2.jpg">
-<img src="gallery3.jpg">
-<img src="gallery4.jpg">
+<ul id="leaderList"></ul>
 
 </div>
 
-</section>
+<!-- MEMBERS -->
 
-
-<!-- EXECUTIVE MEMBERS -->
-
-<section id="members">
+<div id="members" class="section" style="display:none">
 
 <h2>Executive Members</h2>
 
-<div class="members">
-
-<div class="member-card">
-<img src="member1.jpg">
-<h3>Member Name</h3>
-<p>Portfolio</p>
-</div>
-
-<div class="member-card">
-<img src="member2.jpg">
-<h3>Member Name</h3>
-<p>Portfolio</p>
-</div>
+<div id="membersList"></div>
 
 </div>
 
-</section>
+<!-- GALLERY -->
 
+<div id="gallery" class="section" style="display:none">
 
-<!-- CONTACT -->
+<h2>Forum Gallery</h2>
 
-<section id="contact">
-
-<h2>Contact Prahelika Quiz Forum</h2>
-
-<p>Email: prahelikaquizforum@gmail.com</p>
-
-<p>Phone: +91 XXXXX XXXXX</p>
-
-<p>Location: Darrang District, Assam</p>
-
-</section>
-
-
-<!-- ADMIN PANEL -->
-
-<section id="admin">
-
-<h2>Admin Panel</h2>
-
-<input type="password" id="adminPass" placeholder="Enter Admin Password">
-
-<button onclick="loginAdmin()">Login</button>
-
-<div id="adminPanel" style="display:none">
-
-<h3>Add Quiz Question</h3>
-
-<input id="q1" placeholder="Question"><br>
-
-<input id="o1" placeholder="Option 1"><br>
-
-<input id="o2" placeholder="Option 2"><br>
-
-<input id="o3" placeholder="Option 3"><br>
-
-<input id="o4" placeholder="Option 4"><br>
-
-<input id="ans" placeholder="Correct Answer"><br>
-
-<button onclick="addQuestion()">Add Question</button>
+<div class="gallery" id="galleryBox"></div>
 
 </div>
 
-</section>
+<footer>
 
+<p>Contact: Prahelika Quiz Forum | Darrang, Assam</p>
+
+</footer>
 
 <script src="app.js"></script>
 
