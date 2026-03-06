@@ -7,24 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        /* Your favorite Blue Gradient Theme */
+        /* Your favorite dark blue radial gradient */
         body { 
-            background: #0d122b; 
-            background: linear-gradient(-45deg, #0d122b, #1e3a8a, #1e40af, #0891b2);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            min-height: 100vh;
-            color: white;
+            background: radial-gradient(circle at top right, #1e3a8a, #020617 80%); 
+            color: white; 
+            min-height: 100vh; 
             font-family: sans-serif;
         }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .glass-card { 
+        .glass { 
             background: rgba(255, 255, 255, 0.05); 
             backdrop-filter: blur(15px); 
             border: 1px solid rgba(255, 255, 255, 0.1); 
@@ -33,85 +23,103 @@
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full z-50 bg-black/20 backdrop-blur-md px-6 py-4 flex justify-between items-center border-b border-white/10">
+    <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
-            <span class="text-xl font-bold tracking-widest text-cyan-400">PRAHELIKA</span>
+            <span class="text-xl font-black text-cyan-400 tracking-wider">PRAHELIKA</span>
         </div>
-        <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest text-white/80">
-            <a href="#home" class="hover:text-white transition">Home</a>
-            <a href="#gallery" class="hover:text-white transition">Gallery</a>
-            <a href="#executives" class="hover:text-white transition">Executives</a>
-            <a href="#leaderboard" class="hover:text-white transition">Leaderboard</a>
+        <div class="hidden md:flex gap-6 text-xs font-bold uppercase tracking-widest">
+            <a href="#home" class="hover:text-cyan-400 transition">Home</a>
+            <a href="#gallery" class="hover:text-cyan-400 transition">Gallery</a>
+            <a href="#executives" class="hover:text-cyan-400 transition">Executives</a>
+            <a href="#leaderboard" class="hover:text-cyan-400 transition">Leaderboard</a>
         </div>
-        <button id="quiz-trigger" class="bg-cyan-500 text-blue-900 px-6 py-2 rounded-full font-bold shadow-lg hover:scale-105 transition">START QUIZ</button>
+        <button id="quiz-trigger" class="bg-cyan-500 text-blue-950 px-6 py-2 rounded-full font-bold hover:scale-105 transition shadow-lg">START QUIZ</button>
     </nav>
 
     <section id="home" class="pt-48 pb-20 px-6 text-center">
-        <h1 id="hero-title" class="text-6xl md:text-8xl font-black mb-6 animate__animated animate__fadeInDown">
+        <h1 id="hero-title" class="text-5xl md:text-8xl font-black mb-6 animate__animated animate__fadeInDown">
             Prahelika Quiz Forum Darrang
         </h1>
-        <p id="hero-desc" class="text-gray-300 max-w-2xl mx-auto mb-10 text-lg opacity-90">
-            Loading your description from the Admin panel...
+        <p id="hero-desc" class="text-gray-400 max-w-2xl mx-auto mb-10 text-lg">
+            Unleash your intellect. Darrang's premier quiz platform for thinkers and dreamers.
         </p>
-        <div id="hero-img-container" class="max-w-5xl mx-auto">
-             <img id="special-team-img" src="https://via.placeholder.com/1200x600/1e3a8a/ffffff?text=Prahelika+Darrang" class="w-full rounded-3xl shadow-2xl border border-white/10">
-        </div>
+        <img id="special-team-img" src="" class="w-full max-w-4xl mx-auto rounded-3xl shadow-2xl border border-white/10 hidden">
     </section>
 
     <section id="executives" class="py-20 px-6">
-        <h2 class="text-4xl font-bold text-center mb-12 uppercase tracking-tighter">Executive Members</h2>
-        <div id="exec-list" class="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-12">Executive Members</h2>
+        <div id="exec-list" class="flex flex-wrap justify-center gap-8">
             </div>
     </section>
 
+    <footer id="contact" class="p-10 text-center glass mt-20">
+        <p id="contact-info" class="text-cyan-300">Contact: prahelika@darrang.com</p>
+    </footer>
+
     <script type="module">
-        // Using Fixed CDN Links so Vercel can resolve the modules
-        
+        // Fixing the "Failed to resolve module" by using full CDN URLs
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // IMPORTANT: Paste your exact Firebase Config here
+        // REPLACE THIS WITH YOUR ACTUAL FIREBASE CONFIG
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_PROJECT.firebaseapp.com",
             projectId: "YOUR_PROJECT_ID",
             storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "YOUR_ID",
+            messagingSenderId: "YOUR_SENDER_ID",
             appId: "YOUR_APP_ID"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- THE MASTER LISTENER ---
-        // This watches the "homepage" document for changes you make in Admin
-        onSnapshot(doc(db, "site_content", "homepage"), (snap) => {
-            const data = snap.data();
+        // --- BUTTON HANDLERS ---
+        document.getElementById('quiz-trigger').onclick = () => {
+            alert("Quiz initializing... Connect your Quiz Modal here!");
+        };
+
+        // --- THE LISTENERS (MASTER CONTROL LOGIC) ---
+
+        // 1. Home Content Listener
+        onSnapshot(doc(db, "site_content", "homepage"), (snapshot) => {
+            const data = snapshot.data();
             if (data) {
+                // Instantly update Title, Description, and Hero Image
                 if(data.title) document.getElementById('hero-title').innerText = data.title;
                 if(data.desc) document.getElementById('hero-desc').innerText = data.desc;
+                if(data.teamImg) {
+                    const img = document.getElementById('special-team-img');
+                    img.src = data.teamImg;
+                    img.classList.remove('hidden');
+                }
             }
         });
 
-        // --- EXECUTIVES LISTENER ---
-        onSnapshot(collection(db, "executives"), (snap) => {
+        // 2. Executive Members Listener
+        onSnapshot(collection(db, "executives"), (querySnapshot) => {
             const list = document.getElementById('exec-list');
             list.innerHTML = ''; 
-            snap.forEach((doc) => {
-                const d = doc.data();
+            querySnapshot.forEach((doc) => {
+                const member = doc.data();
                 list.innerHTML += `
-                    <div class="glass-card p-8 rounded-3xl text-center w-72 animate__animated animate__fadeInUp">
-                        <img src="${d.url || 'https://via.placeholder.com/150'}" class="w-28 h-28 rounded-full mx-auto mb-4 border-2 border-cyan-400 object-cover">
-                        <h3 class="text-xl font-bold">${d.name}</h3>
-                        <p class="text-cyan-400 font-medium">${d.pos}</p>
+                    <div class="glass p-8 rounded-3xl text-center w-72 animate__animated animate__fadeInUp">
+                        <img src="${member.url || 'https://via.placeholder.com/150'}" class="w-28 h-28 rounded-full mx-auto mb-4 border-2 border-cyan-400 object-cover shadow-cyan-500/20 shadow-xl">
+                        <h3 class="font-bold text-xl text-white">${member.name}</h3>
+                        <p class="text-cyan-400 font-medium text-sm mb-2">${member.pos}</p>
+                        <p class="text-xs text-gray-400 leading-relaxed">${member.desc || ''}</p>
                     </div>`;
             });
         });
 
-        // START BUTTON FIX
-        document.getElementById('quiz-trigger').onclick = () => {
-            alert("Quiz feature connected to database. Get ready!");
-        };
+        // 3. Contact Listener
+        onSnapshot(doc(db, "site_content", "contact"), (snapshot) => {
+            const data = snapshot.data();
+            if(data && data.info) {
+                document.getElementById('contact-info').innerText = data.info;
+            }
+        });
+
     </script>
 </body>
 </html>
