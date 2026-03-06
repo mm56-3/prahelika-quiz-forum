@@ -2,83 +2,112 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Prahelika Master Control</title>
+    <title>Prahelika Master Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #020617; color: white; min-height: 100vh; font-family: sans-serif; }
+        .card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+        input, textarea { background: #000 !important; border: 1px solid #334155 !important; color: white !important; }
+    </style>
 </head>
-<body class="bg-[#0d122b] text-white p-6 md:p-10">
+<body class="p-6">
 
-    <div id="login-form" class="max-w-md mx-auto mt-20 p-8 bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl text-center">
-        <h1 class="text-2xl font-bold mb-6 text-cyan-400">Admin Access</h1>
-        <input type="text" id="admin-user" placeholder="Admin ID" class="w-full p-3 mb-4 bg-black rounded border border-gray-700 outline-none focus:border-cyan-500 text-white">
-        <input type="password" id="admin-pass" placeholder="Password" class="w-full p-3 mb-6 bg-black rounded border border-gray-700 outline-none focus:border-cyan-500 text-white">
-        <button id="login-btn" class="w-full bg-blue-600 hover:bg-blue-500 py-3 rounded-xl font-bold transition">ACCESS DASHBOARD</button>
+    <div id="login-box" class="max-w-md mx-auto mt-20 p-8 card rounded-3xl shadow-2xl">
+        <h1 class="text-2xl font-bold mb-6 text-cyan-400 text-center uppercase tracking-widest">Admin Login</h1>
+        <input type="text" id="user" placeholder="Admin ID" class="w-full p-3 mb-4 rounded-lg outline-none focus:border-cyan-500">
+        <input type="password" id="pass" placeholder="Password" class="w-full p-3 mb-6 rounded-lg outline-none focus:border-cyan-500">
+        <button id="login-btn" class="w-full bg-blue-600 hover:bg-blue-500 p-3 rounded-lg font-bold transition">ENTER DASHBOARD</button>
     </div>
 
-    <div id="dashboard" style="display: none;" class="max-w-5xl mx-auto py-10">
-        <div class="flex justify-between items-center mb-10">
-            <h1 class="text-3xl font-black text-cyan-400">MASTER CONTROL</h1>
-            <button onclick="location.reload()" class="bg-red-900/50 px-4 py-1 rounded text-xs">Logout</button>
+    <div id="dashboard" class="hidden max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-10 border-b border-white/10 pb-5">
+            <h1 class="text-3xl font-black text-cyan-400 uppercase">Master Control Panel</h1>
+            <button onclick="location.reload()" class="bg-red-900/40 text-red-400 px-4 py-1 rounded-full text-xs border border-red-900/50">Logout</button>
         </div>
-        
+
         <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-white/5 p-6 rounded-2xl border border-white/10">
-                <h2 class="text-xl font-bold mb-4 text-cyan-400">Update Website Info</h2>
-                <label class="text-xs text-gray-400">Main Title</label>
-                <input type="text" id="site-title" value="Prahelika Quiz Forum Darrang" class="w-full p-3 mb-4 bg-black border border-gray-800 rounded text-white">
-                <label class="text-xs text-gray-400">Description</label>
-                <textarea id="site-desc" class="w-full p-3 mb-4 bg-black border border-gray-800 rounded h-24 text-white">Unleash your intellect with Prahelika.</textarea>
-                <button id="update-btn" class="w-full bg-cyan-600 hover:bg-cyan-500 py-3 rounded-xl font-bold transition">PUSH UPDATES LIVE</button>
+            <div class="card p-6 rounded-2xl">
+                <h2 class="text-xl font-bold mb-4 text-cyan-400 border-l-4 border-cyan-400 pl-3">Main Content</h2>
+                <label class="text-xs text-gray-500 uppercase font-bold">Forum Title</label>
+                <input type="text" id="title-input" class="w-full p-2 mb-4 rounded">
+                
+                <label class="text-xs text-gray-500 uppercase font-bold">Homepage Description</label>
+                <textarea id="desc-input" class="w-full p-2 mb-4 rounded h-24"></textarea>
+                
+                <label class="text-xs text-gray-500 uppercase font-bold">Hero Image URL</label>
+                <input type="text" id="img-input" placeholder="Paste Image Link" class="w-full p-2 mb-4 rounded">
+                
+                <button id="save-main-btn" class="w-full bg-cyan-600 hover:bg-cyan-500 p-3 rounded-lg font-bold">UPDATE LIVE WEBSITE</button>
+            </div>
+
+            <div class="card p-6 rounded-2xl">
+                <h2 class="text-xl font-bold mb-4 text-green-400 border-l-4 border-green-400 pl-3">Add Executive Member</h2>
+                <input type="text" id="exec-name" placeholder="Full Name" class="w-full p-2 mb-2 rounded">
+                <input type="text" id="exec-pos" placeholder="Position (e.g. President)" class="w-full p-2 mb-2 rounded">
+                <input type="text" id="exec-url" placeholder="Member Photo URL" class="w-full p-2 mb-4 rounded">
+                <button id="add-exec-btn" class="w-full bg-green-600 hover:bg-green-500 p-3 rounded-lg font-bold">ADD MEMBER</button>
             </div>
         </div>
     </div>
 
     <script type="module">
-        // Using full URL imports so Vercel doesn't get confused
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // IMPORTANT: Paste your exact Firebase Config here
+        // CONFIG (Replace with your actual keys)
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_PROJECT.firebaseapp.com",
             projectId: "YOUR_PROJECT_ID",
             storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "YOUR_ID",
             appId: "YOUR_APP_ID"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // LOGIN BUTTON LOGIC
-        document.getElementById('login-btn').addEventListener('click', () => {
-            const u = document.getElementById('admin-user').value;
-            const p = document.getElementById('admin-pass').value;
-            
+        // --- LOGIN LOGIC ---
+        document.getElementById('login-btn').onclick = () => {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
             if(u === 'VIKRAM784125' && p === '#UDSB784125781005') {
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
+                document.getElementById('login-box').style.display = 'none';
+                document.getElementById('dashboard').classList.remove('hidden');
             } else {
-                alert('Invalid Credentials');
+                alert("Wrong ID or Password");
             }
-        });
+        };
 
-        // UPDATE BUTTON LOGIC
-        document.getElementById('update-btn').addEventListener('click', async () => {
-            const title = document.getElementById('site-title').value;
-            const desc = document.getElementById('site-desc').value;
+        // --- UPDATE MAIN CONTENT ---
+        document.getElementById('save-main-btn').onclick = async () => {
+            const title = document.getElementById('title-input').value;
+            const desc = document.getElementById('desc-input').value;
+            const heroImg = document.getElementById('img-input').value;
 
             try {
                 await setDoc(doc(db, "site_content", "homepage"), {
                     title: title,
-                    desc: desc
+                    desc: desc,
+                    heroImg: heroImg
                 }, { merge: true });
                 alert("Website Updated Successfully!");
-            } catch (e) {
-                alert("Error updating! Check Firebase Rules.");
-                console.error(e);
-            }
-        });
+            } catch (e) { alert("Error: " + e.message); }
+        };
+
+        // --- ADD EXECUTIVE ---
+        document.getElementById('add-exec-btn').onclick = async () => {
+            const name = document.getElementById('exec-name').value;
+            const pos = document.getElementById('exec-pos').value;
+            const url = document.getElementById('exec-url').value;
+
+            try {
+                await addDoc(collection(db, "executives"), { name, pos, url });
+                alert("Member Added!");
+                document.getElementById('exec-name').value = "";
+                document.getElementById('exec-pos').value = "";
+                document.getElementById('exec-url').value = "";
+            } catch (e) { alert("Error: " + e.message); }
+        };
     </script>
 </body>
 </html>
