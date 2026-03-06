@@ -1,197 +1,132 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
-<title>Prahelika Quiz Forum</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Prahelika Quiz Forum Darrang</title>
 
 <style>
 
 body{
-margin:0;
 font-family:Arial;
-background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+margin:0;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 color:white;
+text-align:center;
 }
 
-/* HEADER */
-
-header{
+.navbar{
+background:#111;
+padding:15px;
 display:flex;
-align-items:center;
 justify-content:space-between;
-padding:15px 40px;
-background:rgba(0,0,0,0.4);
-backdrop-filter:blur(10px);
+align-items:center;
 }
 
 .logo{
-width:60px;
-height:60px;
-border-radius:50%;
+color:#ff9800;
+font-size:22px;
 }
 
-h1{
-margin:0;
-}
-
-/* NAVIGATION */
-
-nav a{
-
-text-decoration:none;
-margin:10px;
-padding:12px 22px;
-border-radius:25px;
-font-weight:bold;
-
-background:linear-gradient(45deg,#ff6a00,#ee0979);
-
+.nav-buttons button{
+margin:5px;
+padding:10px 18px;
+border:none;
+background:#ff9800;
 color:white;
+cursor:pointer;
+border-radius:6px;
+transition:0.3s;
+}
 
+.nav-buttons button:hover{
+background:#ff5722;
+transform:scale(1.1);
+}
+
+section{
+display:none;
+padding:40px;
+}
+
+.active{
+display:block;
+}
+
+.hero-image{
+width:60%;
+border-radius:10px;
+margin:20px 0;
+}
+
+.description{
+max-width:900px;
+margin:auto;
+line-height:1.7;
+font-size:18px;
+}
+
+.card{
+background:white;
+color:black;
+padding:20px;
+width:60%;
+margin:auto;
+border-radius:10px;
+}
+
+.gallery-container{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+padding:20px;
+}
+
+.gallery-container img{
+width:100%;
+border-radius:10px;
 transition:0.4s;
 }
 
-nav a:hover{
-
+.gallery-container img:hover{
 transform:scale(1.1);
-
-background:linear-gradient(45deg,#00c6ff,#0072ff);
-
-box-shadow:0 0 15px cyan;
-
 }
 
-/* HERO */
-
-.hero{
-
-text-align:center;
-padding:80px 20px;
-
+.members{
+display:flex;
+justify-content:center;
+gap:40px;
 }
 
-.hero h2{
-
-font-size:40px;
-
-background:linear-gradient(45deg,#ffdd00,#ff512f);
-
--webkit-background-clip:text;
-
-color:transparent;
-
-}
-
-.hero button{
-
-margin-top:30px;
-padding:15px 30px;
-border:none;
-border-radius:30px;
-font-size:18px;
-cursor:pointer;
-
-background:linear-gradient(45deg,#00ff87,#60efff);
-
-transition:0.3s;
-
-}
-
-.hero button:hover{
-
-transform:scale(1.15);
-box-shadow:0 0 20px cyan;
-
-}
-
-/* QUIZ AREA */
-
-.quiz{
-
-display:none;
-text-align:center;
-padding:40px;
-
-}
-
-.question{
-
-font-size:24px;
-margin-bottom:20px;
-
-}
-
-.option{
-
-display:block;
-
-margin:10px auto;
-
-padding:10px;
-
-width:200px;
-
-border:none;
-
-border-radius:20px;
-
-cursor:pointer;
-
-background:linear-gradient(45deg,#ff9966,#ff5e62);
-
-color:white;
-
-}
-
-.option:hover{
-
-transform:scale(1.1);
-
-}
-
-/* TIMER */
-
-.timer{
-
-font-size:25px;
-
-color:yellow;
-
-}
-
-/* LEADERBOARD */
-
-.leaderboard{
-
-display:none;
-
-padding:40px;
-
-text-align:center;
-
-}
-
-table{
-
-margin:auto;
-
+.member-card{
 background:white;
-
 color:black;
-
-border-radius:10px;
-
 padding:20px;
-
+border-radius:10px;
+width:200px;
 }
 
-td,th{
+.member-card img{
+width:100%;
+border-radius:10px;
+}
 
-padding:10px 20px;
+input{
+padding:10px;
+margin:10px;
+border-radius:5px;
+border:none;
+}
 
+button{
+padding:10px 15px;
+border:none;
+border-radius:6px;
+background:#ff9800;
+color:white;
+cursor:pointer;
 }
 
 </style>
@@ -200,253 +135,179 @@ padding:10px 20px;
 
 <body>
 
-<header>
+<nav class="navbar">
 
-<div style="display:flex;align-items:center;gap:15px">
+<h1 class="logo">Prahelika Quiz Forum</h1>
 
-<img src="logo.png" class="logo">
-
-<h1>Prahelika Quiz Forum</h1>
-
+<div class="nav-buttons">
+<button onclick="show('home')">Home</button>
+<button onclick="show('participant')">Start Quiz</button>
+<button onclick="show('leaderboard')">Leaderboard</button>
+<button onclick="show('gallery')">Gallery</button>
+<button onclick="show('members')">Members</button>
+<button onclick="show('contact')">Contact</button>
+<button onclick="show('admin')">Admin</button>
 </div>
-
-<nav>
-
-<a href="#">Home</a>
-
-<a href="#" onclick="startQuiz()">Start Quiz</a>
-
-<a href="#" onclick="showLeaderboard()">Leaderboard</a>
-
-<a href="#">Gallery</a>
-
-<a href="#">Members</a>
 
 </nav>
 
-</header>
 
-<!-- HERO -->
+<!-- HOME PAGE -->
 
-<section class="hero">
+<section id="home" class="active">
 
-<h2>Northeast India's Exciting Quiz Platform</h2>
+<h1>Welcome to the Prahelika Quiz Forum</h1>
 
-<p>Test your knowledge and compete with the brightest minds</p>
+<img src="forum.jpg" class="hero-image">
+
+<p class="description">
+
+Established in 2021 during the height of the COVID-19 pandemic, the Prahelika Quiz Forum has rapidly emerged as a beacon of intellectual resilience, standing today as the only active quiz forum in the Darrang district and arguably Assam’s most prominent organization in the field. Although it is rooted in Darrang, the forum has expanded its mission to serve the entire state of Assam, dedicated to fostering a culture of curiosity and lifelong learning by organizing high-caliber events like its renowned annual Northeast India Quiz.
+
+By transforming information into a competitive sport during a time of global isolation, Prahelika successfully bridged the gap between academic education and general awareness, solidifying its reputation as a premier destination for the state's brightest minds to gather, compete, and grow.
+
+</p>
+
+</section>
+
+
+<!-- PARTICIPANT LOGIN -->
+
+<section id="participant">
+
+<h2>Participant Login</h2>
+
+<input id="pname" placeholder="Enter Name"><br>
+
+<input id="pphone" placeholder="Enter Phone Number"><br>
 
 <button onclick="startQuiz()">Start Daily Quiz</button>
 
 </section>
 
-<!-- QUIZ -->
 
-<section class="quiz" id="quiz">
+<!-- QUIZ SECTION -->
 
-<div class="timer">Time Left: <span id="time">10</span>s</div>
+<section id="quiz">
 
-<div class="question" id="question"></div>
+<div class="card">
+
+<h2 id="question">Question</h2>
 
 <div id="options"></div>
 
+<h3>Time Left: <span id="timer">15</span> sec</h3>
+
+<button onclick="next()">Next</button>
+
+</div>
+
 </section>
+
 
 <!-- LEADERBOARD -->
 
-<section class="leaderboard" id="leaderboard">
+<section id="leaderboard">
 
 <h2>Leaderboard</h2>
 
-<table id="board">
-
-<tr>
-
-<th>Name</th>
-
-<th>Score</th>
-
-</tr>
-
-</table>
+<ul id="scores"></ul>
 
 </section>
 
-<script>
 
-const quizData=[
+<!-- GALLERY -->
 
-{
+<section id="gallery">
 
-q:"Who discovered the Raman Effect?",
+<h2>Gallery</h2>
 
-o:["C.V Raman","Newton","Einstein","Tesla"],
+<div class="gallery-container">
 
-a:0
+<img src="gallery1.jpg">
+<img src="gallery2.jpg">
+<img src="gallery3.jpg">
+<img src="gallery4.jpg">
 
-},
+</div>
 
-{
+</section>
 
-q:"What is the SI unit of Resistance?",
 
-o:["Volt","Ohm","Ampere","Watt"],
+<!-- EXECUTIVE MEMBERS -->
 
-a:1
+<section id="members">
 
-},
+<h2>Executive Members</h2>
 
-{
+<div class="members">
 
-q:"Which planet is called Red Planet?",
+<div class="member-card">
+<img src="member1.jpg">
+<h3>Member Name</h3>
+<p>Portfolio</p>
+</div>
 
-o:["Earth","Mars","Venus","Saturn"],
+<div class="member-card">
+<img src="member2.jpg">
+<h3>Member Name</h3>
+<p>Portfolio</p>
+</div>
 
-a:1
+</div>
 
-}
+</section>
 
-];
 
-let index=0;
+<!-- CONTACT -->
 
-let score=0;
+<section id="contact">
 
-let timer;
+<h2>Contact Prahelika Quiz Forum</h2>
 
-let timeLeft=10;
+<p>Email: prahelikaquizforum@gmail.com</p>
 
-function startQuiz(){
+<p>Phone: +91 XXXXX XXXXX</p>
 
-document.querySelector(".hero").style.display="none";
+<p>Location: Darrang District, Assam</p>
 
-document.getElementById("leaderboard").style.display="none";
+</section>
 
-document.getElementById("quiz").style.display="block";
 
-loadQuestion();
+<!-- ADMIN PANEL -->
 
-}
+<section id="admin">
 
-function loadQuestion(){
+<h2>Admin Panel</h2>
 
-clearInterval(timer);
+<input type="password" id="adminPass" placeholder="Enter Admin Password">
 
-timeLeft=10;
+<button onclick="loginAdmin()">Login</button>
 
-document.getElementById("time").innerText=timeLeft;
+<div id="adminPanel" style="display:none">
 
-timer=setInterval(()=>{
+<h3>Add Quiz Question</h3>
 
-timeLeft--;
+<input id="q1" placeholder="Question"><br>
 
-document.getElementById("time").innerText=timeLeft;
+<input id="o1" placeholder="Option 1"><br>
 
-if(timeLeft==0){
+<input id="o2" placeholder="Option 2"><br>
 
-nextQuestion();
+<input id="o3" placeholder="Option 3"><br>
 
-}
+<input id="o4" placeholder="Option 4"><br>
 
-},1000);
+<input id="ans" placeholder="Correct Answer"><br>
 
-const q=quizData[index];
+<button onclick="addQuestion()">Add Question</button>
 
-document.getElementById("question").innerText=q.q;
+</div>
 
-const optDiv=document.getElementById("options");
+</section>
 
-optDiv.innerHTML="";
 
-q.o.forEach((opt,i)=>{
-
-let btn=document.createElement("button");
-
-btn.innerText=opt;
-
-btn.className="option";
-
-btn.onclick=()=>checkAnswer(i);
-
-optDiv.appendChild(btn);
-
-});
-
-}
-
-function checkAnswer(i){
-
-if(i==quizData[index].a){
-
-score++;
-
-}
-
-nextQuestion();
-
-}
-
-function nextQuestion(){
-
-index++;
-
-if(index<quizData.length){
-
-loadQuestion();
-
-}else{
-
-finishQuiz();
-
-}
-
-}
-
-function finishQuiz(){
-
-clearInterval(timer);
-
-let name=prompt("Enter your name");
-
-let board=JSON.parse(localStorage.getItem("leaderboard"))||[];
-
-board.push({name:name,score:score});
-
-localStorage.setItem("leaderboard",JSON.stringify(board));
-
-showLeaderboard();
-
-}
-
-function showLeaderboard(){
-
-document.getElementById("quiz").style.display="none";
-
-document.querySelector(".hero").style.display="none";
-
-document.getElementById("leaderboard").style.display="block";
-
-const board=JSON.parse(localStorage.getItem("leaderboard"))||[];
-
-const table=document.getElementById("board");
-
-table.innerHTML="<tr><th>Name</th><th>Score</th></tr>";
-
-board.sort((a,b)=>b.score-a.score);
-
-board.forEach(p=>{
-
-let row=table.insertRow();
-
-row.insertCell(0).innerText=p.name;
-
-row.insertCell(1).innerText=p.score;
-
-});
-
-}
-
-</script>
+<script src="app.js"></script>
 
 </body>
-
 </html>
-```
