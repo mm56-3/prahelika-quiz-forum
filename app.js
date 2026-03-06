@@ -1,29 +1,41 @@
-// Admin password
+// Admin Password
 const adminPassword = "prahelika123";
 
+// Admin Login
 function loginAdmin() {
-    let pass = document.getElementById("adminPassword").value;
+    const pass = document.getElementById("adminPassword").value;
 
     if (pass === adminPassword) {
         alert("Admin Login Successful");
         window.location.href = "admin.html";
     } else {
-        alert("Wrong Password");
+        alert("Incorrect Password");
     }
 }
 
-// Quiz system
+// Quiz Data
+let questions = [];
+let currentQuestion = 0;
 let score = 0;
 
+// Start Quiz
 function startQuiz() {
+    const name = document.getElementById("username").value;
+
+    if (name === "") {
+        alert("Please enter your name");
+        return;
+    }
+
     alert("Quiz Started!");
 }
 
+// Submit Answer
 function submitAnswer() {
-    alert("Answer Submitted!");
+    alert("Answer submitted!");
 }
 
-// Leaderboard reset
+// Reset Leaderboard
 function resetLeaderboard() {
-    alert("Leaderboard Reset!");
+    alert("Leaderboard reset!");
 }
