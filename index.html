@@ -1,50 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prahelika Quiz Forum Darrang</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-</head>
-<body class="bg-gradient-to-br from-blue-900 via-blue-700 to-cyan-500 min-h-screen text-white">
-
-    <nav class="p-4 flex justify-between items-center bg-black/20 backdrop-blur-md sticky top-0 z-50">
-        <div class="flex items-center gap-2">
-            <img src="logo.png" alt="Logo" class="w-10 h-10 animate-pulse">
-            <span class="font-bold text-xl tracking-widest">PRAHELIKA</span>
-        </div>
-        <div class="space-x-6">
-            <a href="#home" class="hover:text-cyan-300 transition">Home</a>
-            <a href="#quiz" class="hover:text-cyan-300 transition">Quiz</a>
-            <a href="#gallery" class="hover:text-cyan-300 transition">Gallery</a>
-        </div>
-    </nav>
-
-    <section id="home" class="text-center py-20 px-4">
-        <h1 class="text-5xl font-extrabold mb-4 animate-bounce">Welcome to Darrang's Brain Hub</h1>
-        <p class="max-w-2xl mx-auto opacity-90">Engage, Compete, and Lead. Join the ultimate quiz experience.</p>
-        <img src="team-special.jpg" alt="Team" class="mt-8 mx-auto rounded-2xl shadow-2xl border-4 border-white/20 w-full max-w-4xl hover:scale-105 transition duration-500">
-    </section>
-
-    <div id="quiz-login" class="max-w-md mx-auto bg-white/10 p-8 rounded-3xl backdrop-blur-xl border border-white/20">
-        <h2 class="text-2xl font-bold mb-4">Participant Entry</h2>
-        <input type="text" id="p-name" placeholder="Full Name" class="w-full p-3 mb-3 rounded bg-black/30 border-none outline-none">
-        <input type="tel" id="p-phone" placeholder="Phone Number" class="w-full p-3 mb-6 rounded bg-black/30 border-none outline-none">
-        <button onclick="startQuiz()" class="w-full bg-cyan-400 hover:bg-cyan-300 text-blue-900 font-bold py-3 rounded-xl transition">Start Quiz</button>
-    </div>
-
-    <div id="quiz-box" class="hidden max-w-2xl mx-auto mt-10 p-6 bg-white/10 rounded-xl">
-        <div class="flex justify-between mb-4">
-            <span id="timer" class="text-yellow-400 font-bold text-2xl">15s</span>
-            <span id="score">Score: 0</span>
-        </div>
-        <h3 id="question" class="text-xl mb-6">Question text goes here?</h3>
-        <div id="options" class="grid grid-cols-1 gap-4">
+<nav class="fixed top-0 w-full z-[100] bg-white/10 backdrop-blur-lg border-b border-white/20">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.8)]">
+                <span class="text-blue-900 font-bold">P</span>
             </div>
-    </div>
+            <h1 class="text-xl font-black tracking-tighter">PRAHELIKA <span class="text-cyan-400">DARRANG</span></h1>
+        </div>
 
-    <script type="module" src="app.js"></script>
-</body>
-</html>
+        <div class="hidden md:flex space-x-8 font-medium">
+            <a href="#home" class="hover:text-cyan-400 transition-all duration-300">Home</a>
+            <a href="#gallery" class="hover:text-cyan-400 transition-all duration-300">Gallery</a>
+            <a href="#executives" class="hover:text-cyan-400 transition-all duration-300">Executives</a>
+            <a href="#leaderboard" class="hover:text-cyan-400 transition-all duration-300">Leaderboard</a>
+            <a href="#contact" class="hover:text-cyan-400 transition-all duration-300">Contact</a>
+        </div>
+
+        <button onclick="document.getElementById('quiz-login').scrollIntoView({behavior:'smooth'})" 
+                class="bg-cyan-500 hover:bg-cyan-400 text-blue-900 px-6 py-2 rounded-full font-bold shadow-lg transform hover:scale-110 transition">
+            START QUIZ
+        </button>
+    </div>
+</nav>
