@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 
 <title>Admin Panel</title>
@@ -14,17 +13,17 @@ color:white;
 text-align:center;
 }
 
-input{
+input, textarea{
 padding:10px;
 margin:5px;
-border-radius:10px;
+border-radius:8px;
 border:none;
 }
 
 button{
 padding:10px 20px;
 border:none;
-border-radius:10px;
+border-radius:8px;
 background:#0072ff;
 color:white;
 cursor:pointer;
@@ -46,50 +45,65 @@ cursor:pointer;
 <div id="dashboard" style="display:none">
 
 <h2>Upload Logo</h2>
-<input id="logoUrl" placeholder="Logo URL">
-<button onclick="setLogo()">Update Logo</button>
+
+<input type="file" id="logoUpload">
+<button onclick="uploadLogo()">Upload Logo</button>
+
+<hr>
 
 <h2>Homepage Description</h2>
+
 <textarea id="homeText"></textarea>
+
 <br>
-<button onclick="updateHome()">Update Text</button>
+
+<button onclick="updateHome()">Update Description</button>
 
 <hr>
 
 <h2>Add Quiz Question</h2>
 
-<input id="q">
-<input id="a">
-<input id="b">
-<input id="c">
-<input id="d">
-<input id="ans">
+<input id="q" placeholder="Question"><br>
 
-<button onclick="addQuestion()">Add</button>
+<input id="a" placeholder="Option A">
+<input id="b" placeholder="Option B">
+<input id="c" placeholder="Option C">
+<input id="d" placeholder="Option D">
+
+<br>
+
+<input id="ans" placeholder="Correct Option (a/b/c/d)">
+
+<br><br>
+
+<button onclick="addQuestion()">Add Question</button>
 
 <hr>
 
-<h2>Add Gallery Image</h2>
+<h2>Upload Gallery Image</h2>
 
-<input id="galleryUrl">
-<button onclick="addGallery()">Add</button>
+<input type="file" id="galleryUpload">
+
+<button onclick="uploadGallery()">Upload</button>
 
 <hr>
 
-<h2>Add Achievement Image</h2>
+<h2>Upload Achievement Image</h2>
 
-<input id="achUrl">
-<button onclick="addAchievement()">Add</button>
+<input type="file" id="achUpload">
+
+<button onclick="uploadAchievement()">Upload</button>
 
 <hr>
 
 <h2>Add Executive Member</h2>
 
-<input id="mname">
-<input id="mphoto">
-<input id="mrole">
+<input id="mname" placeholder="Name">
+<input id="mrole" placeholder="Position">
 
-<button onclick="addMember()">Add</button>
+<input type="file" id="memberPhoto">
+
+<button onclick="addMember()">Add Member</button>
 
 </div>
 
