@@ -3,18 +3,18 @@
 
 <head>
 
-<title>Admin Dashboard</title>
+<title>Admin Panel</title>
 
 <style>
 
 body{
 font-family:Arial;
-background:#111;
+background:#0f2027;
 color:white;
 text-align:center;
 }
 
-input,textarea{
+input{
 padding:10px;
 margin:5px;
 border-radius:10px;
@@ -24,8 +24,9 @@ border:none;
 button{
 padding:10px 20px;
 border:none;
-border-radius:20px;
-background:orange;
+border-radius:10px;
+background:#0072ff;
+color:white;
 cursor:pointer;
 }
 
@@ -37,48 +38,62 @@ cursor:pointer;
 
 <h1>Prahelika Admin Panel</h1>
 
-<h3>Admin Login</h3>
+<input id="adminUser" placeholder="Username">
+<input id="adminPass" placeholder="Password">
 
-<input id="user" placeholder="Username">
-<input id="pass" placeholder="Password">
-
-<button onclick="login()">Login</button>
+<button onclick="adminLogin()">Login</button>
 
 <div id="dashboard" style="display:none">
 
+<h2>Upload Logo</h2>
+<input id="logoUrl" placeholder="Logo URL">
+<button onclick="setLogo()">Update Logo</button>
+
+<h2>Homepage Description</h2>
+<textarea id="homeText"></textarea>
+<br>
+<button onclick="updateHome()">Update Text</button>
+
+<hr>
+
 <h2>Add Quiz Question</h2>
 
-<input id="question" placeholder="Question">
-<input id="a" placeholder="Option A">
-<input id="b" placeholder="Option B">
-<input id="c" placeholder="Option C">
-<input id="d" placeholder="Option D">
-<input id="ans" placeholder="Correct Answer">
+<input id="q">
+<input id="a">
+<input id="b">
+<input id="c">
+<input id="d">
+<input id="ans">
 
-<button onclick="addQuestion()">Add Question</button>
+<button onclick="addQuestion()">Add</button>
 
 <hr>
 
 <h2>Add Gallery Image</h2>
 
-<input id="galleryUrl" placeholder="Image URL">
-
+<input id="galleryUrl">
 <button onclick="addGallery()">Add</button>
+
+<hr>
+
+<h2>Add Achievement Image</h2>
+
+<input id="achUrl">
+<button onclick="addAchievement()">Add</button>
 
 <hr>
 
 <h2>Add Executive Member</h2>
 
-<input id="mname" placeholder="Name">
-<input id="mphoto" placeholder="Photo URL">
-<input id="mrole" placeholder="Role">
+<input id="mname">
+<input id="mphoto">
+<input id="mrole">
 
-<button onclick="addMember()">Add Member</button>
+<button onclick="addMember()">Add</button>
 
 </div>
 
 <script src="app.js"></script>
 
 </body>
-
 </html>
