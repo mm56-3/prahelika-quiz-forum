@@ -1,37 +1,11 @@
-<header class="hero">
-  <h1 style={{ color: 'blue' }}>Welcome to the Prahelika Quiz Forum!</h1>
-<link rel="stylesheet" href="style.css">
-  <p>Knowledge • Competition • Excellence</p>
-<section id="executives">
-<h2>Executive Members</h2>
-
-<div class="card">
-<img src="president.jpg" width="150">
-<h3>Mritunjoy Kumar Dev Sharma</h3>
-<p>President</p>
-</div>
-
-</section>
-  <button onclick="document
-  .getElementById('start-screen')
-  .scrollIntoView({behavior:'smooth'})">
-  Start Quiz
-  </button>
-</header><div id="start-screen">
-  <h2>Prahelika Quiz Forum</h2>
-  <input type="text" id="playerName" placeholder="Enter Your Name">
-  <button onclick="startQuiz()">Start Quiz</button>
-</div>
-
-<div id="quiz-container" style="display:none;">
-  <h2 id="question"></h2>
-  <div id="options"></div>
-</div><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prahelika Quiz Forum Darrang</title>
+
+<link rel="stylesheet" href="style.css">
 
 <style>
 body{
@@ -54,18 +28,36 @@ border:none;
 background:#ff9800;
 color:white;
 cursor:pointer;
+border-radius:5px;
 }
 
-section{display:none;padding:30px;}
-.active{display:block;}
+section{
+display:none;
+padding:30px;
+}
+
+.active{
+display:block;
+}
 
 .card{
 background:white;
 color:black;
 padding:20px;
-margin:10px auto;
+margin:20px auto;
 width:80%;
 border-radius:10px;
+}
+
+input{
+padding:8px;
+margin:5px;
+}
+
+.gallery{
+width:200px;
+margin:10px;
+border-radius:8px;
 }
 </style>
 </head>
@@ -79,11 +71,19 @@ border-radius:10px;
 <button onclick="show('quiz')">Daily Quiz</button>
 <button onclick="show('leaderboard')">Leaderboard</button>
 <button onclick="show('admin')">Admin</button>
+<button onclick="show('gallery')">Gallery</button>
+<button onclick="show('events')">Events</button>
 </nav>
 
 <section id="home" class="active">
 <h2>Welcome to Prahelika Quiz Forum</h2>
-<p>Digital Quiz Platform</p>
+<p>Knowledge • Competition • Excellence</p>
+
+<div class="card">
+<img src="president.jpg" width="150">
+<h3>Mritunjoy Kumar Dev Sharma</h3>
+<p>President</p>
+</div>
 </section>
 
 <section id="quiz">
@@ -98,25 +98,9 @@ border-radius:10px;
 <h2>Leaderboard</h2>
 <div id="scores"></div>
 </section>
-<h3>Time Left: <span id="timer">15</span> sec</h3>
-<section id="admin">
-<h2>Admin Panel</h2>
-<input id="question" placeholder="Question"><br><br>
-<input id="A" placeholder="Option A"><br>
-<input id="B" placeholder="Option B"><br>
-<input id="C" placeholder="Option C"><br>
-<input id="D" placeholder="Option D"><br>
-<input id="ans" placeholder="Correct Option"><br><br>
-<button onclick="addQ()">Add Question</button>
- </section>
 
-  <script src="app.js"></script>
-</body>
-</html>
-<h2>Leaderboard</h2>
-<ul id="leaderboard"></ul>
-<hr>
-<h2>Admin Panel</h2>
+<section id="admin">
+<h2>Admin Login</h2>
 
 <input type="password" id="adminPass" placeholder="Enter Admin Password">
 <button onclick="loginAdmin()">Login</button>
@@ -125,25 +109,29 @@ border-radius:10px;
 
 <h3>Add New Question</h3>
 
-<input id="q" placeholder="Question"><br><br>
-<input id="o1" placeholder="Option 1"><br>
-<input id="o2" placeholder="Option 2"><br>
-<input id="o3" placeholder="Option 3"><br>
-<input id="o4" placeholder="Option 4"><br><br>
+<input id="question" placeholder="Question"><br><br>
 
-<input id="ans" placeholder="Correct Answer"><br><br>
+<input id="A" placeholder="Option A"><br>
+<input id="B" placeholder="Option B"><br>
+<input id="C" placeholder="Option C"><br>
+<input id="D" placeholder="Option D"><br><br>
 
-<button onclick="addQuestion()">Add Question</button>
+<input id="ans" placeholder="Correct Option (A/B/C/D)"><br><br>
+
+<button onclick="addQ()">Add Question</button>
 
 </div>
+</section>
+
 <section id="gallery">
 <h2>Gallery</h2>
 
-<img src="gallery1.jpg" class="gallery">
-<img src="gallery2.jpg" class="gallery">
-<img src="gallery3.jpg" class="gallery">
+<img src="gallery1.JPG" class="gallery">
+<img src="gallery2.JPG" class="gallery">
+<img src="gallery3.JPG" class="gallery">
 
 </section>
+
 <section id="events">
 <h2>Upcoming Events</h2>
 
@@ -154,3 +142,8 @@ border-radius:10px;
 </ul>
 
 </section>
+
+<script src="app.js"></script>
+
+</body>
+</html>
