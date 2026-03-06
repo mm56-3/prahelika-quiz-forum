@@ -3,67 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRAHELIKA QUIZ FORUM</title>
+    <title>PRAHELIKA QUIZ FORUM DARRANG</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        /* Restored the deep radial glow effect */
+        /* 1. RESTORING THE ANIMATED GRADIENT */
         body { 
-            background: radial-gradient(circle at top right, #1e3a8a, #020617 80%); 
-            color: white; 
-            min-height: 100vh; 
+            background: linear-gradient(-45deg, #0d122b, #1e3a8a, #1e40af, #0891b2);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            color: white;
             overflow-x: hidden;
         }
-        .glass { 
-            background: rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        /* Ensure the title always looks powerful */
-        .hero-text {
+
+        /* 2. SMOOTH TRANSITIONS & GLASS EFFECT */
+        .glass { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* 3. FORCING CAPITAL TITLES */
+        .uppercase-title {
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            text-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+            letter-spacing: 0.1em;
         }
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center">
+    <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-white/10">
         <div class="flex items-center gap-3">
-            <span class="text-xl font-black text-cyan-400 tracking-tighter">PRAHELIKA</span>
+            <span class="text-xl font-black text-cyan-400 tracking-tighter uppercase">Prahelika</span>
         </div>
-        <div class="hidden md:flex gap-6 text-xs font-bold uppercase tracking-widest">
+        <div class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[0.2em]">
             <a href="#home" class="hover:text-cyan-400 transition">Home</a>
             <a href="#gallery" class="hover:text-cyan-400 transition">Gallery</a>
             <a href="#executives" class="hover:text-cyan-400 transition">Executives</a>
-            <a href="#leaderboard" class="hover:text-white transition">Leaderboard</a>
+            <a href="#leaderboard" class="hover:text-cyan-400 transition">Leaderboard</a>
         </div>
-        <button id="quiz-trigger" class="bg-cyan-500 text-blue-950 px-6 py-2 rounded-full font-bold shadow-lg hover:bg-cyan-400 transition transform hover:scale-105">START QUIZ</button>
+        <button id="quiz-trigger" class="bg-cyan-500 text-blue-950 px-6 py-2 rounded-full font-black text-xs uppercase hover:scale-105 transition-transform active:scale-95 shadow-[0_0_20px_rgba(6,182,212,0.5)]">
+            Start Quiz
+        </button>
     </nav>
 
-    <section id="home" class="pt-48 pb-20 px-6 text-center">
-        <h1 id="hero-title" class="hero-text text-5xl md:text-8xl font-black mb-6 animate__animated animate__fadeInDown">
+    <section id="home" class="pt-52 pb-20 px-6 text-center">
+        <h1 id="hero-title" class="text-5xl md:text-8xl font-black mb-6 uppercase-title animate__animated animate__fadeInDown">
             PRAHELIKA QUIZ FORUM DARRANG
         </h1>
-        <p id="hero-desc" class="text-gray-400 max-w-2xl mx-auto mb-12 text-lg md:text-xl opacity-80">
-            Unleash your intellect with Prahelika. The premier quiz forum for thinkers and dreamers.
+        <p id="hero-desc" class="text-cyan-100/60 max-w-2xl mx-auto mb-10 text-lg md:text-xl font-light animate__animated animate__fadeIn animate__delay-1s">
+            Unleash your intellect with Darrang's premier thinkers.
         </p>
-        <div class="relative inline-block">
-            <div class="absolute -inset-1 bg-cyan-500 rounded-3xl blur opacity-20"></div>
-            <img id="special-team-img" src="placeholder.jpg" class="relative w-full max-w-5xl mx-auto rounded-3xl shadow-2xl border border-white/10">
+        <div class="relative inline-block animate__animated animate__zoomIn animate__delay-1s">
+            <img id="special-team-img" src="" class="w-full max-w-5xl mx-auto rounded-3xl shadow-2xl border border-white/10">
+            <div class="absolute inset-0 rounded-3xl bg-gradient-to-t from-[#0d122b] via-transparent to-transparent opacity-60"></div>
         </div>
     </section>
 
     <section id="executives" class="py-20 px-6">
-        <h2 class="text-3xl font-bold text-center mb-12 uppercase tracking-widest text-cyan-400">Executive Members</h2>
-        <div id="exec-list" class="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
+        <h2 class="text-3xl font-black text-center mb-16 uppercase tracking-[0.3em] text-cyan-400">Executive Members</h2>
+        <div id="exec-list" class="flex flex-wrap justify-center gap-10 max-w-6xl mx-auto">
             </div>
     </section>
-
-    <footer id="contact" class="p-10 text-center glass mt-20">
-        <p id="contact-info" class="text-gray-400 tracking-widest uppercase text-sm">Contact: prahelika@darrang.com</p>
-    </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -74,36 +89,37 @@
             authDomain: "YOUR_PROJECT.firebaseapp.com",
             projectId: "YOUR_PROJECT_ID",
             storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "YOUR_ID",
             appId: "YOUR_APP_ID"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // UI Interactions
-        document.getElementById('quiz-trigger').onclick = () => { alert("Quiz Hub is opening..."); };
-
-        // MASTER LISTENERS
-        onSnapshot(doc(db, "site_content", "homepage"), (snapshot) => {
-            const data = snapshot.data();
+        // UI LISTENERS
+        onSnapshot(doc(db, "site_content", "homepage"), (snap) => {
+            const data = snap.data();
             if (data) {
-                // We force Uppercase even if typed lowercase in Admin
-                if(data.title) document.getElementById('hero-title').innerText = data.title.toUpperCase();
+                if(data.title) document.getElementById('hero-title').innerText = data.title;
                 if(data.desc) document.getElementById('hero-desc').innerText = data.desc;
                 if(data.heroImg) document.getElementById('special-team-img').src = data.heroImg;
             }
         });
 
-        onSnapshot(collection(db, "executives"), (querySnapshot) => {
+        onSnapshot(collection(db, "executives"), (snap) => {
             const list = document.getElementById('exec-list');
             list.innerHTML = ''; 
-            querySnapshot.forEach((doc) => {
-                const member = doc.data();
+            snap.forEach((doc) => {
+                const m = doc.data();
                 list.innerHTML += `
-                    <div class="glass p-8 rounded-3xl text-center w-72 animate__animated animate__fadeInUp hover:border-cyan-500 transition duration-500">
-                        <img src="${member.url}" class="w-28 h-28 rounded-full mx-auto mb-4 border-2 border-cyan-400 object-cover shadow-lg">
-                        <h3 class="font-bold text-xl">${member.name}</h3>
-                        <p class="text-cyan-400 text-sm font-bold uppercase tracking-widest">${member.pos}</p>
+                    <div class="glass p-8 rounded-[2rem] text-center w-72 animate__animated animate__fadeInUp">
+                        <img src="${m.url}" class="w-24 h-24 rounded-full mx-auto mb-6 border-2 border-cyan-400/50 p-1 object-cover">
+                        <h3 class="font-bold text-xl uppercase tracking-wider">${m.name}</h3>
+                        <p class="text-cyan-400 text-xs font-bold uppercase mt-2">${m.pos}</p>
                     </div>`;
             });
+        });
+
+        document.getElementById('quiz-trigger').onclick = () => alert("Quiz System Initializing...");
+    </script>
+</body>
+</html>
