@@ -1,28 +1,32 @@
-
 let questions=[]
-let members=[]
 let gallery=[]
-
+let achievements=[]
+let members=[]
 let score=0
 let timer=60
 
 function showSection(id){
 
 document.querySelectorAll(".section").forEach(s=>s.style.display="none")
-
 document.getElementById(id).style.display="block"
 
 }
 
-function saveParticipant(){
+function startQuiz(){
 
-let name=document.getElementById("name").value
+let name=playerName.value
+let phone=playerPhone.value
+
+if(!name || !phone){
+
+alert("Please enter name and phone")
+return
+
+}
 
 localStorage.setItem("player",name)
 
-alert("Welcome "+name)
-
-showSection("quiz")
+quizArea.style.display="block"
 
 loadQuiz()
 
@@ -30,16 +34,14 @@ loadQuiz()
 
 function addQuestion(){
 
-let q={
-q:question.value,
+questions.push({
+q:q.value,
 a:a.value,
 b:b.value,
 c:c.value,
 d:d.value,
 ans:ans.value
-}
-
-questions.push(q)
+})
 
 alert("Question Added")
 
@@ -76,7 +78,7 @@ let interval=setInterval(()=>{
 
 timer--
 
-document.getElementById("timer").innerText="Timer: "+timer
+timer.innerText="Timer: "+timer
 
 if(timer==0){
 
@@ -102,7 +104,7 @@ if(ans && ans.value==q.ans) score++
 
 saveLeaderboard()
 
-alert("Your Score: "+score)
+alert("Score: "+score)
 
 }
 
@@ -126,6 +128,8 @@ let list=JSON.parse(localStorage.getItem("leaderboard")||"[]")
 
 let ul=document.getElementById("leaderList")
 
+if(!ul) return
+
 ul.innerHTML=""
 
 list.sort((a,b)=>b.score-a.score)
@@ -140,9 +144,7 @@ ul.innerHTML+=`<li>${p.name} - ${p.score}</li>`
 
 function addGallery(){
 
-let url=document.getElementById("galleryUrl").value
-
-gallery.push(url)
+gallery.push(galleryUrl.value)
 
 renderGallery()
 
@@ -150,7 +152,9 @@ renderGallery()
 
 function renderGallery(){
 
-let g=document.getElementById("galleryBox")
+let g=document.getElementById("gallerySlider")
+
+if(!g) return
 
 g.innerHTML=""
 
@@ -162,17 +166,37 @@ g.innerHTML+=`<img src="${img}">`
 
 }
 
-function addMember(){
+function addAchievement(){
 
-let m={
+achievements.push(achUrl.value)
 
-name:mname.value,
-photo:mphoto.value,
-role:mrole.value
+renderAchievements()
 
 }
 
-members.push(m)
+function renderAchievements(){
+
+let g=document.getElementById("achievementSlider")
+
+if(!g) return
+
+g.innerHTML=""
+
+achievements.forEach(img=>{
+
+g.innerHTML+=`<img src="${img}">`
+
+})
+
+}
+
+function addMember(){
+
+members.push({
+name:mname.value,
+photo:mphoto.value,
+role:mrole.value
+})
 
 renderMembers()
 
@@ -182,6 +206,8 @@ function renderMembers(){
 
 let box=document.getElementById("membersList")
 
+if(!box) return
+
 box.innerHTML=""
 
 members.forEach(m=>{
@@ -190,7 +216,7 @@ box.innerHTML+=`
 
 <div class="member-card">
 
-<img src="${m.photo}" width="100"><br>
+<img src="${m.photo}" width="90"><br>
 <b>${m.name}</b><br>
 ${m.role}
 
@@ -202,15 +228,29 @@ ${m.role}
 
 }
 
-function login(){
+function setLogo(){
 
-if(user.value=="VIKRAM784125" && pass.value=="#UDSB784125781005"){
+localStorage.setItem("logo",logoUrl.value)
 
-dashboard.style.display="block"
+alert("Logo Updated")
 
 }
 
-else{
+function updateHome(){
+
+localStorage.setItem("homeDesc",homeText.value)
+
+alert("Homepage Updated")
+
+}
+
+function adminLogin(){
+
+if(adminUser.value=="VIKRAM784125" && adminPass.value=="#UDSB784125781005"){
+
+dashboard.style.display="block"
+
+}else{
 
 alert("Wrong Login")
 
@@ -219,5 +259,6 @@ alert("Wrong Login")
 }
 
 showLeaderboard()
-renderMembers()
 renderGallery()
+renderMembers()
+renderAchievements()
