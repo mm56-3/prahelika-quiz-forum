@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <input id="PRAHELIKA QUIZ FORUM DARRANG">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRAHELIKA QUIZ FORUM - ADMIN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background: #020617; color: white; min-height: 100vh; font-family: sans-serif; }
@@ -16,7 +17,7 @@
         <h1 class="text-2xl font-bold mb-6 text-cyan-400 text-center uppercase tracking-widest">Admin Login</h1>
         <input type="text" id="user" placeholder="Admin ID" class="w-full p-3 mb-4 rounded-lg outline-none focus:border-cyan-500">
         <input type="password" id="pass" placeholder="Password" class="w-full p-3 mb-6 rounded-lg outline-none focus:border-cyan-500">
-        <button id="save-btn"> class="w-full bg-blue-600 hover:bg-blue-500 p-3 rounded-lg font-bold transition">ENTER DASHBOARD</button>
+        <button id="login-btn" class="w-full bg-blue-600 hover:bg-blue-500 p-3 rounded-lg font-bold transition">ENTER DASHBOARD</button>
     </div>
 
     <div id="dashboard" class="hidden max-w-6xl mx-auto">
@@ -28,11 +29,12 @@
         <div class="grid md:grid-cols-2 gap-8">
             <div class="card p-6 rounded-2xl">
                 <h2 class="text-xl font-bold mb-4 text-cyan-400 border-l-4 border-cyan-400 pl-3">Main Content</h2>
+                
                 <label class="text-xs text-gray-500 uppercase font-bold">Forum Title</label>
-                <input type="text" id="title-input" class="w-full p-2 mb-4 rounded">
+                <input type="text" id="title-input" placeholder="Prahelika Quiz Forum" class="w-full p-2 mb-4 rounded">
                 
                 <label class="text-xs text-gray-500 uppercase font-bold">Homepage Description</label>
-                <textarea id="desc-input" class="w-full p-2 mb-4 rounded h-24"></textarea>
+                <textarea id="desc-input" placeholder="Describe the forum..." class="w-full p-2 mb-4 rounded h-24"></textarea>
                 
                 <label class="text-xs text-gray-500 uppercase font-bold">Hero Image URL</label>
                 <input type="text" id="img-input" placeholder="Paste Image Link" class="w-full p-2 mb-4 rounded">
@@ -51,22 +53,22 @@
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT.appspot.com",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
+            authDomain: "prahelika-fbf98.firebaseapp.com",
+            projectId: "prahelika-fbf98",
+            storageBucket: "prahelika-fbf98.firebasestorage.app",
+            messagingSenderId: "21670057223",
+            appId: "1:21670057223:web:d20225509d824505cb61a2"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-
+        // LOGIN SYSTEM
         document.getElementById('login-btn').onclick = () => {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
@@ -78,23 +80,25 @@
             }
         };
 
-   
+        // SAVE MAIN CONTENT
         document.getElementById('save-main-btn').onclick = async () => {
             const title = document.getElementById('title-input').value;
             const desc = document.getElementById('desc-input').value;
             const heroImg = document.getElementById('img-input').value;
 
             try {
-                await setDoc(doc(db, "site_content", "homepage"), {
+                await setDoc(doc(db, "website", "data"), {
                     title: title,
-                    desc: desc,
-                    heroImg: heroImg
+                    description: desc,
+                    heroImage: heroImg
                 }, { merge: true });
-                alert("Website Updated Successfully!");
-            } catch (e) { alert("Error: " + e.message); }
+                alert("Success! Website Updated Live.");
+            } catch (e) { 
+                alert("Error: " + e.message); 
+            }
         };
 
-
+        // ADD MEMBER
         document.getElementById('add-exec-btn').onclick = async () => {
             const name = document.getElementById('exec-name').value;
             const pos = document.getElementById('exec-pos').value;
@@ -102,78 +106,12 @@
 
             try {
                 await addDoc(collection(db, "executives"), { name, pos, url });
-                alert("Member Added!");
+                alert("Member Added Successfully!");
                 document.getElementById('exec-name').value = "";
                 document.getElementById('exec-pos').value = "";
                 document.getElementById('exec-url').value = "";
             } catch (e) { alert("Error: " + e.message); }
         };
     </script>
-    // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
-  authDomain: "prahelika-fbf98.firebaseapp.com",
-  projectId: "prahelika-fbf98",
-  storageBucket: "prahelika-fbf98.firebasestorage.app",
-  messagingSenderId: "21670057223",
-  appId: "1:21670057223:web:d20225509d824505cb61a2",
-  measurementId: "G-K0PYM0ZDJP"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-    // When you click the button
-document.getElementById('save-btn').onclick = function() {
-  const textValue = document.getElementById('forum-title').value;
-  // Send the text to Firebase
-  db.collection("website").doc("data").set({
-    title: textValue
-  }).then(() => { alert("Updated Live!"); });
-};
-
-    <script type="module">
-  // Paste your Firebase config here
-  const firebaseConfig = {
-    apiKey: "AIzaSyAoLQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
-    authDomain: "prahelika-fbf98.firebaseapp.com",
-    projectId: "prahelika-fbf98",
-    storageBucket: "prahelika-fbf98.firebasestorage.app",
-    messagingSenderId: "21670057223",
-    appId: "1:21670057223:web:d20225509d824505cb61a2"
-  };
-
-  // Now the Logic to make the button work
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // This connects your "UPDATE" button
-  document.getElementById('update-btn').onclick = async function() {
-      const titleValue = document.getElementById('forum-title').value;
-      const descValue = document.getElementById('homepage-desc').value;
-
-      try {
-          await setDoc(doc(db, "website", "data"), {
-              title: titleValue,
-              description: descValue
-          });
-          alert("Success! Website Updated Live.");
-      } catch (e) {
-          alert("Error updating: " + e.message);
-      }
-  };
-</script>
-    
 </body>
 </html>
