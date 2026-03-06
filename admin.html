@@ -1,31 +1,35 @@
-<body class="bg-gray-900 text-white p-10">
-    <div id="admin-auth" class="max-w-sm mx-auto">
-        <h1 class="text-2xl mb-4">Admin Secure Access</h1>
-        <input type="text" id="user" placeholder="Username" class="block w-full mb-2 p-2 text-black">
-        <input type="password" id="pass" placeholder="Password" class="block w-full mb-4 p-2 text-black">
-        <button onclick="checkAdmin()" class="bg-blue-600 px-6 py-2">Login</button>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel | Prahelika</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white p-10">
+    <div id="auth">
+        <input type="text" id="adminU" placeholder="User" class="text-black p-2">
+        <input type="password" id="adminP" placeholder="Pass" class="text-black p-2">
+        <button onclick="login()">Login</button>
     </div>
 
-    <div id="cms-panel" class="hidden">
-        <h2 class="text-3xl font-bold mb-8">CMS Dashboard</h2>
+    <div id="cms" class="hidden">
+        <h1 class="text-4xl font-bold mb-10">Admin CMS Dashboard</h1>
         
-        <div class="bg-gray-800 p-6 rounded-lg mb-6">
-            <h3>Add New Question</h3>
-            <input type="text" id="q-text" placeholder="Question" class="w-full mt-2 p-2 text-black">
-            <button class="mt-4 bg-green-500 p-2 rounded">Upload to Firebase</button>
+        <div class="bg-white/5 p-6 rounded-xl mb-10">
+            <h2 class="text-xl mb-4 text-cyan-400">Add MCQ Question</h2>
+            <input type="text" id="q-txt" placeholder="Question Text" class="w-full p-3 bg-slate-800 mb-2">
+            <input type="text" id="opt-1" placeholder="Option 1" class="w-full p-2 bg-slate-800 mb-2">
+            <button onclick="uploadQuestion()" class="bg-cyan-500 p-3 rounded">Save Question</button>
         </div>
     </div>
 
     <script>
-        function checkAdmin() {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
-            if(u === "VIKRAM784125" && p === "#UDSB784125781005") {
-                document.getElementById('admin-auth').classList.add('hidden');
-                document.getElementById('cms-panel').classList.remove('hidden');
-            } else {
-                alert("Unauthorized!");
+        function login() {
+            if(document.getElementById('adminU').value === 'VIKRAM784125' && 
+               document.getElementById('adminP').value === '#UDSB784125781005') {
+                document.getElementById('auth').style.display = 'none';
+                document.getElementById('cms').classList.remove('hidden');
             }
         }
     </script>
 </body>
+</html>
