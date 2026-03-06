@@ -1,40 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Prahelika Quiz Forum Admin</title>
+
+<title>Admin Dashboard</title>
 
 <style>
 
 body{
 font-family:Arial;
-background:#0f2027;
+background:#111;
 color:white;
 text-align:center;
-padding:30px;
 }
 
 input,textarea{
 padding:10px;
 margin:5px;
-width:260px;
+border-radius:10px;
+border:none;
 }
 
 button{
 padding:10px 20px;
-background:#ff9800;
 border:none;
-color:white;
+border-radius:20px;
+background:orange;
 cursor:pointer;
-margin-top:10px;
-}
-
-.panel{
-background:white;
-color:black;
-padding:20px;
-margin:20px auto;
-width:350px;
-border-radius:10px;
 }
 
 </style>
@@ -43,183 +35,50 @@ border-radius:10px;
 
 <body>
 
-<h1>Prahelika Quiz Forum Admin</h1>
-
-<div id="login">
+<h1>Prahelika Admin Panel</h1>
 
 <h3>Admin Login</h3>
 
-<input type="text" id="user" placeholder="Username"><br>
-<input type="password" id="pass" placeholder="Password"><br>
+<input id="user" placeholder="Username">
+<input id="pass" placeholder="Password">
 
 <button onclick="login()">Login</button>
 
-</div>
-
 <div id="dashboard" style="display:none">
 
-<h2>Admin Control Dashboard</h2>
+<h2>Add Quiz Question</h2>
 
-
-<!-- HOME EDITOR -->
-
-<div class="panel">
-
-<h3>Edit Homepage Description</h3>
-
-<textarea id="homeText" placeholder="Write homepage description"></textarea><br>
-
-<button onclick="saveHome()">Save Homepage</button>
-
-</div>
-
-
-<!-- ADD QUIZ QUESTIONS -->
-
-<div class="panel">
-
-<h3>Add Quiz Question</h3>
-
-<input id="q" placeholder="Question"><br>
-<input id="o1" placeholder="Option 1"><br>
-<input id="o2" placeholder="Option 2"><br>
-<input id="o3" placeholder="Option 3"><br>
-<input id="o4" placeholder="Option 4"><br>
-
-<input id="ans" placeholder="Correct Answer"><br>
+<input id="question" placeholder="Question">
+<input id="a" placeholder="Option A">
+<input id="b" placeholder="Option B">
+<input id="c" placeholder="Option C">
+<input id="d" placeholder="Option D">
+<input id="ans" placeholder="Correct Answer">
 
 <button onclick="addQuestion()">Add Question</button>
 
-</div>
+<hr>
 
+<h2>Add Gallery Image</h2>
 
-<!-- ADD EVENT -->
+<input id="galleryUrl" placeholder="Image URL">
 
-<div class="panel">
+<button onclick="addGallery()">Add</button>
 
-<h3>Add Event</h3>
+<hr>
 
-<input id="eventText" placeholder="Event Name"><br>
+<h2>Add Executive Member</h2>
 
-<button onclick="addEvent()">Add Event</button>
+<input id="mname" placeholder="Name">
+<input id="mphoto" placeholder="Photo URL">
+<input id="mrole" placeholder="Role">
 
-</div>
-
-
-<!-- ADD GALLERY IMAGE -->
-
-<div class="panel">
-
-<h3>Add Gallery Image</h3>
-
-<input id="imgURL" placeholder="Image URL"><br>
-
-<button onclick="addGallery()">Add Image</button>
+<button onclick="addMember()">Add Member</button>
 
 </div>
 
-</div>
-
-
-<script>
-
-function login(){
-
-let u=document.getElementById("user").value;
-let p=document.getElementById("pass").value;
-
-if(u=="VIKRAM784125" && p=="#UDSB784125781005"){
-
-document.getElementById("login").style.display="none";
-document.getElementById("dashboard").style.display="block";
-
-}
-
-else{
-
-alert("Wrong Login");
-
-}
-
-}
-
-
-
-function addQuestion(){
-
-let question=document.getElementById("q").value;
-
-let o1=document.getElementById("o1").value;
-let o2=document.getElementById("o2").value;
-let o3=document.getElementById("o3").value;
-let o4=document.getElementById("o4").value;
-
-let ans=document.getElementById("ans").value;
-
-firebase.firestore().collection("questions").add({
-
-question:question,
-o1:o1,
-o2:o2,
-o3:o3,
-o4:o4,
-answer:ans
-
-})
-
-alert("Question Added Successfully");
-
-}
-
-
-
-function saveHome(){
-
-let text=document.getElementById("homeText").value;
-
-firebase.firestore().collection("site").doc("home").set({
-
-description:text
-
-})
-
-alert("Homepage Updated");
-
-}
-
-
-
-function addEvent(){
-
-let e=document.getElementById("eventText").value;
-
-firebase.firestore().collection("events").add({
-
-name:e
-
-})
-
-alert("Event Added");
-
-}
-
-
-
-function addGallery(){
-
-let img=document.getElementById("imgURL").value;
-
-firebase.firestore().collection("gallery").add({
-
-url:img
-
-})
-
-alert("Image Added");
-
-}
-
-</script>
+<script src="app.js"></script>
 
 </body>
+
 </html>
