@@ -1,282 +1,223 @@
-// --------------------
-// ADMIN PASSWORD
-// --------------------
-const adminPassword = "prahelika123";
-let isAdmin = false;
 
+let questions=[]
+let members=[]
+let gallery=[]
 
-// --------------------
-// ADMIN LOGIN
-// --------------------
-function loginAdmin(){
+let score=0
+let timer=60
 
-let pass = document.getElementById("adminPass").value;
+function showSection(id){
 
-if(pass === adminPassword){
+document.querySelectorAll(".section").forEach(s=>s.style.display="none")
 
-alert("Admin Mode Activated");
-
-isAdmin = true;
-
-document.getElementById("adminPanel").style.display = "block";
-
-}else{
-
-alert("Wrong Password");
+document.getElementById(id).style.display="block"
 
 }
 
-}
+function saveParticipant(){
 
+let name=document.getElementById("name").value
 
-// --------------------
-// EDIT HOMEPAGE TEXT
-// --------------------
-function updateHome(){
+localStorage.setItem("player",name)
 
-if(!isAdmin){
-alert("Admin login required");
-return;
-}
+alert("Welcome "+name)
 
-let text = document.getElementById("homeTextInput").value;
+showSection("quiz")
 
-document.getElementById("homeText").innerText = text;
-
-localStorage.setItem("homeText", text);
-
-alert("Homepage Updated");
+loadQuiz()
 
 }
 
-
-// --------------------
-// LOAD HOMEPAGE TEXT
-// --------------------
-window.onload = function(){
-
-let saved = localStorage.getItem("homeText");
-
-if(saved){
-document.getElementById("homeText").innerText = saved;
-}
-
-loadLeaderboard();
-
-}
-
-
-
-// --------------------
-// ADD EVENT
-// --------------------
-function addEvent(){
-
-let event = document.getElementById("eventInput").value;
-
-let events = JSON.parse(localStorage.getItem("events")) || [];
-
-events.push(event);
-
-localStorage.setItem("events",JSON.stringify(events));
-
-showEvents();
-
-}
-
-
-// --------------------
-// SHOW EVENTS
-// --------------------
-function showEvents(){
-
-let events = JSON.parse(localStorage.getItem("events")) || [];
-
-let html = "";
-
-events.forEach(e=>{
-html += "<li>"+e+"</li>";
-});
-
-document.getElementById("eventList").innerHTML = html;
-
-}
-
-
-// --------------------
-// ADD QUIZ QUESTION
-// --------------------
 function addQuestion(){
 
-let q = document.getElementById("q").value;
-let o1 = document.getElementById("o1").value;
-let o2 = document.getElementById("o2").value;
-let o3 = document.getElementById("o3").value;
-let o4 = document.getElementById("o4").value;
-let ans = document.getElementById("ans").value;
+let q={
+q:question.value,
+a:a.value,
+b:b.value,
+c:c.value,
+d:d.value,
+ans:ans.value
+}
 
-let questions = JSON.parse(localStorage.getItem("quizQuestions")) || [];
+questions.push(q)
 
-questions.push({
-question:q,
-options:[o1,o2,o3,o4],
-answer:ans
-});
-
-localStorage.setItem("quizQuestions",JSON.stringify(questions));
-
-alert("Question Added");
+alert("Question Added")
 
 }
 
+function loadQuiz(){
 
+let box=document.getElementById("questionBox")
 
-// --------------------
-// QUIZ SYSTEM
-// --------------------
-let questions = [];
-let current = 0;
-let score = 0;
+box.innerHTML=""
 
+questions.forEach((q,i)=>{
 
-function startQuiz(){
+box.innerHTML+=`
 
-let name = document.getElementById("playerName").value;
+<h3>${q.q}</h3>
 
-if(name===""){
-alert("Enter your name");
-return;
-}
+<input type="radio" name="q${i}" value="a">${q.a}<br>
+<input type="radio" name="q${i}" value="b">${q.b}<br>
+<input type="radio" name="q${i}" value="c">${q.c}<br>
+<input type="radio" name="q${i}" value="d">${q.d}<br>
 
-questions = JSON.parse(localStorage.getItem("quizQuestions")) || [];
+`
 
-current = 0;
-score = 0;
+})
 
-show("quiz");
-
-loadQuestion();
+startTimer()
 
 }
 
+function startTimer(){
 
+let interval=setInterval(()=>{
 
-function loadQuestion(){
+timer--
 
-if(current >= questions.length){
-finishQuiz();
-return;
-}
+document.getElementById("timer").innerText="Timer: "+timer
 
-let q = questions[current];
+if(timer==0){
 
-document.getElementById("q").innerText = q.question;
+clearInterval(interval)
 
-let html="";
-
-q.options.forEach(opt=>{
-
-html += `<button onclick="answer('${opt}')">${opt}</button><br><br>`;
-
-});
-
-document.getElementById("options").innerHTML = html;
+submitQuiz()
 
 }
 
-
-
-function answer(opt){
-
-if(opt === questions[current].answer){
-score++;
-}
-
-current++;
-
-loadQuestion();
+},1000)
 
 }
 
+function submitQuiz(){
 
+questions.forEach((q,i)=>{
 
-function finishQuiz(){
+let ans=document.querySelector(`input[name="q${i}"]:checked`)
 
-alert("Your Score: "+score);
+if(ans && ans.value==q.ans) score++
 
-saveScore();
+})
 
-show("leaderboard");
+saveLeaderboard()
 
-}
-
-
-
-// --------------------
-// SAVE SCORE
-// --------------------
-function saveScore(){
-
-let name = document.getElementById("playerName").value;
-
-let scores = JSON.parse(localStorage.getItem("scores")) || [];
-
-scores.push({
-name:name,
-score:score
-});
-
-localStorage.setItem("scores",JSON.stringify(scores));
+alert("Your Score: "+score)
 
 }
 
+function saveLeaderboard(){
 
+let name=localStorage.getItem("player")
 
-// --------------------
-// LEADERBOARD
-// --------------------
-function loadLeaderboard(){
+let list=JSON.parse(localStorage.getItem("leaderboard")||"[]")
 
-let scores = JSON.parse(localStorage.getItem("scores")) || [];
+list.push({name,score})
 
-let html="";
+localStorage.setItem("leaderboard",JSON.stringify(list))
 
-scores.forEach(s=>{
-html += `<p>${s.name} : ${s.score}</p>`;
-});
-
-document.getElementById("scores").innerHTML = html;
+showLeaderboard()
 
 }
 
+function showLeaderboard(){
 
+let list=JSON.parse(localStorage.getItem("leaderboard")||"[]")
 
-// --------------------
-// RESET LEADERBOARD
-// --------------------
-function resetLeaderboard(){
+let ul=document.getElementById("leaderList")
 
-localStorage.removeItem("scores");
+ul.innerHTML=""
 
-alert("Leaderboard Reset");
+list.sort((a,b)=>b.score-a.score)
 
-loadLeaderboard();
+list.forEach(p=>{
+
+ul.innerHTML+=`<li>${p.name} - ${p.score}</li>`
+
+})
+
+}
+
+function addGallery(){
+
+let url=document.getElementById("galleryUrl").value
+
+gallery.push(url)
+
+renderGallery()
 
 }
 
+function renderGallery(){
 
+let g=document.getElementById("galleryBox")
 
-// --------------------
-// PAGE NAVIGATION
-// --------------------
-function show(id){
+g.innerHTML=""
 
-let sections = document.querySelectorAll("section");
+gallery.forEach(img=>{
 
-sections.forEach(sec=>{
-sec.classList.remove("active");
-});
+g.innerHTML+=`<img src="${img}">`
 
-document.getElementById(id).classList.add("active");
+})
 
 }
+
+function addMember(){
+
+let m={
+
+name:mname.value,
+photo:mphoto.value,
+role:mrole.value
+
+}
+
+members.push(m)
+
+renderMembers()
+
+}
+
+function renderMembers(){
+
+let box=document.getElementById("membersList")
+
+box.innerHTML=""
+
+members.forEach(m=>{
+
+box.innerHTML+=`
+
+<div class="member-card">
+
+<img src="${m.photo}" width="100"><br>
+<b>${m.name}</b><br>
+${m.role}
+
+</div>
+
+`
+
+})
+
+}
+
+function login(){
+
+if(user.value=="VIKRAM784125" && pass.value=="#UDSB784125781005"){
+
+dashboard.style.display="block"
+
+}
+
+else{
+
+alert("Wrong Login")
+
+}
+
+}
+
+showLeaderboard()
+renderMembers()
+renderGallery()
