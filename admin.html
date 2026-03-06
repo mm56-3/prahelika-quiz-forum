@@ -5,31 +5,29 @@
 <style>
 
 body{
-<script>
-let password = prompt("Enter Admin Password");
-
-if(password !== "Prahelika@Admin"){
-document.body.innerHTML="<h2>Access Denied</h2>";
-}
-</script>
 font-family:Arial;
-background:#222;
+background:#0f2027;
 color:white;
 text-align:center;
+padding:40px;
+}
+
+input{
+padding:10px;
+margin:5px;
+width:250px;
 }
 
 button{
 padding:10px 20px;
-margin:10px;
-border:none;
 background:#ff9800;
+border:none;
 color:white;
 cursor:pointer;
 }
 
-input{
-padding:8px;
-margin:5px;
+.panel{
+margin-top:30px;
 }
 
 </style>
@@ -39,26 +37,58 @@ margin:5px;
 
 <h1>Prahelika Quiz Forum Admin</h1>
 
-<h3>Add Question</h3>
+<div id="login">
+
+<input type="text" id="user" placeholder="Username"><br>
+<input type="password" id="pass" placeholder="Password"><br>
+
+<button onclick="login()">Login</button>
+
+</div>
+
+<div id="dashboard" style="display:none">
+
+<h2>Admin Dashboard</h2>
+
+<div class="panel">
+
+<h3>Add Quiz Question</h3>
+
+<input id="q" placeholder="Question"><br>
+<input id="o1" placeholder="Option 1"><br>
+<input id="o2" placeholder="Option 2"><br>
+<input id="o3" placeholder="Option 3"><br>
+<input id="o4" placeholder="Option 4"><br>
+<input id="ans" placeholder="Correct Answer"><br>
+
 <button onclick="addQuestion()">Add Question</button>
-<input id="q" placeholder="Question">
-<input id="o1" placeholder="Option 1">
-<input id="o2" placeholder="Option 2">
-<input id="o3" placeholder="Option 3">
-<input id="o4" placeholder="Option 4">
-<input id="ans" placeholder="Correct Answer">
-<button onclick="addQuestion()">Add Question</button>
 
-<hr>
+</div>
 
-<h3>Leaderboard Control</h3>
+</div>
 
-<button onclick="resetBoard()">Reset Leaderboard</button>
+<script>
 
-<h3>Participants</h3>
-<ul id="players"></ul>
+function login(){
 
-<script src="admin.js"></script>
+let u=document.getElementById("user").value;
+let p=document.getElementById("pass").value;
+
+if(u=="VIKRAM784125" && p=="#UDSB784125781005"){
+
+document.getElementById("login").style.display="none";
+document.getElementById("dashboard").style.display="block";
+
+}
+else{
+
+alert("Wrong Login");
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
