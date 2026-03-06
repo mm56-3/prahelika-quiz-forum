@@ -66,5 +66,32 @@
     </section>
 
     <script type="module" src="app.js"></script>
+
+    import { db } from './firebase.js';
+import { doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// LISTEN TO HERO CHANGES
+onSnapshot(doc(db, "site_content", "homepage"), (doc) => {
+    const data = doc.data();
+    if(data) {
+        document.getElementById('hero-title').innerText = data.title;
+        document.getElementById('hero-desc').innerText = data.description;
+    }
+});
+
+// LISTEN TO EXECUTIVE LIST CHANGES
+onSnapshot(collection(db, "executives"), (querySnapshot) => {
+    const list = document.getElementById('exec-list');
+    list.innerHTML = '';
+    querySnapshot.forEach((doc) => {
+        const d = doc.data();
+        list.innerHTML += `<div class="glass-card p-4 rounded-xl">
+            <img src="${d.url}" class="w-20 h-20 rounded-full mx-auto">
+            <h3>${d.name}</h3>
+            <p>${d.pos}</p>
+        </div>`;
+    });
+});
+
 </body>
 </html>
