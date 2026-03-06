@@ -2,242 +2,246 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prahelika Quiz Forum Darrang</title>
-
-<link rel="stylesheet" href="style.css">
+<title>Prahelika Quiz Forum</title>
 
 <style>
+
 body{
-font-family:Arial;
+font-family: Arial;
 margin:0;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+background:#f4f6f9;
+}
+
+/* HEADER */
+
+header{
+background:#0b3d91;
 color:white;
+padding:15px;
+display:flex;
+align-items:center;
+}
+
+.logo{
+width:60px;
+height:60px;
+background:#fff;
+border-radius:50%;
+margin-right:15px;
+}
+
+header h1{
+margin:0;
+font-size:26px;
+}
+
+/* HERO */
+
+.hero{
+text-align:center;
+padding:60px 20px;
+background:linear-gradient(120deg,#0b3d91,#1e88e5);
+color:white;
+}
+
+.hero img{
+width:350px;
+border-radius:10px;
+margin-top:20px;
+}
+
+/* DESCRIPTION */
+
+.description{
+max-width:900px;
+margin:auto;
+padding:40px;
+text-align:center;
+font-size:18px;
+line-height:1.6;
+}
+
+/* GALLERY */
+
+.gallery{
+padding:40px;
+background:white;
+}
+
+.gallery h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+.slider{
+display:flex;
+overflow:hidden;
+}
+
+.slider img{
+width:300px;
+margin-right:20px;
+border-radius:10px;
+animation:slide 20s infinite linear;
+}
+
+@keyframes slide{
+0%{transform:translateX(0)}
+100%{transform:translateX(-1000px)}
+}
+
+/* EXECUTIVE MEMBERS */
+
+.members{
+padding:40px;
+}
+
+.member-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+}
+
+.member{
+background:white;
+padding:20px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+.member img{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+}
+
+/* CONTACT */
+
+.contact{
+background:#0b3d91;
+color:white;
+padding:40px;
 text-align:center;
 }
 
-nav{
-background:#111;
-padding:15px;
-}
-
-nav button{
-margin:5px;
-padding:10px 15px;
-border:none;
-background:#ff9800;
-color:white;
-cursor:pointer;
-}
-
-section{
-display:none;
-padding:30px;
-}
-
-.active{
-display:block;
-}
-
-.card{
-background:white;
-color:black;
-padding:20px;
-margin:10px auto;
-width:80%;
-border-radius:10px;
-}
-
-.gallery{
-width:200px;
-margin:10px;
-border-radius:10px;
-}
 </style>
-
 </head>
 
 <body>
 
+<!-- HEADER -->
 <header>
-<h1 style="color:white;">Welcome to the Prahelika Quiz Forum!</h1>
-<p>Knowledge • Competition • Excellence</p>
 
-<button onclick="show('quiz')">Start Quiz</button>
+<img src="logo.png" class="logo">
+
+<h1>Prahelika Quiz Forum</h1>
+
 </header>
 
 
-<h1>Prahelika Quiz Forum Darrang</h1>
+<!-- HERO SECTION -->
 
-
-<nav>
-
-<button onclick="show('home')">Home</button>
-
-<button onclick="show('quiz')">Daily Quiz</button>
-
-<button onclick="show('leaderboard')">Leaderboard</button>
-
-<button onclick="show('admin')">Admin</button>
-
-<button onclick="show('gallery')">Gallery</button>
-
-<button onclick="show('events')">Events</button>
-
-</nav>
-
-
-<section id="home" class="active">
+<section class="hero">
 
 <h2>Welcome to Prahelika Quiz Forum</h2>
 
-<p>Digital Quiz Platform</p>
+<p>The intellectual hub of Assam's quizzing community</p>
+
+<img src="mainphoto.jpg">
 
 </section>
 
 
-<section id="quiz">
+<!-- DESCRIPTION -->
 
-<div class="card">
+<section class="description">
 
-<h2 id="q">Sample Question: What is the capital of India?</h2>
+<p>
 
-<button onclick="answer('A')">A. Delhi</button><br><br>
+Established in 2021 during the height of the COVID-19 pandemic, the Prahelika Quiz Forum has rapidly emerged as a beacon of intellectual resilience, standing today as the only active quiz forum in the Darrang district and arguably Assam’s most prominent organization in the field.
 
-<button onclick="answer('B')">B. Mumbai</button><br><br>
+Although it is rooted in Darrang, the forum has expanded its mission to serve the entire state of Assam, dedicated to fostering a culture of curiosity and lifelong learning by organizing high-caliber events like its renowned annual Northeast India Quiz.
 
-<button onclick="answer('C')">C. Kolkata</button><br><br>
+By transforming information into a competitive sport during a time of global isolation, Prahelika successfully bridged the gap between academic education and general awareness, solidifying its reputation as the premier destination for the state's brightest minds to gather, compete, and grow.
 
-<button onclick="answer('D')">D. Chennai</button>
+Through its consistent efforts and widespread influence, the forum has not only established Darrang as a central hub for intellectual discourse but continues to set the gold standard for quizzing excellence across the entire region.
+
+</p>
+
+</section>
+
+
+<!-- ACHIEVEMENT GALLERY -->
+
+<section class="gallery">
+
+<h2>Our Achievements</h2>
+
+<div class="slider">
+
+<img src="achieve1.jpg">
+<img src="achieve2.jpg">
+<img src="achieve3.jpg">
+<img src="achieve4.jpg">
+<img src="achieve5.jpg">
 
 </div>
 
 </section>
 
 
-<section id="leaderboard">
+<!-- EXECUTIVE MEMBERS -->
 
-<h2>Leaderboard</h2>
+<section class="members">
 
-<div id="scores">No scores yet</div>
+<h2 style="text-align:center;">Executive Members</h2>
 
-</section>
+<div class="member-grid">
 
+<div class="member">
+<img src="member1.jpg">
+<h3>Member Name</h3>
+<p>President</p>
+</div>
 
-<section id="admin">
+<div class="member">
+<img src="member2.jpg">
+<h3>Member Name</h3>
+<p>Vice President</p>
+</div>
 
-<h2>Admin Login</h2>
+<div class="member">
+<img src="member3.jpg">
+<h3>Member Name</h3>
+<p>Secretary</p>
+</div>
 
-<input type="password" id="adminPass" placeholder="Enter Admin Password">
-
-<button onclick="loginAdmin()">Login</button>
-
-<div id="adminPanel" style="display:none;">
-
-<h3>Add New Question</h3>
-
-<input id="adminQuestion" placeholder="Question"><br><br>
-
-<input id="A" placeholder="Option A"><br>
-
-<input id="B" placeholder="Option B"><br>
-
-<input id="C" placeholder="Option C"><br>
-
-<input id="D" placeholder="Option D"><br><br>
-
-<input id="ans" placeholder="Correct Option"><br><br>
-
-<button onclick="addQ()">Add Question</button>
+<div class="member">
+<img src="member4.jpg">
+<h3>Member Name</h3>
+<p>Treasurer</p>
+</div>
 
 </div>
 
 </section>
 
 
-<section id="gallery">
+<!-- CONTACT -->
 
-<h2>Gallery</h2>
+<section class="contact">
 
-<img src="gallery1.jpg" class="gallery">
+<h2>Contact Us</h2>
 
-<img src="gallery2.jpg" class="gallery">
+<p>Email: prahelikaquizforum@gmail.com</p>
 
-<img src="gallery3.jpg" class="gallery">
+<p>Location: Darrang, Assam</p>
 
-</section>
-
-
-<section id="events">
-
-<h2>Upcoming Events</h2>
-
-<ul>
-
-<li>District Level Quiz Competition</li>
-
-<li>Daily Online Quiz</li>
-
-<li>Science Quiz Festival</li>
-
-</ul>
+<p>Follow us for quiz updates and competitions</p>
 
 </section>
-
-
-<script>
-
-function show(id){
-
-document.querySelectorAll("section").forEach(s=>s.classList.remove("active"))
-
-document.getElementById(id).classList.add("active")
-
-}
-
-
-function loginAdmin(){
-
-let pass=document.getElementById("adminPass").value
-
-if(pass==="prahelika123"){
-
-document.getElementById("adminPanel").style.display="block"
-
-alert("Admin Login Successful")
-
-}
-
-else{
-
-alert("Wrong Password")
-
-}
-
-}
-
-
-function answer(option){
-
-alert("You selected option "+option)
-
-}
-
-
-function addQ(){
-
-alert("Question Added Successfully")
-
-}
-
-</script>
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-<script src="firebase.js"></script>
-<script src="app.js"></script>
 
 </body>
 </html>
