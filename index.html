@@ -59,59 +59,16 @@ border-radius:10px;
 
 <body>
 
-<header class="hero">
-<h1 style="color:blue;">Welcome to the Prahelika Quiz Forum!</h1>
+<header>
+<h1 style="color:white;">Welcome to the Prahelika Quiz Forum!</h1>
 <p>Knowledge • Competition • Excellence</p>
 
-<button onclick="document.getElementById('start-screen').scrollIntoView({behavior:'smooth'})">
-Start Quiz
-</button>
+<button onclick="show('quiz')">Start Quiz</button>
 </header>
-
-
-<!-- EXECUTIVES -->
-
-<section id="executives" class="active">
-
-<h2>Executive Members</h2>
-
-<div class="card">
-<img src="president.jpg" width="150">
-<h3>Mritunjoy Kumar Dev Sharma</h3>
-<p>President</p>
-</div>
-
-</section>
-
-
-<!-- START SCREEN -->
-
-<div id="start-screen">
-
-<h2>Prahelika Quiz Forum</h2>
-
-<input type="text" id="playerName" placeholder="Enter Your Name">
-
-<button onclick="startQuiz()">Start Quiz</button>
-
-</div>
-
-
-<!-- QUIZ CONTAINER -->
-
-<div id="quiz-container" style="display:none;">
-
-<h2 id="quizQuestion"></h2>
-
-<div id="options"></div>
-
-</div>
 
 
 <h1>Prahelika Quiz Forum Darrang</h1>
 
-
-<!-- NAVIGATION -->
 
 <nav>
 
@@ -130,9 +87,7 @@ Start Quiz
 </nav>
 
 
-<!-- HOME -->
-
-<section id="home">
+<section id="home" class="active">
 
 <h2>Welcome to Prahelika Quiz Forum</h2>
 
@@ -141,43 +96,37 @@ Start Quiz
 </section>
 
 
-<!-- QUIZ -->
-
 <section id="quiz">
 
 <div class="card">
 
-<h2 id="q"></h2>
+<h2 id="q">Sample Question: What is the capital of India?</h2>
 
-<div id="quizOptions"></div>
+<button onclick="answer('A')">A. Delhi</button><br><br>
 
-<button onclick="next()">Next</button>
+<button onclick="answer('B')">B. Mumbai</button><br><br>
+
+<button onclick="answer('C')">C. Kolkata</button><br><br>
+
+<button onclick="answer('D')">D. Chennai</button>
 
 </div>
 
 </section>
 
 
-<!-- LEADERBOARD -->
-
 <section id="leaderboard">
 
 <h2>Leaderboard</h2>
 
-<div id="scores"></div>
-
-<h3>Time Left: <span id="timer">15</span> sec</h3>
-
-<ul id="leaderboardList"></ul>
+<div id="scores">No scores yet</div>
 
 </section>
 
 
-<!-- ADMIN PANEL -->
-
 <section id="admin">
 
-<h2>Admin Panel</h2>
+<h2>Admin Login</h2>
 
 <input type="password" id="adminPass" placeholder="Enter Admin Password">
 
@@ -206,8 +155,6 @@ Start Quiz
 </section>
 
 
-<!-- GALLERY -->
-
 <section id="gallery">
 
 <h2>Gallery</h2>
@@ -220,8 +167,6 @@ Start Quiz
 
 </section>
 
-
-<!-- EVENTS -->
 
 <section id="events">
 
@@ -240,7 +185,52 @@ Start Quiz
 </section>
 
 
-<script src="app.js"></script>
+<script>
+
+function show(id){
+
+document.querySelectorAll("section").forEach(s=>s.classList.remove("active"))
+
+document.getElementById(id).classList.add("active")
+
+}
+
+
+function loginAdmin(){
+
+let pass=document.getElementById("adminPass").value
+
+if(pass==="prahelika123"){
+
+document.getElementById("adminPanel").style.display="block"
+
+alert("Admin Login Successful")
+
+}
+
+else{
+
+alert("Wrong Password")
+
+}
+
+}
+
+
+function answer(option){
+
+alert("You selected option "+option)
+
+}
+
+
+function addQ(){
+
+alert("Question Added Successfully")
+
+}
+
+</script>
 
 </body>
 </html>
