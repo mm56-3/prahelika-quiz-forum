@@ -1,210 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRAHELIKA - MASTER CONTROL</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background: #020617; color: white; min-height: 100vh; font-family: sans-serif; }
-        .card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
-        input, textarea { background: #000 !important; border: 1px solid #334155 !important; color: white !important; }
-        .section-title { border-left: 4px solid #22d3ee; padding-left: 12px; margin-bottom: 16px; font-weight: bold; text-transform: uppercase; }
-        .preview-img { width: 100px; height: 60px; object-fit: cover; border-radius: 8px; margin-top: 10px; background: #111; border: 1px dashed #334155; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRAHELIKA - MASTER CONTROL</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+body{
+background:#020617;
+color:white;
+min-height:100vh;
+font-family:sans-serif;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter:blur(10px);
+}
+
+input,textarea{
+background:#000 !important;
+border:1px solid #334155 !important;
+color:white !important;
+}
+
+.section-title{
+border-left:4px solid #22d3ee;
+padding-left:12px;
+margin-bottom:16px;
+font-weight:bold;
+text-transform:uppercase;
+}
+
+.preview-img{
+width:100px;
+height:60px;
+object-fit:cover;
+border-radius:8px;
+margin-top:10px;
+background:#111;
+border:1px dashed #334155;
+}
+
+</style>
 </head>
+
 <body class="p-6">
 
-    <div id="login-box" class="max-w-md mx-auto mt-20 p-8 card rounded-3xl shadow-2xl">
-        <h1 class="text-2xl font-bold mb-6 text-cyan-400 text-center uppercase tracking-widest">Admin Login</h1>
-        <input type="text" id="user" placeholder="Admin ID" class="w-full p-3 mb-4 rounded-lg outline-none focus:border-cyan-500">
-        <input type="password" id="pass" placeholder="Password" class="w-full p-3 mb-6 rounded-lg outline-none focus:border-cyan-500">
-        <button id="login-btn" class="w-full bg-blue-600 hover:bg-blue-500 p-3 rounded-lg font-bold transition">ENTER DASHBOARD</button>
-    </div>
+<div id="login-box" class="max-w-md mx-auto mt-20 p-8 card rounded-3xl shadow-2xl">
 
-    <div id="dashboard" class="hidden max-w-6xl mx-auto">
-        <div class="flex justify-between items-center mb-10 border-b border-white/10 pb-5">
-            <h1 class="text-3xl font-black text-cyan-400 uppercase">Master Control Panel</h1>
-            <button onclick="location.reload()" class="bg-red-900/40 text-red-400 px-4 py-1 rounded-full text-xs hover:bg-red-600 hover:text-white transition">Logout</button>
-        </div>
+<h1 class="text-2xl font-bold mb-6 text-cyan-400 text-center uppercase tracking-widest">
+Admin Login
+</h1>
 
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="card p-6 rounded-2xl">
-                <h2 class="section-title text-cyan-400">Website Header</h2>
-                <input type="text" id="title-input" placeholder="Hero Title" class="w-full p-2 mb-2 rounded">
-                <textarea id="desc-input" placeholder="Description Text" class="w-full p-2 mb-2 rounded h-20"></textarea>
-                <input type="text" id="img-input" placeholder="Hero Image Direct URL" class="w-full p-2 rounded" oninput="document.getElementById('p-hero').src=this.value">
-                <img id="p-hero" class="preview-img" src="">
-                <button id="save-main-btn" class="w-full mt-4 bg-cyan-600 p-3 rounded-lg font-bold">UPDATE HOME CONTENT</button>
-            </div>
+<input id="user" placeholder="Admin ID" class="w-full p-3 mb-4 rounded-lg">
 
-            <div class="card p-6 rounded-2xl">
-                <h2 class="section-title text-green-400">Add Executive</h2>
-                <input type="text" id="exec-name" placeholder="Full Name" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="exec-pos" placeholder="Position (e.g. President)" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="exec-url" placeholder="Photo Direct Link" class="w-full p-2 rounded" oninput="document.getElementById('p-exec').src=this.value">
-                <img id="p-exec" class="preview-img rounded-full w-12 h-12" src="">
-                <button id="add-exec-btn" class="w-full mt-4 bg-green-600 p-3 rounded-lg font-bold">ADD NEW MEMBER</button>
-            </div>
+<input id="pass" type="password" placeholder="Password" class="w-full p-3 mb-6 rounded-lg">
 
-            <div class="card p-6 rounded-2xl">
-                <h2 class="section-title text-purple-400">Gallery Management</h2>
-                <p class="text-xs text-gray-500 mb-2">Separate multiple image links with a comma (,)</p>
-                <textarea id="gallery-urls" placeholder="https://link1.jpg, https://link2.png" class="w-full p-2 mb-4 rounded h-32"></textarea>
-                <button id="upload-gallery-btn" class="w-full bg-purple-600 p-3 rounded-lg font-bold">REPLACE GALLERY IMAGES</button>
-            </div>
+<button id="login-btn" class="w-full bg-blue-600 p-3 rounded-lg font-bold">
+ENTER DASHBOARD
+</button>
 
-            <div class="card p-6 rounded-2xl">
-                <h2 class="section-title text-yellow-400">Add Quiz Question</h2>
-                <input type="text" id="quiz-ques" placeholder="Question Text" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="quiz-img" placeholder="Question Image URL (Optional)" class="w-full p-2 mb-2 rounded">
-                <div class="grid grid-cols-2 gap-2 mb-2">
-                    <input type="text" id="opt-a" placeholder="Option A" class="p-2 rounded">
-                    <input type="text" id="opt-b" placeholder="Option B" class="p-2 rounded">
-                    <input type="text" id="opt-c" placeholder="Option C" class="p-2 rounded">
-                    <input type="text" id="opt-d" placeholder="Option D" class="p-2 rounded">
-                </div>
-                <input type="text" id="quiz-correct" placeholder="Correct Answer (Exact Match)" class="w-full p-2 mb-4 rounded">
-                <button id="add-quiz-btn" class="w-full bg-yellow-600 p-3 rounded-lg font-bold text-black">PUBLISH QUESTION</button>
-            </div>
+</div>
 
-            <div class="card p-6 rounded-2xl md:col-span-2">
-                <h2 class="section-title text-pink-400">Contact & Social Links</h2>
-                <div class="grid md:grid-cols-2 gap-4">
-                    <input type="text" id="cont-phone" placeholder="Phone Number" class="p-2 rounded">
-                    <input type="text" id="cont-fb" placeholder="Facebook Profile URL" class="p-2 rounded">
-                    <input type="text" id="cont-ig" placeholder="Instagram Profile URL" class="p-2 rounded">
-                    <input type="text" id="cont-yt" placeholder="YouTube Channel URL" class="p-2 rounded">
-                </div>
-                <button id="save-contact-btn" class="w-full mt-4 bg-pink-600 p-3 rounded-lg font-bold">SAVE ALL CONTACT INFO</button>
-            </div>
-        </div>
-    </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
-            authDomain: "prahelika-fbf98.firebaseapp.com",
-            projectId: "prahelika-fbf98",
-            storageBucket: "prahelika-fbf98.firebasestorage.app",
-            messagingSenderId: "21670057223",
-            appId: "1:21670057223:web:d20225509d824505cb61a2"
-        };
+<div id="dashboard" class="hidden max-w-6xl mx-auto">
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+<div class="flex justify-between items-center mb-10 border-b border-white/10 pb-5">
 
-        // --- LOGIN SYSTEM ---
-        document.getElementById('login-btn').onclick = () => {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
-            if(u === 'VIKRAM784125' && p === '#UDSB784125781005') {
-                document.getElementById('login-box').classList.add('hidden');
-                document.getElementById('dashboard').classList.remove('hidden');
-                loadExistingData();
-            } else { alert("Unauthorized Access"); }
-        };
+<h1 class="text-3xl font-black text-cyan-400 uppercase">
+Master Control Panel
+</h1>
 
-        // --- FETCH EXISTING DATA ---
-        function loadExistingData() {
-            // Fetch Header
-            onSnapshot(doc(db, "website", "data"), (d) => {
-                if(d.exists()){
-                    document.getElementById('title-input').value = d.data().title || "";
-                    document.getElementById('desc-input').value = d.data().description || "";
-                    document.getElementById('img-input').value = d.data().heroImage || "";
-                    document.getElementById('p-hero').src = d.data().heroImage || "";
-                }
-            });
-            // Fetch Contacts
-            onSnapshot(doc(db, "website", "contact"), (d) => {
-                if(d.exists()){
-                    document.getElementById('cont-phone').value = d.data().phone || "";
-                    document.getElementById('cont-fb').value = d.data().facebook || "";
-                    document.getElementById('cont-ig').value = d.data().instagram || "";
-                    document.getElementById('cont-yt').value = d.data().youtube || "";
-                }
-            });
-            // Fetch Gallery (to see current links)
-            onSnapshot(doc(db, "website", "gallery"), (d) => {
-                if(d.exists()){
-                    document.getElementById('gallery-urls').value = (d.data().images || []).join(', ');
-                }
-            });
-        }
+<button onclick="location.reload()" class="bg-red-900/40 px-4 py-1 rounded-full text-xs">
+Logout
+</button>
 
-        // --- SAVE ACTIONS ---
-        document.getElementById('save-main-btn').onclick = async () => {
-            try {
-                await setDoc(doc(db, "website", "data"), {
-                    title: document.getElementById('title-input').value,
-                    description: document.getElementById('desc-input').value,
-                    heroImage: document.getElementById('img-input').value
-                }, { merge: true });
-                alert("Home Content Updated Successfully!");
-            } catch (e) { alert(e.message); }
-        };
+</div>
 
-        document.getElementById('add-exec-btn').onclick = async () => {
-            try {
-                await addDoc(collection(db, "executives"), {
-                    name: document.getElementById('exec-name').value,
-                    pos: document.getElementById('exec-pos').value,
-                    url: document.getElementById('exec-url').value
-                });
-                alert("Member Added!");
-                document.getElementById('exec-name').value = "";
-                document.getElementById('exec-pos').value = "";
-                document.getElementById('exec-url').value = "";
-            } catch (e) { alert(e.message); }
-        };
 
-        document.getElementById('upload-gallery-btn').onclick = async () => {
-            const urls = document.getElementById('gallery-urls').value.split(',').map(u => u.trim()).filter(u => u !== "");
-            try {
-                await setDoc(doc(db, "website", "gallery"), { images: urls });
-                alert("Gallery Database Replaced!");
-            } catch (e) { alert(e.message); }
-        };
 
-        document.getElementById('add-quiz-btn').onclick = async () => {
-            try {
-                await addDoc(collection(db, "quiz_questions"), {
-                    text: document.getElementById('quiz-ques').value,
-                    image: document.getElementById('quiz-img').value || "",
-                    options: [
-                        document.getElementById('opt-a').value,
-                        document.getElementById('opt-b').value,
-                        document.getElementById('opt-c').value,
-                        document.getElementById('opt-d').value
-                    ],
-                    correct: document.getElementById('quiz-correct').value
-                });
-                alert("Question Published!");
-                document.getElementById('quiz-ques').value = "";
-                document.getElementById('quiz-img').value = "";
-                document.getElementById('opt-a').value = "";
-                document.getElementById('opt-b').value = "";
-                document.getElementById('opt-c').value = "";
-                document.getElementById('opt-d').value = "";
-                document.getElementById('quiz-correct').value = "";
-            } catch (e) { alert(e.message); }
-        };
+<div class="grid md:grid-cols-2 gap-8">
 
-        document.getElementById('save-contact-btn').onclick = async () => {
-            try {
-                await setDoc(doc(db, "website", "contact"), {
-                    phone: document.getElementById('cont-phone').value,
-                    facebook: document.getElementById('cont-fb').value,
-                    instagram: document.getElementById('cont-ig').value,
-                    youtube: document.getElementById('cont-yt').value
-                }, { merge: true });
-                alert("Contact Details Saved!");
-            } catch (e) { alert(e.message); }
-        };
-    </script>
+<!-- HERO CONTENT -->
+
+<div class="card p-6 rounded-2xl">
+
+<h2 class="section-title text-cyan-400">Website Header</h2>
+
+<input id="title-input" placeholder="Hero Title" class="w-full p-2 mb-2 rounded">
+
+<textarea id="desc-input" placeholder="Description Text" class="w-full p-2 mb-2 rounded h-20"></textarea>
+
+<input id="img-input" placeholder="Hero Image URL" class="w-full p-2 rounded"
+oninput="document.getElementById('p-hero').src=this.value">
+
+<img id="p-hero" class="preview-img">
+
+<button id="save-main-btn" class="w-full mt-4 bg-cyan-600 p-3 rounded-lg font-bold">
+UPDATE HOME CONTENT
+</button>
+
+</div>
+
+
+
+<!-- EXECUTIVE -->
+
+<div class="card p-6 rounded-2xl">
+
+<h2 class="section-title text-green-400">Add Executive</h2>
+
+<input id="exec-name" placeholder="Full Name" class="w-full p-2 mb-2 rounded">
+
+<input id="exec-pos" placeholder="Position" class="w-full p-2 mb-2 rounded">
+
+<input id="exec-url" placeholder="Photo URL" class="w-full p-2 rounded"
+oninput="document.getElementById('p-exec').src=this.value">
+
+<img id="p-exec" class="preview-img rounded-full w-12 h-12">
+
+<button id="add-exec-btn" class="w-full mt-4 bg-green-600 p-3 rounded-lg font-bold">
+ADD MEMBER
+</button>
+
+</div>
+
+
+
+<!-- GALLERY -->
+
+<div class="card p-6 rounded-2xl">
+
+<h2 class="section-title text-purple-400">Gallery</h2>
+
+<textarea id="gallery-urls"
+placeholder="image1.jpg, image2.jpg"
+class="w-full p-2 mb-4 rounded h-32"></textarea>
+
+<button id="upload-gallery-btn"
+class="w-full bg-purple-600 p-3 rounded-lg font-bold">
+
+UPDATE GALLERY
+
+</button>
+
+</div>
+
+
+
+<!-- QUIZ -->
+
+<div class="card p-6 rounded-2xl">
+
+<h2 class="section-title text-yellow-400">Add Quiz Question</h2>
+
+<input id="quiz-ques" placeholder="Question" class="w-full p-2 mb-2 rounded">
+
+<input id="quiz-img" placeholder="Image URL (optional)" class="w-full p-2 mb-2 rounded">
+
+<div class="grid grid-cols-2 gap-2 mb-2">
+
+<input id="opt-a" placeholder="Option A" class="p-2 rounded">
+<input id="opt-b" placeholder="Option B" class="p-2 rounded">
+<input id="opt-c" placeholder="Option C" class="p-2 rounded">
+<input id="opt-d" placeholder="Option D" class="p-2 rounded">
+
+</div>
+
+<input id="quiz-correct" placeholder="Correct Answer" class="w-full p-2 mb-4 rounded">
+
+<button id="add-quiz-btn"
+class="w-full bg-yellow-600 p-3 rounded-lg font-bold text-black">
+
+PUBLISH QUESTION
+
+</button>
+
+</div>
+
+
+
+<!-- CONTACT -->
+
+<div class="card p-6 rounded-2xl md:col-span-2">
+
+<h2 class="section-title text-pink-400">Contact Info</h2>
+
+<div class="grid md:grid-cols-2 gap-4">
+
+<input id="cont-phone" placeholder="Phone" class="p-2 rounded">
+<input id="cont-fb" placeholder="Facebook URL" class="p-2 rounded">
+<input id="cont-ig" placeholder="Instagram URL" class="p-2 rounded">
+<input id="cont-yt" placeholder="YouTube URL" class="p-2 rounded">
+
+</div>
+
+<button id="save-contact-btn"
+class="w-full mt-4 bg-pink-600 p-3 rounded-lg font-bold">
+
+SAVE CONTACT
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<script type="module">
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+setDoc,
+collection,
+addDoc,
+onSnapshot
+}
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
+authDomain:"prahelika-fbf98.firebaseapp.com",
+projectId:"prahelika-fbf98",
+storageBucket:"prahelika-fbf98.appspot.com",
+messagingSenderId:"21670057223",
+appId:"1:21670057223:web:d20225509d824505cb61a2"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
+
+
+document.getElementById("login-btn").onclick=()=>{
+
+const u=document.getElementById("user").value;
+const p=document.getElementById("pass").value;
+
+if(u==="VIKRAM784125" && p==="#UDSB784125781005"){
+
+document.getElementById("login-box").classList.add("hidden");
+document.getElementById("dashboard").classList.remove("hidden");
+
+loadExistingData();
+
+}else{
+
+alert("Unauthorized Access");
+
+}
+
+};
+
+
+
+function loadExistingData(){
+
+onSnapshot(doc(db,"website","data"),d=>{
+
+if(!d.exists()) return
+
+document.getElementById("title-input").value=d.data().title||"";
+document.getElementById("desc-input").value=d.data().description||"";
+document.getElementById("img-input").value=d.data().heroImage||"";
+document.getElementById("p-hero").src=d.data().heroImage||"";
+
+});
+
+}
+
+
+
+document.getElementById("save-main-btn").onclick=async()=>{
+
+await setDoc(doc(db,"website","data"),{
+
+title:document.getElementById("title-input").value,
+description:document.getElementById("desc-input").value,
+heroImage:document.getElementById("img-input").value,
+updated:Date.now()
+
+},{merge:true});
+
+alert("Homepage Updated");
+
+};
+
+
+
+document.getElementById("add-exec-btn").onclick=async()=>{
+
+await addDoc(collection(db,"executives"),{
+
+name:document.getElementById("exec-name").value,
+pos:document.getElementById("exec-pos").value,
+url:document.getElementById("exec-url").value,
+created:Date.now()
+
+});
+
+alert("Executive Added");
+
+};
+
+
+
+document.getElementById("upload-gallery-btn").onclick=async()=>{
+
+const urls=document.getElementById("gallery-urls")
+.value.split(",")
+.map(u=>u.trim());
+
+await setDoc(doc(db,"website","gallery"),{
+
+images:urls,
+updated:Date.now()
+
+});
+
+alert("Gallery Updated");
+
+};
+
+
+
+document.getElementById("add-quiz-btn").onclick=async()=>{
+
+await addDoc(collection(db,"quiz_questions"),{
+
+text:document.getElementById("quiz-ques").value,
+image:document.getElementById("quiz-img").value,
+
+options:[
+document.getElementById("opt-a").value,
+document.getElementById("opt-b").value,
+document.getElementById("opt-c").value,
+document.getElementById("opt-d").value
+],
+
+correct:document.getElementById("quiz-correct").value,
+created:Date.now()
+
+});
+
+alert("Question Published");
+
+};
+
+
+
+document.getElementById("save-contact-btn").onclick=async()=>{
+
+await setDoc(doc(db,"website","contact"),{
+
+phone:document.getElementById("cont-phone").value,
+facebook:document.getElementById("cont-fb").value,
+instagram:document.getElementById("cont-ig").value,
+youtube:document.getElementById("cont-yt").value,
+updated:Date.now()
+
+},{merge:true});
+
+alert("Contact Saved");
+
+};
+
+</script>
+
 </body>
 </html>
