@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRAHELIKA - ADMIN LOGIN</title>
+    <title>PRAHELIKA - MASTER CONTROL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background: #020617; color: white; min-height: 100vh; font-family: sans-serif; }
         .card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
         input, textarea { background: #000 !important; border: 1px solid #334155 !important; color: white !important; }
+        .section-title { border-left: 4px solid; padding-left: 12px; margin-bottom: 16px; font-weight: bold; }
     </style>
 </head>
 <body class="p-6">
@@ -28,15 +29,15 @@
 
         <div class="grid md:grid-cols-2 gap-8">
             <div class="card p-6 rounded-2xl">
-                <h2 class="text-xl font-bold mb-4 text-cyan-400 border-l-4 border-cyan-400 pl-3">Website Header</h2>
-                <input type="text" id="title-input" placeholder="New Forum Title" class="w-full p-2 mb-4 rounded">
-                <textarea id="desc-input" placeholder="New Description" class="w-full p-2 mb-4 rounded h-20"></textarea>
+                <h2 class="section-title text-cyan-400 border-cyan-400">Website Header</h2>
+                <input type="text" id="title-input" placeholder="New Forum Title" class="w-full p-2 mb-2 rounded">
+                <textarea id="desc-input" placeholder="New Description" class="w-full p-2 mb-2 rounded h-20"></textarea>
                 <input type="text" id="img-input" placeholder="New Hero Image URL" class="w-full p-2 mb-4 rounded">
                 <button id="save-main-btn" class="w-full bg-cyan-600 p-3 rounded-lg font-bold">UPDATE LIVE SITE</button>
             </div>
 
             <div class="card p-6 rounded-2xl">
-                <h2 class="text-xl font-bold mb-4 text-green-400 border-l-4 border-green-400 pl-3">Add Executive</h2>
+                <h2 class="section-title text-green-400 border-green-400">Add Executive</h2>
                 <input type="text" id="exec-name" placeholder="Name" class="w-full p-2 mb-2 rounded">
                 <input type="text" id="exec-pos" placeholder="Position" class="w-full p-2 mb-2 rounded">
                 <input type="text" id="exec-url" placeholder="Photo URL" class="w-full p-2 mb-4 rounded">
@@ -44,22 +45,33 @@
             </div>
 
             <div class="card p-6 rounded-2xl">
-                <h2 class="text-xl font-bold mb-4 text-purple-400 border-l-4 border-purple-400 pl-3">Gallery</h2>
+                <h2 class="section-title text-purple-400 border-purple-400">Gallery</h2>
                 <textarea id="gallery-urls" placeholder="Paste URLs separated by commas" class="w-full p-2 mb-4 rounded h-32"></textarea>
                 <button id="upload-gallery-btn" class="w-full bg-purple-600 p-3 rounded-lg font-bold">UPDATE GALLERY</button>
             </div>
 
             <div class="card p-6 rounded-2xl">
-                <h2 class="text-xl font-bold mb-4 text-yellow-400 border-l-4 border-yellow-400 pl-3">Add Quiz Question</h2>
+                <h2 class="section-title text-yellow-400 border-yellow-400">Add Quiz Question</h2>
                 <input type="text" id="quiz-ques" placeholder="Question" class="w-full p-2 mb-2 rounded">
-                <div class="grid grid-cols-2 gap-2 mb-4">
-                    <input type="text" id="opt-a" placeholder="A" class="p-2 rounded">
-                    <input type="text" id="opt-b" placeholder="B" class="p-2 rounded">
-                    <input type="text" id="opt-c" placeholder="C" class="p-2 rounded">
-                    <input type="text" id="opt-d" placeholder="D" class="p-2 rounded">
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <input type="text" id="opt-a" placeholder="A" class="p-2 rounded border border-white/10">
+                    <input type="text" id="opt-b" placeholder="B" class="p-2 rounded border border-white/10">
+                    <input type="text" id="opt-c" placeholder="C" class="p-2 rounded border border-white/10">
+                    <input type="text" id="opt-d" placeholder="D" class="p-2 rounded border border-white/10">
                 </div>
                 <input type="text" id="quiz-correct" placeholder="Correct Answer" class="w-full p-2 mb-4 rounded">
                 <button id="add-quiz-btn" class="w-full bg-yellow-600 p-3 rounded-lg font-bold text-black">ADD QUESTION</button>
+            </div>
+
+            <div class="card p-6 rounded-2xl md:col-span-2">
+                <h2 class="section-title text-pink-400 border-pink-400">Contact & Social Links</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <input type="text" id="cont-phone" placeholder="Phone Number" class="p-2 rounded border border-white/10">
+                    <input type="text" id="cont-fb" placeholder="Facebook Link" class="p-2 rounded border border-white/10">
+                    <input type="text" id="cont-ig" placeholder="Instagram Link" class="p-2 rounded border border-white/10">
+                    <input type="text" id="cont-yt" placeholder="YouTube Link" class="p-2 rounded border border-white/10">
+                </div>
+                <button id="save-contact-btn" class="w-full mt-4 bg-pink-600 p-3 rounded-lg font-bold">SAVE CONTACT INFO</button>
             </div>
         </div>
     </div>
@@ -87,13 +99,72 @@
             if(u === 'VIKRAM784125' && p === '#UDSB784125781005') {
                 document.getElementById('login-box').style.display = 'none';
                 document.getElementById('dashboard').classList.remove('hidden');
-            } else {
-                alert("Incorrect Login Details");
-            }
+            } else { alert("Incorrect Login Details"); }
         };
 
-        // All other buttons (Header, Member, Gallery, Quiz) functions follow here...
-        // [Functions for setDoc and addDoc as previously structured]
+        // SAVE MAIN CONTENT
+        document.getElementById('save-main-btn').onclick = async () => {
+            try {
+                await setDoc(doc(db, "website", "data"), {
+                    title: document.getElementById('title-input').value,
+                    description: document.getElementById('desc-input').value,
+                    heroImage: document.getElementById('img-input').value
+                }, { merge: true });
+                alert("Website Updated Successfully!");
+            } catch (e) { alert(e.message); }
+        };
+
+        // ADD EXECUTIVE
+        document.getElementById('add-exec-btn').onclick = async () => {
+            try {
+                await addDoc(collection(db, "executives"), {
+                    name: document.getElementById('exec-name').value,
+                    pos: document.getElementById('exec-pos').value,
+                    url: document.getElementById('exec-url').value
+                });
+                alert("Executive Added!");
+            } catch (e) { alert(e.message); }
+        };
+
+        // UPDATE GALLERY
+        document.getElementById('upload-gallery-btn').onclick = async () => {
+            const urls = document.getElementById('gallery-urls').value.split(',').map(u => u.trim());
+            try {
+                await setDoc(doc(db, "website", "gallery"), { images: urls });
+                alert("Gallery Updated!");
+            } catch (e) { alert(e.message); }
+        };
+
+        // ADD QUIZ QUESTION
+        document.getElementById('add-quiz-btn').onclick = async () => {
+            const qData = {
+                text: document.getElementById('quiz-ques').value,
+                options: [
+                    document.getElementById('opt-a').value,
+                    document.getElementById('opt-b').value,
+                    document.getElementById('opt-c').value,
+                    document.getElementById('opt-d').value
+                ],
+                correct: document.getElementById('quiz-correct').value
+            };
+            try {
+                await addDoc(collection(db, "quiz_questions"), qData);
+                alert("Question Added!");
+            } catch (e) { alert(e.message); }
+        };
+
+        // SAVE CONTACT INFO
+        document.getElementById('save-contact-btn').onclick = async () => {
+            try {
+                await setDoc(doc(db, "website", "contact"), {
+                    phone: document.getElementById('cont-phone').value,
+                    facebook: document.getElementById('cont-fb').value,
+                    instagram: document.getElementById('cont-ig').value,
+                    youtube: document.getElementById('cont-yt').value
+                }, { merge: true });
+                alert("Contact Info Saved!");
+            } catch (e) { alert(e.message); }
+        };
     </script>
 </body>
 </html>
