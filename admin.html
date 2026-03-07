@@ -3,83 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRAHELIKA - MASTER CONTROL</title>
+    <title>PRAHELIKA QUIZ FORUM</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #020617; color: white; min-height: 100vh; font-family: sans-serif; }
-        .card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
-        input, textarea { background: #000 !important; border: 1px solid #334155 !important; color: white !important; }
-        .section-title { border-left: 4px solid; padding-left: 12px; margin-bottom: 16px; font-weight: bold; }
+        body { background: #020617; color: white; font-family: sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
     </style>
 </head>
-<body class="p-6">
+<body>
 
-    <div id="login-box" class="max-w-md mx-auto mt-20 p-8 card rounded-3xl shadow-2xl">
-        <h1 class="text-2xl font-bold mb-6 text-cyan-400 text-center uppercase tracking-widest">Admin Login</h1>
-        <input type="text" id="user" placeholder="Admin ID" class="w-full p-3 mb-4 rounded-lg outline-none focus:border-cyan-500">
-        <input type="password" id="pass" placeholder="Password" class="w-full p-3 mb-6 rounded-lg outline-none focus:border-cyan-500">
-        <button id="login-btn" class="w-full bg-blue-600 hover:bg-blue-500 p-3 rounded-lg font-bold transition">ENTER DASHBOARD</button>
-    </div>
-
-    <div id="dashboard" class="hidden max-w-6xl mx-auto">
-        <div class="flex justify-between items-center mb-10 border-b border-white/10 pb-5">
-            <h1 class="text-3xl font-black text-cyan-400 uppercase">Master Control Panel</h1>
-            <button onclick="location.reload()" class="bg-red-900/40 text-red-400 px-4 py-1 rounded-full text-xs border border-red-900/50">Logout</button>
+    <nav class="flex justify-between items-center p-6 max-w-7xl mx-auto">
+        <h1 class="font-black text-2xl text-cyan-400">PRAHELIKA</h1>
+        <div class="hidden md:flex space-x-6 text-sm font-bold uppercase">
+            <a href="#home" class="hover:text-cyan-400">Home</a>
+            <a href="#gallery" class="hover:text-cyan-400">Gallery</a>
+            <a href="#executives" class="hover:text-cyan-400">Executives</a>
+            <a href="#contacts" class="hover:text-cyan-400">Contacts</a>
         </div>
+        <button onclick="window.location.href='quiz.html'" class="bg-cyan-500 text-black px-6 py-2 rounded-full font-bold">START QUIZ</button>
+    </nav>
 
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="card p-6 rounded-2xl">
-                <h2 class="section-title text-cyan-400 border-cyan-400">Website Header</h2>
-                <input type="text" id="title-input" placeholder="New Forum Title" class="w-full p-2 mb-2 rounded">
-                <textarea id="desc-input" placeholder="New Description" class="w-full p-2 mb-2 rounded h-20"></textarea>
-                <input type="text" id="img-input" placeholder="New Hero Image URL" class="w-full p-2 mb-4 rounded">
-                <button id="save-main-btn" class="w-full bg-cyan-600 p-3 rounded-lg font-bold">UPDATE LIVE SITE</button>
+    <section id="home" class="min-h-[60vh] flex flex-col items-center justify-center text-center p-6">
+        <h1 id="hero-title" class="text-5xl md:text-7xl font-black mb-4 uppercase">Loading Title...</h1>
+        <p id="hero-desc" class="text-gray-400 max-w-2xl mb-8">Loading description...</p>
+        <div class="w-full max-w-4xl h-64 glass rounded-3xl overflow-hidden shadow-2xl">
+            <img id="hero-img" src="" class="w-full h-full object-cover opacity-60">
+        </div>
+    </section>
+
+    <section id="gallery" class="py-20 px-6 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-black mb-10 border-l-4 border-purple-500 pl-4">GALLERY</h2>
+        <div id="gallery-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
             </div>
+    </section>
 
-            <div class="card p-6 rounded-2xl">
-                <h2 class="section-title text-green-400 border-green-400">Add Executive</h2>
-                <input type="text" id="exec-name" placeholder="Name" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="exec-pos" placeholder="Position" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="exec-url" placeholder="Photo Direct Link (e.g., .jpg, .png)" class="w-full p-2 mb-4 rounded">
-                <button id="add-exec-btn" class="w-full bg-green-600 p-3 rounded-lg font-bold">ADD MEMBER</button>
+    <section id="executives" class="py-20 px-6 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-black mb-10 border-l-4 border-green-500 pl-4">EXECUTIVE MEMBERS</h2>
+        <div id="member-list" class="grid grid-cols-1 md:grid-cols-4 gap-6">
             </div>
+    </section>
 
-            <div class="card p-6 rounded-2xl">
-                <h2 class="section-title text-purple-400 border-purple-400">Gallery</h2>
-                <textarea id="gallery-urls" placeholder="Paste Direct Links separated by commas" class="w-full p-2 mb-4 rounded h-32"></textarea>
-                <button id="upload-gallery-btn" class="w-full bg-purple-600 p-3 rounded-lg font-bold">UPDATE GALLERY</button>
-            </div>
-
-            <div class="card p-6 rounded-2xl">
-                <h2 class="section-title text-yellow-400 border-yellow-400">Add Quiz Question</h2>
-                <input type="text" id="quiz-ques" placeholder="Question Text" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="quiz-img" placeholder="Question Image URL (Optional)" class="w-full p-2 mb-2 rounded">
-                <div class="grid grid-cols-2 gap-2 mb-2">
-                    <input type="text" id="opt-a" placeholder="Option A" class="p-2 rounded border border-white/10">
-                    <input type="text" id="opt-b" placeholder="Option B" class="p-2 rounded border border-white/10">
-                    <input type="text" id="opt-c" placeholder="Option C" class="p-2 rounded border border-white/10">
-                    <input type="text" id="opt-d" placeholder="Option D" class="p-2 rounded border border-white/10">
-                </div>
-                <input type="text" id="quiz-correct" placeholder="Correct Answer (Exact text)" class="w-full p-2 mb-4 rounded">
-                <button id="add-quiz-btn" class="w-full bg-yellow-600 p-3 rounded-lg font-bold text-black">ADD QUESTION</button>
-            </div>
-
-            <div class="card p-6 rounded-2xl md:col-span-2">
-                <h2 class="section-title text-pink-400 border-pink-400">Contact & Social Links</h2>
-                <div class="grid md:grid-cols-2 gap-4">
-                    <input type="text" id="cont-phone" placeholder="Phone Number" class="p-2 rounded border border-white/10">
-                    <input type="text" id="cont-fb" placeholder="Facebook Link" class="p-2 rounded border border-white/10">
-                    <input type="text" id="cont-ig" placeholder="Instagram Link" class="p-2 rounded border border-white/10">
-                    <input type="text" id="cont-yt" placeholder="YouTube Link" class="p-2 rounded border border-white/10">
-                </div>
-                <button id="save-contact-btn" class="w-full mt-4 bg-pink-600 p-3 rounded-lg font-bold">SAVE CONTACT INFO</button>
+    <footer id="contacts" class="bg-black/50 py-12 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:row justify-between items-center gap-6">
+            <div class="flex space-x-6">
+                <a id="fb-link" href="#" target="_blank" class="text-gray-400 hover:text-blue-500 font-bold">Facebook</a>
+                <a id="ig-link" href="#" target="_blank" class="text-gray-400 hover:text-pink-500 font-bold">Instagram</a>
+                <a id="yt-link" href="#" target="_blank" class="text-gray-400 hover:text-red-500 font-bold">YouTube</a>
+                <a id="phone-link" href="#" class="text-cyan-400 font-bold">Call Us</a>
             </div>
         </div>
-    </div>
+    </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
@@ -93,95 +70,57 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // LOGIN SYSTEM
-        document.getElementById('login-btn').onclick = () => {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
-            if(u === 'VIKRAM784125' && p === '#UDSB784125781005') {
-                document.getElementById('login-box').style.display = 'none';
-                document.getElementById('dashboard').classList.remove('hidden');
-            } else { alert("Incorrect Login Details"); }
-        };
+        // 1. SYNC HEADER (Home Page)
+        onSnapshot(doc(db, "website", "data"), (d) => {
+            if (d.exists()) {
+                const data = d.data();
+                document.getElementById('hero-title').innerText = data.title || "PRAHELIKA";
+                document.getElementById('hero-desc').innerText = data.description || "";
+                document.getElementById('hero-img').src = data.heroImage || "";
+            }
+        });
 
-        // SAVE HEADER CONTENT
-        document.getElementById('save-main-btn').onclick = async () => {
-            try {
-                await setDoc(doc(db, "website", "data"), {
-                    title: document.getElementById('title-input').value,
-                    description: document.getElementById('desc-input').value,
-                    heroImage: document.getElementById('img-input').value
-                }, { merge: true });
-                alert("Website Header Updated!");
-            } catch (e) { alert("Error: " + e.message); }
-        };
+        // 2. SYNC GALLERY (Updates whenever you click "Update Gallery" in Admin)
+        onSnapshot(doc(db, "website", "gallery"), (d) => {
+            const container = document.getElementById('gallery-container');
+            if (d.exists() && container) {
+                const images = d.data().images || [];
+                container.innerHTML = images.map(url => `
+                    <div class="glass rounded-xl overflow-hidden h-64 shadow-lg">
+                        <img src="${url}" class="w-full h-full object-cover">
+                    </div>
+                `).join('');
+            }
+        });
 
-        // ADD EXECUTIVE (Fixed for clean links)
-        document.getElementById('add-exec-btn').onclick = async () => {
-            const rawUrl = document.getElementById('exec-url').value;
-            // Clean up URL if they paste HTML by mistake
-            const cleanUrl = rawUrl.includes('src="') ? rawUrl.split('src="')[1].split('"')[0] : rawUrl.trim();
-
-            try {
-                await addDoc(collection(db, "executives"), {
-                    name: document.getElementById('exec-name').value,
-                    pos: document.getElementById('exec-pos').value,
-                    url: cleanUrl
+        // 3. SYNC MEMBERS (Updates whenever you click "Add Member" in Admin)
+        onSnapshot(collection(db, "executives"), (snap) => {
+            const list = document.getElementById('member-list');
+            if(list) {
+                list.innerHTML = "";
+                snap.forEach((doc) => {
+                    const m = doc.data();
+                    list.innerHTML += `
+                        <div class="glass p-6 rounded-2xl text-center">
+                            <img src="${m.url}" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover border-2 border-cyan-500">
+                            <h3 class="font-bold">${m.name}</h3>
+                            <p class="text-cyan-400 text-xs uppercase">${m.pos}</p>
+                        </div>
+                    `;
                 });
-                alert("Executive Member Added!");
-                document.getElementById('exec-name').value = "";
-                document.getElementById('exec-pos').value = "";
-                document.getElementById('exec-url').value = "";
-            } catch (e) { alert("Error: " + e.message); }
-        };
+            }
+        });
 
-        // UPDATE GALLERY (Fixed for lists)
-        document.getElementById('upload-gallery-btn').onclick = async () => {
-            const rawUrls = document.getElementById('gallery-urls').value;
-            const urlArray = rawUrls.split(',').map(u => u.trim()).filter(u => u !== "");
-            try {
-                await setDoc(doc(db, "website", "gallery"), { images: urlArray });
-                alert("Gallery Replaced!");
-                document.getElementById('gallery-urls').value = "";
-            } catch (e) { alert("Error: " + e.message); }
-        };
-
-        // ADD QUIZ QUESTION
-        document.getElementById('add-quiz-btn').onclick = async () => {
-            try {
-                await addDoc(collection(db, "quiz_questions"), {
-                    text: document.getElementById('quiz-ques').value,
-                    image: document.getElementById('quiz-img').value,
-                    options: [
-                        document.getElementById('opt-a').value,
-                        document.getElementById('opt-b').value,
-                        document.getElementById('opt-c').value,
-                        document.getElementById('opt-d').value
-                    ],
-                    correct: document.getElementById('quiz-correct').value
-                });
-                alert("Quiz Question Added!");
-                document.getElementById('quiz-ques').value = "";
-                document.getElementById('quiz-img').value = "";
-                document.getElementById('opt-a').value = "";
-                document.getElementById('opt-b').value = "";
-                document.getElementById('opt-c').value = "";
-                document.getElementById('opt-d').value = "";
-                document.getElementById('quiz-correct').value = "";
-            } catch (e) { alert("Error: " + e.message); }
-        };
-
-        // SAVE CONTACT INFO
-        document.getElementById('save-contact-btn').onclick = async () => {
-            try {
-                await setDoc(doc(db, "website", "contact"), {
-                    phone: document.getElementById('cont-phone').value,
-                    facebook: document.getElementById('cont-fb').value,
-                    instagram: document.getElementById('cont-ig').value,
-                    youtube: document.getElementById('cont-yt').value
-                }, { merge: true });
-                alert("Contact & Social Info Updated!");
-            } catch (e) { alert("Error: " + e.message); }
-        };
+        // 4. SYNC CONTACTS (Updates whenever you click "Save Contact Info" in Admin)
+        onSnapshot(doc(db, "website", "contact"), (d) => {
+            if (d.exists()) {
+                const c = d.data();
+                if(c.phone) document.getElementById('phone-link').href = "tel:" + c.phone;
+                if(c.facebook) document.getElementById('fb-link').href = c.facebook;
+                if(c.instagram) document.getElementById('ig-link').href = c.instagram;
+                if(c.youtube) document.getElementById('yt-link').href = c.youtube;
+            }
+        });
     </script>
 </body>
 </html>
