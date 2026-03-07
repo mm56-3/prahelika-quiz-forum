@@ -3,86 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRAHELIKA QUIZ FORUM - ADMIN</title>
+    <title>PRAHELIKA QUIZ FORUM DARRANG</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        body { background: #020617; color: white; min-height: 100vh; font-family: sans-serif; }
-        .card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
-        input, textarea { background: #000 !important; border: 1px solid #334155 !important; color: white !important; }
+        body { background: #020617; color: white; font-family: sans-serif; overflow-x: hidden; }
+        .hero-gradient { background: radial-gradient(circle at center, #1e293b 0%, #020617 100%); }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
     </style>
 </head>
-<body class="p-6">
+<body>
 
-    <div id="login-box" class="max-w-md mx-auto mt-20 p-8 card rounded-3xl shadow-2xl">
-        <h1 class="text-2xl font-bold mb-6 text-cyan-400 text-center uppercase tracking-widest">Admin Login</h1>
-        <input type="text" id="user" placeholder="Admin ID" class="w-full p-3 mb-4 rounded-lg outline-none focus:border-cyan-500">
-        <input type="password" id="pass" placeholder="Password" class="w-full p-3 mb-6 rounded-lg outline-none focus:border-cyan-500">
-        <button id="login-btn" class="w-full bg-blue-600 hover:bg-blue-500 p-3 rounded-lg font-bold transition">ENTER DASHBOARD</button>
-    </div>
-
-    <div id="dashboard" class="hidden max-w-6xl mx-auto">
-        <div class="flex justify-between items-center mb-10 border-b border-white/10 pb-5">
-            <h1 class="text-3xl font-black text-cyan-400 uppercase">Master Control Panel</h1>
-            <button onclick="location.reload()" class="bg-red-900/40 text-red-400 px-4 py-1 rounded-full text-xs border border-red-900/50">Logout</button>
+    <nav class="flex justify-between items-center p-6 max-w-7xl mx-auto">
+        <div class="flex items-center space-x-3">
+            <div class="bg-cyan-500 p-2 rounded-lg font-bold text-black">P</div>
+            <span class="font-black tracking-tighter text-xl">PRAHELIKA</span>
         </div>
+        <div class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-gray-400">
+            <a href="#home" class="hover:text-cyan-400">Home</a>
+            <a href="#gallery" class="hover:text-cyan-400">Gallery</a>
+            <a href="#executives" class="hover:text-cyan-400">Executives</a>
+            <a href="#contacts" class="hover:text-cyan-400">Contacts</a>
+        </div>
+        <button id="start-quiz-btn" class="bg-cyan-500 hover:bg-cyan-400 text-black px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider transition">Start Quiz</button>
+    </nav>
 
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="card p-6 rounded-2xl">
-                <h2 class="text-xl font-bold mb-4 text-cyan-400 border-l-4 border-cyan-400 pl-3">Main Content</h2>
-                <label class="text-xs text-gray-500 uppercase font-bold">Forum Title</label>
-                <input type="text" id="title-input" placeholder="Prahelika Quiz Forum" class="w-full p-2 mb-4 rounded">
-                <label class="text-xs text-gray-500 uppercase font-bold">Homepage Description</label>
-                <textarea id="desc-input" placeholder="Describe the forum..." class="w-full p-2 mb-4 rounded h-24"></textarea>
-                <label class="text-xs text-gray-500 uppercase font-bold">Hero Image URL</label>
-                <input type="text" id="img-input" placeholder="Paste Image Link" class="w-full p-2 mb-4 rounded">
-                <button id="save-main-btn" class="w-full bg-cyan-600 hover:bg-cyan-500 p-3 rounded-lg font-bold">UPDATE LIVE WEBSITE</button>
+    <section id="home" class="hero-gradient min-h-[80vh] flex flex-col items-center justify-center text-center px-6">
+        <h1 id="hero-title" class="text-5xl md:text-7xl font-black mb-6 animate__animated animate__fadeInDown uppercase">
+            PRAHELIKA QUIZ FORUM DARRANG
+        </h1>
+        <p id="hero-desc" class="text-gray-400 max-w-2xl mb-10 text-lg">Unleash your intellect with Prahelika.</p>
+        <div class="w-full max-w-4xl h-64 glass rounded-3xl overflow-hidden shadow-2xl">
+            <img id="hero-img" src="https://via.placeholder.com/1200x600" class="w-full h-full object-cover opacity-50">
+        </div>
+    </section>
+
+    <section id="gallery" class="py-20 px-6 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-black mb-10 border-l-4 border-purple-500 pl-4">GALLERY</h2>
+        <div id="gallery-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
             </div>
+    </section>
 
-            <div class="card p-6 rounded-2xl">
-                <h2 class="text-xl font-bold mb-4 text-green-400 border-l-4 border-green-400 pl-3">Add Executive Member</h2>
-                <input type="text" id="exec-name" placeholder="Full Name" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="exec-pos" placeholder="Position (e.g. President)" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="exec-url" placeholder="Member Photo URL" class="w-full p-2 mb-4 rounded">
-                <button id="add-exec-btn" class="w-full bg-green-600 hover:bg-green-500 p-3 rounded-lg font-bold">ADD MEMBER</button>
+    <section id="executives" class="py-20 px-6 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-black mb-10 border-l-4 border-green-500 pl-4 text-right">EXECUTIVE MEMBERS</h2>
+        <div id="member-list" class="grid grid-cols-1 md:grid-cols-4 gap-6">
             </div>
+    </section>
 
-            <div class="card p-6 rounded-2xl">
-                <h2 class="text-xl font-bold mb-4 text-purple-400 border-l-4 border-purple-400 pl-3">Image Gallery</h2>
-                <label class="text-xs text-gray-500 uppercase font-bold">Paste Image URLs (Separate with commas)</label>
-                <textarea id="gallery-urls" placeholder="https://image1.jpg, https://image2.png" class="w-full p-2 mb-4 rounded h-24"></textarea>
-                <button id="upload-gallery-btn" class="w-full bg-purple-600 hover:bg-purple-500 p-3 rounded-lg font-bold">UPDATE GALLERY</button>
-            </div>
-
-            <div class="card p-6 rounded-2xl">
-                <h2 class="text-xl font-bold mb-4 text-yellow-400 border-l-4 border-yellow-400 pl-3">Add Quiz Question</h2>
-                <input type="text" id="quiz-ques" placeholder="Question Text" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="quiz-img" placeholder="Question Image URL (Optional)" class="w-full p-2 mb-2 rounded">
-                <div class="grid grid-cols-2 gap-2 mb-2">
-                    <input type="text" id="opt-a" placeholder="Option A" class="p-2 rounded">
-                    <input type="text" id="opt-b" placeholder="Option B" class="p-2 rounded">
-                    <input type="text" id="opt-c" placeholder="Option C" class="p-2 rounded">
-                    <input type="text" id="opt-d" placeholder="Option D" class="p-2 rounded">
-                </div>
-                <input type="text" id="quiz-correct" placeholder="Correct Answer (Exact text)" class="w-full p-2 mb-4 rounded">
-                <button id="add-quiz-btn" class="w-full bg-yellow-600 hover:bg-yellow-500 p-3 rounded-lg font-bold">ADD QUESTION</button>
-            </div>
-
-            <div class="card p-6 rounded-2xl md:col-span-2">
-                <h2 class="text-xl font-bold mb-4 text-pink-400 border-l-4 border-pink-400 pl-3">Contact & Social Links</h2>
-                <div class="grid md:grid-cols-2 gap-4">
-                    <input type="text" id="cont-phone" placeholder="Phone Number" class="p-2 rounded">
-                    <input type="text" id="cont-fb" placeholder="Facebook URL" class="p-2 rounded">
-                    <input type="text" id="cont-ig" placeholder="Instagram URL" class="p-2 rounded">
-                    <input type="text" id="cont-yt" placeholder="YouTube URL" class="p-2 rounded">
-                </div>
-                <button id="save-contact-btn" class="w-full mt-4 bg-pink-600 hover:bg-pink-500 p-3 rounded-lg font-bold">SAVE CONTACT INFO</button>
+    <footer id="contacts" class="bg-black/50 py-12 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-500 text-sm mb-6 md:mb-0">© 2026 Prahelika Quiz Forum. All Rights Reserved.</p>
+            <div class="flex space-x-6">
+                <a id="fb-link" href="#" target="_blank" class="text-gray-400 hover:text-blue-500">Facebook</a>
+                <a id="ig-link" href="#" target="_blank" class="text-gray-400 hover:text-pink-500">Instagram</a>
+                <a id="yt-link" href="#" target="_blank" class="text-gray-400 hover:text-red-500">YouTube</a>
+                <a id="phone-link" href="#" class="text-cyan-400 font-bold">Call Us</a>
             </div>
         </div>
-    </div>
+    </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
@@ -96,41 +78,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // LOGIN SYSTEM
-        document.getElementById('login-btn').onclick = () => {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
-            if(u === 'VIKRAM784125' && p === '#UDSB784125781005') {
-                document.getElementById('login-box').style.display = 'none';
-                document.getElementById('dashboard').classList.remove('hidden');
-            } else {
-                alert("Wrong ID or Password");
-            }
-        };
-
-        // SAVE MAIN CONTENT
-        document.getElementById('save-main-btn').onclick = async () => {
-            try {
-                await setDoc(doc(db, "website", "data"), {
-                    title: document.getElementById('title-input').value,
-                    description: document.getElementById('desc-input').value,
-                    heroImage: document.getElementById('img-input').value
-                }, { merge: true });
-                alert("Success! Website Updated.");
-            } catch (e) { alert(e.message); }
-        };
-
-        // ADD MEMBER
-        document.getElementById('add-exec-btn').onclick = async () => {
-            try {
-                await addDoc(collection(db, "executives"), {
-                    name: document.getElementById('exec-name').value,
-                    pos: document.getElementById('exec-pos').value,
-                    url: document.getElementById('exec-url').value
-                });
-                alert("Member Added!");
-            } catch (e) { alert(e.message); }
-        };
-
-        // UPDATE GALLERY
-        document.getElementById('upload-gallery-btn').onclick = async () => {
+        // 1. Update Title & Hero Image
+        onSnapshot(doc(db, "website", "data"), (doc) => {
+            if (doc.exists()) {
+                const data = doc.
