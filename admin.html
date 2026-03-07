@@ -56,6 +56,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, doc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+        // Your specific Firebase credentials
         const firebaseConfig = {
             apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
             authDomain: "prahelika-fbf98.firebaseapp.com",
@@ -72,6 +73,7 @@
         document.getElementById('login-btn').onclick = () => {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
+            // Admin Credentials
             if(u === 'VIKRAM784125' && p === '#UDSB784125781005') {
                 document.getElementById('login-box').style.display = 'none';
                 document.getElementById('dashboard').classList.remove('hidden');
@@ -80,25 +82,26 @@
             }
         };
 
-        // SAVE MAIN CONTENT
+        // SAVE MAIN CONTENT TO FIREBASE
         document.getElementById('save-main-btn').onclick = async () => {
             const title = document.getElementById('title-input').value;
             const desc = document.getElementById('desc-input').value;
             const heroImg = document.getElementById('img-input').value;
 
             try {
+                // This targets the document "data" inside collection "website"
                 await setDoc(doc(db, "website", "data"), {
                     title: title,
                     description: desc,
                     heroImage: heroImg
                 }, { merge: true });
-                alert("Success! Website Updated Live.");
+                alert("Success! The live website has been updated.");
             } catch (e) { 
                 alert("Error: " + e.message); 
             }
         };
 
-        // ADD MEMBER
+        // ADD NEW MEMBER TO FIREBASE
         document.getElementById('add-exec-btn').onclick = async () => {
             const name = document.getElementById('exec-name').value;
             const pos = document.getElementById('exec-pos').value;
@@ -106,7 +109,8 @@
 
             try {
                 await addDoc(collection(db, "executives"), { name, pos, url });
-                alert("Member Added Successfully!");
+                alert("New Member Added Successfully!");
+                // Clear the boxes after success
                 document.getElementById('exec-name').value = "";
                 document.getElementById('exec-pos').value = "";
                 document.getElementById('exec-url').value = "";
