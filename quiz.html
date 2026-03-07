@@ -1,148 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRAHELIKA - LIVE QUIZ & LEADERBOARD</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background: #020617; color: white; font-family: sans-serif; min-height: 100vh; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .option-btn { width: 100%; text-align: left; padding: 1rem; border-radius: 0.75rem; margin-bottom: 0.5rem; transition: all 0.3s; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
-        .option-btn:hover { background: rgba(34, 211, 238, 0.1); border-color: #22d3ee; }
-        .leader-row { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    </style>
-</head>
-<body class="p-6">
+// --- ADD QUIZ QUESTION (ADMIN PANEL) ---
+document.getElementById('add-quiz-btn').onclick = async () => {
+    const questionText = document.getElementById('quiz-ques').value;
+    const options = [
+        document.getElementById('opt-a').value,
+        document.getElementById('opt-b').value,
+        document.getElementById('opt-c').value,
+        document.getElementById('opt-d').value
+    ];
+    const correctAnswer = document.getElementById('quiz-correct').value;
+    const imageUrl = document.getElementById('quiz-img').value;
 
-    <div class="max-w-2xl mx-auto">
-        <div id="quiz-container" class="glass p-8 rounded-3xl shadow-2xl mb-10">
-            <div id="quiz-content">
-                <div class="flex justify-between items-center mb-6">
-                    <span class="text-cyan-400 font-bold uppercase tracking-widest text-sm">Live Quiz</span>
-                    <span id="q-count" class="text-gray-500 text-sm font-bold">Question 0/0</span>
-                </div>
+    // Validation: Don't send empty questions
+    if (!questionText || !correctAnswer || options.some(opt => opt === "")) {
+        alert("Please fill in the question, all 4 options, and the correct answer.");
+        return;
+    }
 
-                <div id="q-image-area" class="hidden mb-6 rounded-2xl overflow-hidden h-48 border border-white/10">
-                    <img id="q-img" src="" class="w-full h-full object-cover">
-                </div>
-
-                <h2 id="q-text" class="text-2xl font-bold mb-8 leading-tight">Loading...</h2>
-                <div id="options-area"></div>
-            </div>
-
-            <div id="result-content" class="hidden text-center">
-                <h2 class="text-3xl font-black text-cyan-400 mb-2">FINISHED!</h2>
-                <p class="text-lg mb-6">Score: <span id="final-score" class="font-bold text-white">0</span></p>
-                <button onclick="location.reload()" class="bg-cyan-500 text-black px-6 py-2 rounded-full font-bold text-sm">Play Again</button>
-            </div>
-        </div>
-
-        <div class="glass p-8 rounded-3xl shadow-2xl">
-            <h2 class="text-xl font-black mb-6 text-yellow-400 border-l-4 border-yellow-400 pl-3">TOP SCORERS</h2>
-            <div id="leaderboard-list" class="space-y-2">
-                <p class="text-gray-500 text-sm">Waiting for results...</p>
-            </div>
-        </div>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, addDoc, query, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
-            authDomain: "prahelika-fbf98.firebaseapp.com",
-            projectId: "prahelika-fbf98",
-            storageBucket: "prahelika-fbf98.firebasestorage.app",
-            messagingSenderId: "21670057223",
-            appId: "1:21670057223:web:d20225509d824505cb61a2"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        let questions = [];
-        let currentIdx = 0;
-        let score = 0;
-
-        // 1. FETCH QUESTIONS
-        async function loadQuestions() {
-            const snap = await getDocs(collection(db, "quiz_questions"));
-            snap.forEach(doc => questions.push(doc.data()));
-            if(questions.length > 0) showQuestion();
-        }
-
-        function showQuestion() {
-            const q = questions[currentIdx];
-            document.getElementById('q-count').innerText = `Question ${currentIdx + 1}/${questions.length}`;
-            document.getElementById('q-text').innerText = q.text;
-            
-            // Image handling
-            const imgArea = document.getElementById('q-image-area');
-            if(q.image) {
-                document.getElementById('q-img').src = q.image;
-                imgArea.classList.remove('hidden');
-            } else { imgArea.classList.add('hidden'); }
-
-            const area = document.getElementById('options-area');
-            area.innerHTML = "";
-            q.options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = "option-btn";
-                btn.innerText = opt;
-                btn.onclick = () => checkAns(opt, q.correct);
-                area.appendChild(btn);
-            });
-        }
-
-        async function checkAns(selected, correct) {
-            if(selected === correct) score++;
-            currentIdx++;
-            if(currentIdx < questions.length) {
-                showQuestion();
-            } else {
-                await finishQuiz();
-            }
-        }
-
-        // 2. AUTO-SAVE TO LEADERBOARD
-        async function finishQuiz() {
-            document.getElementById('quiz-content').classList.add('hidden');
-            document.getElementById('result-content').classList.remove('hidden');
-            document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
-
-            const name = prompt("Enter your name for the Leaderboard:");
-            if(name) {
-                try {
-                    await addDoc(collection(db, "leaderboard"), {
-                        userName: name,
-                        userScore: score,
-                        total: questions.length,
-                        time: Date.now()
-                    });
-                    alert("Your score has been saved!");
-                } catch (e) { console.error(e); }
-            }
-        }
-
-        // 3. REAL-TIME LEADERBOARD DISPLAY
-        const qLeader = query(collection(db, "leaderboard"), orderBy("userScore", "desc"), limit(10));
-        onSnapshot(qLeader, (snap) => {
-            const list = document.getElementById('leaderboard-list');
-            list.innerHTML = "";
-            snap.forEach(doc => {
-                const data = doc.data();
-                list.innerHTML += `
-                    <div class="leader-row">
-                        <span class="font-bold">${data.userName}</span>
-                        <span class="text-cyan-400 font-mono">${data.userScore}/${data.total}</span>
-                    </div>
-                `;
-            });
+    try {
+        // We use "quiz_questions" to match the quiz.html fetcher
+        await addDoc(collection(db, "quiz_questions"), {
+            text: questionText,
+            options: options,
+            correct: correctAnswer,
+            image: imageUrl || "", // Optional image
+            timestamp: Date.now()
         });
-
-        loadQuestions();
-    </script>
-</body>
-</html>
+        
+        alert("✔️ Question added to Database!");
+        
+        // Clear the inputs for the next question
+        document.getElementById('quiz-ques').value = "";
+        document.getElementById('quiz-img').value = "";
+        document.getElementById('opt-a').value = "";
+        document.getElementById('opt-b').value = "";
+        document.getElementById('opt-c').value = "";
+        document.getElementById('opt-d').value = "";
+        document.getElementById('quiz-correct').value = "";
+        
+    } catch (e) {
+        alert("Failed to add question: " + e.message);
+    }
+};
