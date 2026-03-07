@@ -64,46 +64,7 @@
             storageBucket: "prahelika-fbf98.firebasestorage.app",
             messagingSenderId: "21670057223",
             appId: "1:21670057223:web:d20225509d824505cb61a2"
-            // 1. Gallery Logic
-document.getElementById('upload-gallery-btn').onclick = async () => {
-    const urls = document.getElementById('gallery-urls').value.split(',');
-    try {
-        await setDoc(doc(db, "website", "gallery"), { images: urls.map(url => url.trim()) });
-        alert("Gallery Updated!");
-    } catch (e) { alert(e.message); }
-};
-
-// 2. Quiz Logic
-document.getElementById('add-quiz-btn').onclick = async () => {
-    const questionData = {
-        text: document.getElementById('quiz-ques').value,
-        image: document.getElementById('quiz-img').value,
-        options: [
-            document.getElementById('opt-a').value,
-            document.getElementById('opt-b').value,
-            document.getElementById('opt-c').value,
-            document.getElementById('opt-d').value
-        ],
-        correct: document.getElementById('quiz-correct').value
-    };
-    try {
-        await addDoc(collection(db, "quiz_questions"), questionData);
-        alert("Question Added!");
-    } catch (e) { alert(e.message); }
-};
-
-// 3. Contact Logic
-document.getElementById('save-contact-btn').onclick = async () => {
-    try {
-        await setDoc(doc(db, "website", "contact"), {
-            phone: document.getElementById('cont-phone').value,
-            facebook: document.getElementById('cont-fb').value,
-            instagram: document.getElementById('cont-ig').value,
-            youtube: document.getElementById('cont-yt').value
-        });
-        alert("Contact Info Saved!");
-    } catch (e) { alert(e.message); }
-};
+    
         };
 
         const app = initializeApp(firebaseConfig);
