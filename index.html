@@ -47,7 +47,7 @@
     </nav>
 
     <section id="home" class="pt-40 pb-20 px-6 text-center">
-        <h1 id="hero-title" class="text-5xl md:text-7xl font-black mb-6 animate__animated animate__fadeInDown">PRAHELIKA QUIZ FORUM DARRANG</h1>
+        <h1 id="display-title" class="text-5xl md:text-7xl font-black mb-6 animate__animated animate__fadeInDown">PRAHELIKA QUIZ FORUM DARRANG</h1>
         <p id="hero-desc" class="text-gray-400 max-w-2xl mx-auto mb-10">Unleash your intellect with Prahelika.</p>
         
         <div class="max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 animate__animated animate__zoomIn">
@@ -60,34 +60,36 @@
         <div id="exec-list" class="flex flex-wrap justify-center gap-8"></div>
     </section>
 
-    <script type="module">
-  // Import the database tool first
-  import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  // Use your Firebase Config here
-  const firebaseConfig = {
-    apiKey: "AIzaSyAoLQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
-    authDomain: "prahelika-fbf98.firebaseapp.com",
-    projectId: "prahelika-fbf98",
-    storageBucket: "prahelika-fbf98.firebasestorage.app",
-    messagingSenderId: "21670057223",
-    appId: "1:21670057223:web:d20225509d824505cb61a2"
-  };
+    // Use your Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
+        authDomain: "prahelika-fbf98.firebaseapp.com",
+        projectId: "prahelika-fbf98",
+        storageBucket: "prahelika-fbf98.firebasestorage.app",
+        messagingSenderId: "21670057223",
+        appId: "1:21670057223:web:d20225509d824505cb61a2"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  // This is the fixed listener code
-  onSnapshot(doc(db, "website", "data"), (doc) => {
-    if (doc.exists()) {
-      const data = doc.data();
-      // This updates the title on your screen automatically
-      if(document.getElementById('display-title')) {
-          document.getElementById('display-title').innerText = data.title;
-      }
-    }
-  });
+    // 1. Update the Title and Description automatically
+    onSnapshot(doc(db, "website", "data"), (doc) => {
+        if (doc.exists()) {
+            const data = doc.data();
+            if(document.getElementById('display-title')) {
+                document.getElementById('display-title').innerText = data.title;
+            }
+            if(document.getElementById('display-desc')) {
+                document.getElementById('display-desc').innerText = data.description;
+            }
+        }
+    });
+</script>
 </script>
     
 </body>
