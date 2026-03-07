@@ -61,59 +61,34 @@
     </section>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  // Import the database tool first
+  import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT.appspot.com",
-            appId: "YOUR_APP_ID"
-        };
+  // Use your Firebase Config here
+  const firebaseConfig = {
+    apiKey: "AIzaSyAoLQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
+    authDomain: "prahelika-fbf98.firebaseapp.com",
+    projectId: "prahelika-fbf98",
+    storageBucket: "prahelika-fbf98.firebasestorage.app",
+    messagingSenderId: "21670057223",
+    appId: "1:21670057223:web:d20225509d824505cb61a2"
+  };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-        // --- BUTTON FIX (Direct Binding) ---
-        const btn = document.getElementById('quiz-trigger');
-        if(btn) {
-            btn.addEventListener('click', () => {
-                alert("Quiz starting... Checking database connection!");
-            });
-        }
-
-        // --- MASTER LISTENERS ---
-        onSnapshot(doc(db, "site_content", "homepage"), (snapshot) => {
-            const data = snapshot.data();
-            if (data) {
-                // Restore Uppercase logic
-                if(data.title) document.getElementById('hero-title').innerText = data.title.toUpperCase();
-                if(data.desc) document.getElementById('hero-desc').innerText = data.desc;
-                // Hero Image Update from Admin
-                if(data.heroImg) document.getElementById('special-team-img').src = data.heroImg;
-            }
-        });
-
-        onSnapshot(collection(db, "executives"), (querySnapshot) => {
-            const list = document.getElementById('exec-list');
-            list.innerHTML = ''; 
-            querySnapshot.forEach((doc) => {
-                const member = doc.data();
-                list.innerHTML += `
-                    <div class="glass p-6 rounded-2xl text-center w-64 animate__animated animate__fadeInUp">
-                        <img src="${member.url}" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-cyan-400 object-cover" onerror="this.src='https://ui-avatars.com/api/?name=${member.name}&background=random'">
-                        <h3 class="font-bold text-lg uppercase">${member.name}</h3>
-                        <p class="text-cyan-400 text-sm font-bold">${member.pos}</p>
-                    </div>`;
-            });
-        });
-    </script>
-
-    // This tells the site to check Firebase automatically
-db.collection("website").doc("data").onSnapshot((doc) => {
-  document.getElementById('display-title').innerText = doc.data().title;
-});
+  // This is the fixed listener code
+  onSnapshot(doc(db, "website", "data"), (doc) => {
+    if (doc.exists()) {
+      const data = doc.data();
+      // This updates the title on your screen automatically
+      if(document.getElementById('display-title')) {
+          document.getElementById('display-title').innerText = data.title;
+      }
+    }
+  });
+</script>
     
 </body>
 </html>
