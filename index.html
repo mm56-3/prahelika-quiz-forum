@@ -3,95 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <h1 id="PRAHELIKA QUIZ FORUM"></h1>
+    <title>PRAHELIKA QUIZ FORUM</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        body { 
-            background: radial-gradient(circle at top right, #1e3a8a, #020617 80%); 
-            color: white; 
-            min-height: 100vh; 
-        }
-
-        /* SMOOTH TRANSITIONS RESTORED */
-        .glass { 
-            background: rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-
-        .glass:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-5px);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-        }
-
-        #display-title { text-transform: uppercase; }
+        body { background: #020617; color: white; font-family: sans-serif; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <img src="logo.png" id="nav-logo" class="w-10 h-10 object-contain" onerror="this.src='https://ui-avatars.com/api/?name=P&background=06b6d4&color=fff'">
-            <span class="text-xl font-black text-cyan-400">PRAHELIKA</span>
-        </div>
-        <div class="hidden md:flex gap-6 text-xs font-bold uppercase">
-            <a href="#home">Home</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#executives">Executives</a>
-            <a href="#leaderboard">Leaderboard</a>
-            <a href="#contacts">Contacts</a>
-        </div>
-        <button id="quiz-trigger" class="bg-cyan-500 text-blue-950 px-5 py-2 rounded-full font-bold hover:bg-cyan-400 transition-all">START QUIZ</button>
-    </nav>
-
-    <section id="home" class="pt-40 pb-20 px-6 text-center">
-        <h1 id="display-title" class="text-5xl md:text-7xl font-black mb-6 animate__animated animate__fadeInDown">PRAHELIKA QUIZ FORUM DARRANG</h1>
-        <p id="display-desc" class="text-gray-400 max-w-2xl mx-auto mb-10">Unleash your intellect with Prahelika.</p>
-        
-        <div class="max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 animate__animated animate__zoomIn">
-            <img id="special-team-img" src="special-team.jpg" class="w-full h-auto object-cover min-h-[300px]" onerror="this.src='https://via.placeholder.com/1200x600/0d122b/06b6d4?text=Prahelika+Quiz+Forum+Darrang'">
+    <section class="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+        <h1 id="hero-title" class="text-6xl md:text-8xl font-black mb-4 uppercase tracking-tighter">PRAHELIKA</h1>
+        <p id="hero-desc" class="text-gray-400 max-w-xl mb-10 text-lg">Official Quiz Forum</p>
+        <div class="w-full max-w-5xl h-[400px] glass rounded-[2rem] overflow-hidden">
+            <img id="hero-img" src="" class="w-full h-full object-cover opacity-80">
         </div>
     </section>
 
-    <section id="executives" class="py-20 px-6">
-        <h2 class="text-3xl font-bold text-center mb-10 uppercase tracking-widest">Executive Members</h2>
-        <div id="exec-list" class="flex flex-wrap justify-center gap-8"></div>
-    </section>
+    <div class="py-20 px-6 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-bold mb-10 border-l-4 border-purple-500 pl-4">GALLERY</h2>
+        <div id="gallery-container" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+    </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <div class="py-20 px-6 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-bold mb-10 border-l-4 border-green-500 pl-4">MEMBERS</h2>
+        <div id="member-list" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
+    </div>
 
-    // Use your Firebase Config
-    const firebaseConfig = {
-        apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
-        authDomain: "prahelika-fbf98.firebaseapp.com",
-        projectId: "prahelika-fbf98",
-        storageBucket: "prahelika-fbf98.firebasestorage.app",
-        messagingSenderId: "21670057223",
-        appId: "1:21670057223:web:d20225509d824505cb61a2"
-    };
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+        const firebaseConfig = {
+            apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
+            authDomain: "prahelika-fbf98.firebaseapp.com",
+            projectId: "prahelika-fbf98",
+            storageBucket: "prahelika-fbf98.firebasestorage.app",
+            messagingSenderId: "21670057223",
+            appId: "1:21670057223:web:d20225509d824505cb61a2"
+        };
 
-    // 1. Update the Title and Description automatically
-    onSnapshot(doc(db, "website", "data"), (doc) => {
-        if (doc.exists()) {
-            const data = doc.data();
-            if(document.getElementById('display-title')) {
-                document.getElementById('display-title').innerText = data.title;
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // OBSERVE HOME
+        onSnapshot(doc(db, "website", "data"), (d) => {
+            if(d.exists()) {
+                document.getElementById('hero-title').innerText = d.data().title;
+                document.getElementById('hero-desc').innerText = d.data().description;
+                document.getElementById('hero-img').src = d.data().heroImage;
             }
-            if(document.getElementById('display-desc')) {
-                document.getElementById('display-desc').innerText = data.description;
+        });
+
+        // OBSERVE GALLERY
+        onSnapshot(doc(db, "website", "gallery"), (d) => {
+            if(d.exists()) {
+                document.getElementById('gallery-container').innerHTML = d.data().images.map(url => `
+                    <div class="glass h-64 rounded-2xl overflow-hidden">
+                        <img src="${url}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400?text=Invalid+Link'">
+                    </div>
+                `).join('');
             }
-        }
-    });
-</script>
-</script>
-    
+        });
+
+        // OBSERVE MEMBERS
+        onSnapshot(collection(db, "executives"), (snap) => {
+            const list = document.getElementById('member-list');
+            list.innerHTML = "";
+            snap.forEach(doc => {
+                const m = doc.data();
+                list.innerHTML += `
+                    <div class="glass p-6 rounded-3xl text-center">
+                        <img src="${m.url}" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-cyan-500 object-cover">
+                        <h3 class="font-bold">${m.name}</h3>
+                        <p class="text-cyan-400 text-xs">${m.pos}</p>
+                    </div>
+                `;
+            });
+        });
+    </script>
 </body>
 </html>
