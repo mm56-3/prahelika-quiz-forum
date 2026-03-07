@@ -29,16 +29,12 @@
         <div class="grid md:grid-cols-2 gap-8">
             <div class="card p-6 rounded-2xl">
                 <h2 class="text-xl font-bold mb-4 text-cyan-400 border-l-4 border-cyan-400 pl-3">Main Content</h2>
-                
                 <label class="text-xs text-gray-500 uppercase font-bold">Forum Title</label>
                 <input type="text" id="title-input" placeholder="Prahelika Quiz Forum" class="w-full p-2 mb-4 rounded">
-                
                 <label class="text-xs text-gray-500 uppercase font-bold">Homepage Description</label>
                 <textarea id="desc-input" placeholder="Describe the forum..." class="w-full p-2 mb-4 rounded h-24"></textarea>
-                
                 <label class="text-xs text-gray-500 uppercase font-bold">Hero Image URL</label>
                 <input type="text" id="img-input" placeholder="Paste Image Link" class="w-full p-2 mb-4 rounded">
-                
                 <button id="save-main-btn" class="w-full bg-cyan-600 hover:bg-cyan-500 p-3 rounded-lg font-bold">UPDATE LIVE WEBSITE</button>
             </div>
 
@@ -49,6 +45,38 @@
                 <input type="text" id="exec-url" placeholder="Member Photo URL" class="w-full p-2 mb-4 rounded">
                 <button id="add-exec-btn" class="w-full bg-green-600 hover:bg-green-500 p-3 rounded-lg font-bold">ADD MEMBER</button>
             </div>
+
+            <div class="card p-6 rounded-2xl">
+                <h2 class="text-xl font-bold mb-4 text-purple-400 border-l-4 border-purple-400 pl-3">Image Gallery</h2>
+                <label class="text-xs text-gray-500 uppercase font-bold">Paste Image URLs (Separate with commas)</label>
+                <textarea id="gallery-urls" placeholder="https://image1.jpg, https://image2.png" class="w-full p-2 mb-4 rounded h-24"></textarea>
+                <button id="upload-gallery-btn" class="w-full bg-purple-600 hover:bg-purple-500 p-3 rounded-lg font-bold">UPDATE GALLERY</button>
+            </div>
+
+            <div class="card p-6 rounded-2xl">
+                <h2 class="text-xl font-bold mb-4 text-yellow-400 border-l-4 border-yellow-400 pl-3">Add Quiz Question</h2>
+                <input type="text" id="quiz-ques" placeholder="Question Text" class="w-full p-2 mb-2 rounded">
+                <input type="text" id="quiz-img" placeholder="Question Image URL (Optional)" class="w-full p-2 mb-2 rounded">
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <input type="text" id="opt-a" placeholder="Option A" class="p-2 rounded">
+                    <input type="text" id="opt-b" placeholder="Option B" class="p-2 rounded">
+                    <input type="text" id="opt-c" placeholder="Option C" class="p-2 rounded">
+                    <input type="text" id="opt-d" placeholder="Option D" class="p-2 rounded">
+                </div>
+                <input type="text" id="quiz-correct" placeholder="Correct Answer (Exact text)" class="w-full p-2 mb-4 rounded">
+                <button id="add-quiz-btn" class="w-full bg-yellow-600 hover:bg-yellow-500 p-3 rounded-lg font-bold">ADD QUESTION</button>
+            </div>
+
+            <div class="card p-6 rounded-2xl md:col-span-2">
+                <h2 class="text-xl font-bold mb-4 text-pink-400 border-l-4 border-pink-400 pl-3">Contact & Social Links</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <input type="text" id="cont-phone" placeholder="Phone Number" class="p-2 rounded">
+                    <input type="text" id="cont-fb" placeholder="Facebook URL" class="p-2 rounded">
+                    <input type="text" id="cont-ig" placeholder="Instagram URL" class="p-2 rounded">
+                    <input type="text" id="cont-yt" placeholder="YouTube URL" class="p-2 rounded">
+                </div>
+                <button id="save-contact-btn" class="w-full mt-4 bg-pink-600 hover:bg-pink-500 p-3 rounded-lg font-bold">SAVE CONTACT INFO</button>
+            </div>
         </div>
     </div>
 
@@ -56,7 +84,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, doc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Your specific Firebase credentials
         const firebaseConfig = {
             apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
             authDomain: "prahelika-fbf98.firebaseapp.com",
@@ -64,7 +91,6 @@
             storageBucket: "prahelika-fbf98.firebasestorage.app",
             messagingSenderId: "21670057223",
             appId: "1:21670057223:web:d20225509d824505cb61a2"
-    
         };
 
         const app = initializeApp(firebaseConfig);
@@ -74,7 +100,6 @@
         document.getElementById('login-btn').onclick = () => {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
-            // Admin Credentials
             if(u === 'VIKRAM784125' && p === '#UDSB784125781005') {
                 document.getElementById('login-box').style.display = 'none';
                 document.getElementById('dashboard').classList.remove('hidden');
@@ -83,72 +108,29 @@
             }
         };
 
-        // SAVE MAIN CONTENT TO FIREBASE
+        // SAVE MAIN CONTENT
         document.getElementById('save-main-btn').onclick = async () => {
-            const title = document.getElementById('title-input').value;
-            const desc = document.getElementById('desc-input').value;
-            const heroImg = document.getElementById('img-input').value;
-
             try {
-                // This targets the document "data" inside collection "website"
                 await setDoc(doc(db, "website", "data"), {
-                    title: title,
-                    description: desc,
-                    heroImage: heroImg
+                    title: document.getElementById('title-input').value,
+                    description: document.getElementById('desc-input').value,
+                    heroImage: document.getElementById('img-input').value
                 }, { merge: true });
-                alert("Success! The live website has been updated.");
-            } catch (e) { 
-                alert("Error: " + e.message); 
-            }
+                alert("Success! Website Updated.");
+            } catch (e) { alert(e.message); }
         };
 
-        // ADD NEW MEMBER TO FIREBASE
+        // ADD MEMBER
         document.getElementById('add-exec-btn').onclick = async () => {
-            const name = document.getElementById('exec-name').value;
-            const pos = document.getElementById('exec-pos').value;
-            const url = document.getElementById('exec-url').value;
-
             try {
-                await addDoc(collection(db, "executives"), { name, pos, url });
-                alert("New Member Added Successfully!");
-                // Clear the boxes after success
-                document.getElementById('exec-name').value = "";
-                document.getElementById('exec-pos').value = "";
-                document.getElementById('exec-url').value = "";
-            } catch (e) { alert("Error: " + e.message); }
+                await addDoc(collection(db, "executives"), {
+                    name: document.getElementById('exec-name').value,
+                    pos: document.getElementById('exec-pos').value,
+                    url: document.getElementById('exec-url').value
+                });
+                alert("Member Added!");
+            } catch (e) { alert(e.message); }
         };
 
-        <div class="card p-6 rounded-2xl mb-8">
-    <h2 class="text-xl font-bold mb-4 text-purple-400 border-l-4 border-purple-400 pl-3">Image Gallery</h2>
-    <label class="text-xs text-gray-500 uppercase font-bold">Paste Image URLs (Separate with commas)</label>
-    <textarea id="gallery-urls" placeholder="https://image1.jpg, https://image2.png" class="w-full p-2 mb-4 rounded h-24"></textarea>
-    <button id="upload-gallery-btn" class="w-full bg-purple-600 hover:bg-purple-500 p-3 rounded-lg font-bold">UPDATE GALLERY</button>
-</div>
-
-        <div class="card p-6 rounded-2xl mb-8">
-    <h2 class="text-xl font-bold mb-4 text-yellow-400 border-l-4 border-yellow-400 pl-3">Add Quiz Question</h2>
-    <input type="text" id="quiz-ques" placeholder="Question Text" class="w-full p-2 mb-2 rounded">
-    <input type="text" id="quiz-img" placeholder="Question Image URL (Optional)" class="w-full p-2 mb-2 rounded">
-    
-    <div class="grid grid-cols-2 gap-2 mb-2">
-        <input type="text" id="opt-a" placeholder="Option A" class="p-2 rounded">
-        <input type="text" id="opt-b" placeholder="Option B" class="p-2 rounded">
-        <input type="text" id="opt-c" placeholder="Option C" class="p-2 rounded">
-        <input type="text" id="opt-d" placeholder="Option D" class="p-2 rounded">
-    </div>
-    
-    <input type="text" id="quiz-correct" placeholder="Correct Answer (Exact text)" class="w-full p-2 mb-4 rounded">
-    <button id="add-quiz-btn" class="w-full bg-yellow-600 hover:bg-yellow-500 p-3 rounded-lg font-bold">ADD QUESTION</button>
-</div>
-
-        <div class="card p-6 rounded-2xl mb-8">
-    <h2 class="text-xl font-bold mb-4 text-pink-400 border-l-4 border-pink-400 pl-3">Contact & Social Links</h2>
-    <input type="text" id="cont-phone" placeholder="Phone Number" class="w-full p-2 mb-2 rounded">
-    <input type="text" id="cont-fb" placeholder="Facebook URL" class="w-full p-2 mb-2 rounded">
-    <input type="text" id="cont-ig" placeholder="Instagram URL" class="w-full p-2 mb-2 rounded">
-    <input type="text" id="cont-yt" placeholder="YouTube URL" class="w-full p-2 mb-4 rounded">
-    <button id="save-contact-btn" class="w-full bg-pink-600 hover:bg-pink-500 p-3 rounded-lg font-bold text-white">SAVE CONTACT INFO</button>
-</div>
-    </script>
-</body>
-</html>
+        // UPDATE GALLERY
+        document.getElementById('upload-gallery-btn').onclick = async () => {
