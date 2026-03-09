@@ -61,11 +61,10 @@
         <div id="exec-list" class="flex flex-wrap justify-center gap-8"></div>
     </section>
 
-  <script type="module">
+<script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // Use your Firebase Config
     const firebaseConfig = {
         apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
         authDomain: "prahelika-fbf98.firebaseapp.com",
@@ -90,6 +89,68 @@
             }
         }
     });
+
+    // 2. LISTEN TO HOME CONTENT (website/data)
+    onSnapshot(doc(db, "website", "data"), (d) => {
+        if(d.exists()) {
+            const data = d.data();
+            // These IDs must exist in your HTML
+            if(document.getElementById('hero-title')) document.getElementById('hero-title').innerText = data.title;
+            if(document.getElementById('hero-desc')) document.getElementById('hero-desc').innerText = data.description;
+            if(document.getElementById('hero-img')) document.getElementById('hero-img').src = data.heroImage;
+        }
+    });
+
+    // 3. LISTEN TO GALLERY (website/gallery)
+    onSnapshot(doc(db, "website", "gallery"), (d) => {
+        const container = document.getElementById('gallery-container');
+        if(d.exists() && container) {
+            container.innerHTML = d.data().images.map(url => `
+                <div class="overflow-hidden rounded-xl h-64 shadow-lg"> 
+                    <img src="${url}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400?text=Invalid+Link'">
+                </div>
+            `).join('');
+        }
+    });
+
+    // 4. LISTEN TO EXECUTIVES (executives)
+    onSnapshot(collection(db, "executives"), (snap) => {
+        const list = document.getElementById('member-list');
+        if(list) {
+            list.innerHTML = "";
+            snap.forEach(doc => {
+                const m = doc.data();
+                list.innerHTML += `
+                    <div class="text-center p-4 glass rounded-3xl">
+                        <img src="${m.url}" class="w-20 h-20 rounded-full mx-auto mb-2 object-cover border-2 border-cyan-500">
+                        <h3 class="font-bold">${m.name}</h3>
+                        <p class="text-xs text-cyan-400 uppercase">${m.pos}</p>
+                    </div>
+                `;
+            });
+        }
+    });
+
+    // 5. LISTEN TO CONTACTS (website/contact)
+    onSnapshot(doc(db, "website", "contact"), (d) => {
+        if(d.exists()) {
+            const c = d.data();
+            // These IDs must exist in your Footer
+            if(document.getElementById('phone-link')) document.getElementById('phone-link').href = "tel:" + c.phone;
+            if(document.getElementById('fb-link')) document.getElementById('fb-link').href = c.facebook;
+            if(document.getElementById('ig-link')) document.getElementById('ig-link').href = c.instagram;
+            if(document.getElementById('yt-link')) document.getElementById('yt-link').href = c.youtube;
+        }
+    });
+
+    // --- START QUIZ LISTENER ---
+const startBtn = document.getElementById('start-quiz-btn');
+if (startBtn) {
+    startBtn.addEventListener('click', () => {
+        // This sends the user to your quiz page
+        window.location.href = 'quiz.html';
+    });
+}
 </script>
 </script>
     
