@@ -9,6 +9,7 @@
         body { background: #020617; color: white; min-height: 100vh; font-family: sans-serif; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; padding: 2rem; }
         input, textarea { background: rgba(0, 0, 0, 0.4) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; color: white !important; width: 100%; padding: 0.8rem; border-radius: 0.75rem; margin-bottom: 1rem; outline: none; }
+        input:focus { border-color: #22d3ee !important; }
         .btn-cyan { background: #0891b2; color: white; font-weight: bold; padding: 0.8rem; border-radius: 0.75rem; width: 100%; cursor: pointer; transition: 0.3s; }
         .btn-cyan:hover { background: #22d3ee; }
         .btn-delete { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 0.2rem 0.6rem; border-radius: 0.5rem; font-size: 0.7rem; cursor: pointer; }
@@ -19,58 +20,72 @@
 <body class="p-6 md:p-10">
 
     <div id="login-box" class="max-w-md mx-auto mt-20 glass text-center">
-        <h1 class="text-3xl font-black mb-8 uppercase">Admin Access</h1>
-        <input type="password" id="admin-pass" placeholder="Master Password">
-        <button id="login-btn" class="btn-cyan mt-2">DECRYPT & ENTER</button>
+        <h1 class="text-3xl font-black mb-8 uppercase tracking-tighter">Admin Access</h1>
+        <input type="text" id="admin-user" placeholder="Username">
+        <input type="password" id="admin-pass" placeholder="Password">
+        <button id="login-btn" class="btn-cyan mt-2 uppercase tracking-widest">Login</button>
     </div>
 
     <div id="dashboard" class="hidden max-w-6xl mx-auto space-y-10">
         <div class="flex justify-between items-center border-b border-white/5 pb-6">
             <h1 class="text-3xl font-black text-white">PRAHELIKA <span class="text-cyan-400 text-sm block">MASTER CONTROL</span></h1>
-            <button onclick="location.reload()" class="bg-red-500/20 text-red-400 px-4 py-2 rounded-full text-xs font-bold">LOGOUT</button>
+            <button onclick="location.reload()" class="bg-red-500/20 text-red-400 px-6 py-2 rounded-full text-xs font-bold hover:bg-red-600 hover:text-white transition">LOGOUT</button>
         </div>
 
         <div class="grid md:grid-cols-2 gap-8">
             <div class="glass">
-                <h2 class="section-tag">1. Home & Gallery</h2>
+                <h2 class="section-tag">Home Identity</h2>
                 <input type="text" id="h-title" placeholder="Site Title">
-                <textarea id="h-desc" placeholder="Description" class="h-24"></textarea>
+                <textarea id="h-desc" placeholder="Site Description" class="h-24"></textarea>
                 <input type="text" id="h-img" placeholder="Hero Image URL">
-                <button id="save-home-btn" class="btn-cyan mb-6">UPDATE HOME</button>
-                
-                <h3 class="text-xs font-bold text-purple-400 mb-2 uppercase">Gallery Links (comma separated)</h3>
-                <textarea id="gallery-urls" placeholder="link1.jpg, link2.png" class="h-20"></textarea>
-                <button id="save-gallery-btn" class="btn-cyan !bg-purple-600">REPLACE GALLERY</button>
+                <button id="save-home-btn" class="btn-cyan">UPDATE HOME CONTENT</button>
             </div>
 
             <div class="glass">
-                <h2 class="section-tag" style="border-color: #4ade80; color: #4ade80;">2. Executive Team</h2>
-                <input type="text" id="ex-name" placeholder="Name">
-                <input type="text" id="ex-pos" placeholder="Position">
-                <input type="text" id="ex-url" placeholder="Photo URL">
+                <h2 class="section-tag" style="border-color: #a855f7; color: #a855f7;">Gallery Manager</h2>
+                <p class="text-[10px] text-gray-500 mb-2 font-bold uppercase">Separate URLs with a comma</p>
+                <textarea id="gallery-urls" placeholder="image1.jpg, image2.png" class="h-40"></textarea>
+                <button id="save-gallery-btn" class="btn-cyan !bg-purple-600">REPLACE ALL IMAGES</button>
+            </div>
+
+            <div class="glass">
+                <h2 class="section-tag" style="border-color: #4ade80; color: #4ade80;">Executive Team</h2>
+                <div class="flex gap-2">
+                    <input type="text" id="ex-name" placeholder="Name">
+                    <input type="text" id="ex-pos" placeholder="Position">
+                </div>
+                <input type="text" id="ex-url" placeholder="Photo Link">
                 <button id="add-ex-btn" class="btn-cyan !bg-green-600 mb-4">ADD MEMBER</button>
-                <div id="ex-list" class="max-h-40 overflow-y-auto pr-2"></div>
+                <p class="text-[10px] font-bold text-gray-500 uppercase">Live Roster</p>
+                <div id="ex-list" class="max-h-40 overflow-y-auto pr-2 mt-2"></div>
             </div>
 
             <div class="glass">
-                <h2 class="section-tag" style="border-color: #f472b6; color: #f472b6;">3. Contact & Socials</h2>
+                <h2 class="section-tag" style="border-color: #f472b6; color: #f472b6;">Contact & Socials</h2>
                 <input type="text" id="c-phone" placeholder="Phone Number">
                 <input type="text" id="c-fb" placeholder="Facebook URL">
                 <input type="text" id="c-ig" placeholder="Instagram URL">
                 <input type="text" id="c-yt" placeholder="YouTube URL">
-                <button id="save-contact-btn" class="btn-cyan !bg-pink-600">SAVE ALL CONTACTS</button>
+                <button id="save-contact-btn" class="btn-cyan !bg-pink-600">SAVE ALL LINKS</button>
             </div>
 
-            <div class="glass">
-                <h2 class="section-tag" style="border-color: #facc15; color: #facc15;">4. Quiz Engine</h2>
-                <input type="text" id="q-text" placeholder="Question Text">
-                <div class="grid grid-cols-2 gap-2">
-                    <input type="text" id="q-a" placeholder="A"><input type="text" id="q-b" placeholder="B">
-                    <input type="text" id="q-c" placeholder="C"><input type="text" id="q-d" placeholder="D">
+            <div class="glass md:col-span-2">
+                <h2 class="section-tag" style="border-color: #facc15; color: #facc15;">Quiz Engine</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <input type="text" id="q-text" placeholder="Question Text">
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" id="q-a" placeholder="Option A"><input type="text" id="q-b" placeholder="Option B">
+                            <input type="text" id="q-c" placeholder="Option C"><input type="text" id="q-d" placeholder="Option D">
+                        </div>
+                        <input type="text" id="q-correct" placeholder="Correct Answer (Exact text)">
+                        <button id="add-q-btn" class="btn-cyan !bg-yellow-500 !text-black hover:!bg-yellow-400">SAVE & ADD ANOTHER</button>
+                    </div>
+                    <div class="border-l border-white/5 pl-6">
+                        <p class="text-[10px] font-bold text-gray-500 uppercase">Question Bank</p>
+                        <div id="q-list" class="max-h-60 overflow-y-auto pr-2 mt-2"></div>
+                    </div>
                 </div>
-                <input type="text" id="q-correct" placeholder="Correct Answer">
-                <button id="add-q-btn" class="btn-cyan !bg-yellow-500 !text-black mb-4">SAVE & ADD ANOTHER</button>
-                <div id="q-list" class="max-h-40 overflow-y-auto pr-2"></div>
             </div>
         </div>
     </div>
@@ -91,17 +106,23 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- LOGIN ---
+        // --- AUTH SYSTEM ---
         document.getElementById('login-btn').onclick = () => {
-            if(document.getElementById('admin-pass').value === '#UDSB784125781005') {
+            const user = document.getElementById('admin-user').value;
+            const pass = document.getElementById('admin-pass').value;
+            
+            // Verifying both Username and Password
+            if(user === 'VIKRAM784125' && pass === '#UDSB784125781005') {
                 document.getElementById('login-box').classList.add('hidden');
                 document.getElementById('dashboard').classList.remove('hidden');
                 startSync();
-            } else { alert("Access Denied"); }
+            } else { 
+                alert("Invalid Admin Credentials"); 
+            }
         };
 
         function startSync() {
-            // Sync Home & Gallery & Contact
+            // Auto-load Home, Gallery, and Contact data so boxes are never empty
             onSnapshot(doc(db, "website", "data"), (d) => { if(d.exists()) {
                 document.getElementById('h-title').value = d.data().title || "";
                 document.getElementById('h-desc').value = d.data().description || "";
@@ -117,40 +138,63 @@
                 document.getElementById('c-yt').value = d.data().youtube || "";
             }});
 
-            // Sync Lists
+            // Sync Member List
             onSnapshot(collection(db, "executives"), (snap) => {
                 const list = document.getElementById('ex-list'); list.innerHTML = "";
-                snap.forEach(s => list.innerHTML += `<div class="list-box"><span class="text-xs font-bold">${s.data().name}</span><button onclick="delDoc('executives','${s.id}')" class="btn-delete">DEL</button></div>`);
+                snap.forEach(s => list.innerHTML += `<div class="list-box"><span class="text-xs font-bold">${s.data().name}</span><button onclick="delItem('executives','${s.id}')" class="btn-delete">REMOVE</button></div>`);
             });
+            // Sync Quiz List
             onSnapshot(collection(db, "quiz_questions"), (snap) => {
                 const list = document.getElementById('q-list'); list.innerHTML = "";
-                snap.forEach(s => list.innerHTML += `<div class="list-box"><span class="text-[10px] truncate max-w-[150px] opacity-60">${s.data().text}</span><button onclick="delDoc('quiz_questions','${s.id}')" class="btn-delete">DEL</button></div>`);
+                snap.forEach(s => list.innerHTML += `<div class="list-box"><span class="text-[10px] truncate max-w-[150px] opacity-60">${s.data().text}</span><button onclick="delItem('quiz_questions','${s.id}')" class="btn-delete">DELETE</button></div>`);
             });
         }
 
-        window.delDoc = async (col, id) => { if(confirm("Delete?")) await deleteDoc(doc(db, col, id)); };
+        window.delItem = async (col, id) => { if(confirm("Are you sure?")) await deleteDoc(doc(db, col, id)); };
 
-        // --- SAVES ---
+        // --- BUTTON ACTIONS ---
         document.getElementById('save-home-btn').onclick = async () => {
-            await setDoc(doc(db, "website", "data"), { title: document.getElementById('h-title').value, description: document.getElementById('h-desc').value, heroImage: document.getElementById('h-img').value }, { merge: true });
-            alert("Home Updated!");
+            await setDoc(doc(db, "website", "data"), { 
+                title: document.getElementById('h-title').value, 
+                description: document.getElementById('h-desc').value, 
+                heroImage: document.getElementById('h-img').value 
+            }, { merge: true });
+            alert("Home Content Updated!");
         };
+
         document.getElementById('save-gallery-btn').onclick = async () => {
-            const urls = document.getElementById('gallery-urls').value.split(',').map(u => u.trim());
+            const urls = document.getElementById('gallery-urls').value.split(',').map(u => u.trim()).filter(u => u !== "");
             await setDoc(doc(db, "website", "gallery"), { images: urls });
-            alert("Gallery Updated!");
+            alert("Gallery Replaced!");
         };
+
         document.getElementById('save-contact-btn').onclick = async () => {
-            await setDoc(doc(db, "website", "contact"), { phone: document.getElementById('c-phone').value, facebook: document.getElementById('c-fb').value, instagram: document.getElementById('c-ig').value, youtube: document.getElementById('c-yt').value }, { merge: true });
+            await setDoc(doc(db, "website", "contact"), { 
+                phone: document.getElementById('c-phone').value, 
+                facebook: document.getElementById('c-fb').value, 
+                instagram: document.getElementById('c-ig').value, 
+                youtube: document.getElementById('c-yt').value 
+            }, { merge: true });
             alert("Contacts Saved!");
         };
+
         document.getElementById('add-ex-btn').onclick = async () => {
-            await addDoc(collection(db, "executives"), { name: document.getElementById('ex-name').value, pos: document.getElementById('ex-pos').value, url: document.getElementById('ex-url').value });
+            await addDoc(collection(db, "executives"), { 
+                name: document.getElementById('ex-name').value, 
+                pos: document.getElementById('ex-pos').value, 
+                url: document.getElementById('ex-url').value 
+            });
             ['ex-name','ex-pos','ex-url'].forEach(i => document.getElementById(i).value = "");
         };
+
         document.getElementById('add-q-btn').onclick = async () => {
-            await addDoc(collection(db, "quiz_questions"), { text: document.getElementById('q-text').value, options: [document.getElementById('q-a').value, document.getElementById('q-b').value, document.getElementById('q-c').value, document.getElementById('q-d').value], correct: document.getElementById('q-correct').value });
+            await addDoc(collection(db, "quiz_questions"), { 
+                text: document.getElementById('q-text').value, 
+                options: [document.getElementById('q-a').value, document.getElementById('q-b').value, document.getElementById('q-c').value, document.getElementById('q-d').value], 
+                correct: document.getElementById('q-correct').value 
+            });
             ['q-text','q-a','q-b','q-c','q-d','q-correct'].forEach(i => document.getElementById(i).value = "");
+            document.getElementById('q-text').focus();
         };
     </script>
 </body>
