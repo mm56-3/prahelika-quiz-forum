@@ -3,25 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRAHELIKA - ADMIN PANEL</title>
+    <title>PRAHELIKA - MASTER CONTROL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background: #020617; color: white; min-height: 100vh; font-family: sans-serif; }
         .card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
         input, textarea { background: #000 !important; border: 1px solid #334155 !important; color: white !important; }
-        .section-title { border-left: 4px solid #22d3ee; padding-left: 12px; margin-bottom: 16px; font-weight: bold; text-transform: uppercase; color: #22d3ee; }
-        .list-item { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05); }
-        .btn-delete { color: #f87171; font-size: 12px; font-weight: bold; border: 1px solid #f87171; padding: 2px 8px; border-radius: 4px; transition: 0.3s; }
-        .btn-delete:hover { background: #f87171; color: white; }
+        .section-title { border-left: 4px solid #22d3ee; padding-left: 12px; margin-bottom: 16px; font-weight: bold; text-transform: uppercase; }
+        .preview-img { width: 100px; height: 60px; object-fit: cover; border-radius: 8px; margin-top: 10px; background: #111; border: 1px dashed #334155; }
+        .list-item { background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.05); }
+        .btn-del { color: #f87171; font-weight: bold; border: 1px solid #f87171; padding: 2px 8px; border-radius: 4px; font-size: 10px; transition: 0.2s; }
+        .btn-del:hover { background: #f87171; color: white; }
     </style>
 </head>
 <body class="p-6">
 
     <div id="login-box" class="max-w-md mx-auto mt-20 p-8 card rounded-3xl shadow-2xl">
         <h1 class="text-2xl font-bold mb-6 text-cyan-400 text-center uppercase tracking-widest">Admin Login</h1>
-        <input type="text" id="admin-user" placeholder="Username" class="w-full p-3 mb-4 rounded-lg outline-none focus:border-cyan-500">
-        <input type="password" id="admin-pass" placeholder="Password" class="w-full p-3 mb-6 rounded-lg outline-none focus:border-cyan-500">
-        <button id="login-btn" class="w-full bg-blue-600 hover:bg-blue-500 p-3 rounded-lg font-bold transition">ENTER DASHBOARD</button>
+        <input type="text" id="user" placeholder="Admin ID" class="w-full p-3 mb-4 rounded-lg outline-none focus:border-cyan-500">
+        <input type="password" id="pass" placeholder="Password" class="w-full p-3 mb-6 rounded-lg outline-none focus:border-cyan-500">
+        <button id="login-btn" class="w-full bg-blue-600 hover:bg-blue-500 p-3 rounded-lg font-bold transition uppercase">Enter Dashboard</button>
     </div>
 
     <div id="dashboard" class="hidden max-w-6xl mx-auto">
@@ -32,65 +33,66 @@
 
         <div class="grid md:grid-cols-2 gap-8">
             <div class="card p-6 rounded-2xl">
-                <h2 class="section-title">1. Website Header</h2>
-                <input type="text" id="h-title" placeholder="Hero Title" class="w-full p-2 mb-2 rounded">
-                <textarea id="h-desc" placeholder="Description Text" class="w-full p-2 mb-2 rounded h-20"></textarea>
-                <input type="text" id="h-img" placeholder="Hero Image URL" class="w-full p-2 mb-4 rounded">
-                <button id="save-home-btn" class="w-full bg-cyan-600 p-3 rounded-lg font-bold">UPDATE HOME CONTENT</button>
+                <h2 class="section-title text-cyan-400">Website Header</h2>
+                <input type="text" id="title-input" placeholder="Hero Title" class="w-full p-2 mb-2 rounded">
+                <textarea id="desc-input" placeholder="Description Text" class="w-full p-2 mb-2 rounded h-20"></textarea>
+                <input type="text" id="img-input" placeholder="Hero Image Direct URL" class="w-full p-2 rounded" oninput="document.getElementById('p-hero').src=this.value">
+                <img id="p-hero" class="preview-img" src="">
+                <button id="save-main-btn" class="w-full mt-4 bg-cyan-600 p-3 rounded-lg font-bold">UPDATE HOME CONTENT</button>
             </div>
 
             <div class="card p-6 rounded-2xl">
-                <h2 class="section-title" style="border-color: #a855f7;">2. Gallery Management</h2>
-                <textarea id="gallery-urls" placeholder="link1.jpg, link2.png" class="w-full p-2 mb-4 rounded h-32"></textarea>
-                <button id="save-gallery-btn" class="w-full bg-purple-600 p-3 rounded-lg font-bold">REPLACE ALL IMAGES</button>
-            </div>
-
-            <div class="card p-6 rounded-2xl">
-                <h2 class="section-title" style="border-color: #4ade80;">3. Add Executive</h2>
-                <input type="text" id="ex-name" placeholder="Full Name" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="ex-pos" placeholder="Position" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="ex-url" placeholder="Photo URL" class="w-full p-2 mb-4 rounded">
-                <button id="add-ex-btn" class="w-full bg-green-600 p-3 rounded-lg font-bold mb-4">ADD NEW MEMBER</button>
+                <h2 class="section-title text-green-400">Add Executive</h2>
+                <input type="text" id="exec-name" placeholder="Full Name" class="w-full p-2 mb-2 rounded">
+                <input type="text" id="exec-pos" placeholder="Position" class="w-full p-2 mb-2 rounded">
+                <input type="text" id="exec-url" placeholder="Photo Direct Link" class="w-full p-2 rounded" oninput="document.getElementById('p-exec').src=this.value">
+                <img id="p-exec" class="preview-img rounded-full w-12 h-12" src="">
+                <button id="add-exec-btn" class="w-full mt-4 bg-green-600 p-3 rounded-lg font-bold mb-6">ADD NEW MEMBER</button>
                 
-                <p class="text-[10px] text-gray-500 uppercase font-bold mb-2">Live Roster (Delete Below)</p>
-                <div id="ex-list" class="max-h-40 overflow-y-auto pr-2"></div>
+                <h3 class="text-xs font-bold text-gray-500 uppercase mb-2">Live Member List (Delete)</h3>
+                <div id="exec-list" class="max-h-40 overflow-y-auto pr-2"></div>
             </div>
 
             <div class="card p-6 rounded-2xl">
-                <h2 class="section-title" style="border-color: #f472b6;">4. Contact & Socials</h2>
-                <input type="text" id="c-phone" placeholder="Phone Number" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="c-fb" placeholder="Facebook URL" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="c-ig" placeholder="Instagram URL" class="w-full p-2 mb-2 rounded">
-                <input type="text" id="c-yt" placeholder="YouTube URL" class="w-full p-2 mb-4 rounded">
-                <button id="save-contact-btn" class="w-full bg-pink-600 p-3 rounded-lg font-bold">SAVE ALL CONTACTS</button>
+                <h2 class="section-title text-purple-400">Gallery Management</h2>
+                <p class="text-xs text-gray-500 mb-2">Separate multiple image links with a comma (,)</p>
+                <textarea id="gallery-urls" placeholder="link1.jpg, link2.png" class="w-full p-2 mb-4 rounded h-32"></textarea>
+                <button id="upload-gallery-btn" class="w-full bg-purple-600 p-3 rounded-lg font-bold">REPLACE GALLERY IMAGES</button>
+            </div>
+
+            <div class="card p-6 rounded-2xl">
+                <h2 class="section-title text-yellow-400">Quiz Question Builder</h2>
+                <input type="text" id="quiz-ques" placeholder="Question Text" class="w-full p-2 mb-2 rounded">
+                <input type="text" id="quiz-img" placeholder="Question Image URL (Optional)" class="w-full p-2 mb-2 rounded">
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <input type="text" id="opt-a" placeholder="Option A" class="p-2 rounded">
+                    <input type="text" id="opt-b" placeholder="Option B" class="p-2 rounded">
+                    <input type="text" id="opt-c" placeholder="Option C" class="p-2 rounded">
+                    <input type="text" id="opt-d" placeholder="Option D" class="p-2 rounded">
+                </div>
+                <input type="text" id="quiz-correct" placeholder="Correct Answer" class="w-full p-2 mb-4 rounded">
+                <button id="add-quiz-btn" class="w-full bg-yellow-600 p-3 rounded-lg font-bold text-black mb-6">PUBLISH QUESTION</button>
+
+                <h3 class="text-xs font-bold text-gray-500 uppercase mb-2">Question Bank (Delete)</h3>
+                <div id="quiz-list" class="max-h-40 overflow-y-auto pr-2"></div>
             </div>
 
             <div class="card p-6 rounded-2xl md:col-span-2">
-                <h2 class="section-title" style="border-color: #facc15;">5. Quiz Question Builder</h2>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                        <input type="text" id="q-text" placeholder="Question Text" class="w-full p-2 mb-2 rounded">
-                        <div class="grid grid-cols-2 gap-2 mb-2">
-                            <input type="text" id="q-a" placeholder="Option A" class="p-2 rounded">
-                            <input type="text" id="q-b" placeholder="Option B" class="p-2 rounded">
-                            <input type="text" id="q-c" placeholder="Option C" class="p-2 rounded">
-                            <input type="text" id="q-d" placeholder="Option D" class="p-2 rounded">
-                        </div>
-                        <input type="text" id="q-correct" placeholder="Correct Answer" class="w-full p-2 mb-4 rounded">
-                        <button id="add-q-btn" class="w-full bg-yellow-600 p-3 rounded-lg font-bold text-black">SAVE & ADD ANOTHER</button>
-                    </div>
-                    <div class="border-l border-white/10 pl-4">
-                        <p class="text-[10px] text-gray-500 uppercase font-bold mb-2">Question Bank (Delete Below)</p>
-                        <div id="q-list" class="max-h-60 overflow-y-auto pr-2"></div>
-                    </div>
+                <h2 class="section-title text-pink-400">Contact & Social Links</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <input type="text" id="cont-phone" placeholder="Phone Number" class="p-2 rounded">
+                    <input type="text" id="cont-fb" placeholder="Facebook Profile URL" class="p-2 rounded">
+                    <input type="text" id="cont-ig" placeholder="Instagram Profile URL" class="p-2 rounded">
+                    <input type="text" id="cont-yt" placeholder="YouTube Channel URL" class="p-2 rounded">
                 </div>
+                <button id="save-contact-btn" class="w-full mt-4 bg-pink-600 p-3 rounded-lg font-bold">SAVE ALL CONTACT INFO</button>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, collection, addDoc, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
@@ -104,68 +106,112 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- AUTH ---
+        // --- LOGIN SYSTEM ---
         document.getElementById('login-btn').onclick = () => {
-            const user = document.getElementById('admin-user').value;
-            const pass = document.getElementById('admin-pass').value;
-            if(user === 'VIKRAM784125' && pass === '#UDSB784125781005') {
-                document.getElementById('login-box').style.display = 'none';
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u === 'VIKRAM784125' && p === '#UDSB784125781005') {
+                document.getElementById('login-box').classList.add('hidden');
                 document.getElementById('dashboard').classList.remove('hidden');
-                syncData();
-            } else { alert("Invalid login!"); }
+                loadExistingData();
+            } else { alert("Unauthorized Access"); }
         };
 
-        function syncData() {
-            // Load Context automatically
-            onSnapshot(doc(db, "website", "data"), (d) => { if(d.exists()) {
-                document.getElementById('h-title').value = d.data().title || "";
-                document.getElementById('h-desc').value = d.data().description || "";
-                document.getElementById('h-img').value = d.data().heroImage || "";
-            }});
-            onSnapshot(doc(db, "website", "gallery"), (d) => { if(d.exists()) {
-                document.getElementById('gallery-urls').value = (d.data().images || []).join(', ');
-            }});
-            onSnapshot(doc(db, "website", "contact"), (d) => { if(d.exists()) {
-                document.getElementById('c-phone').value = d.data().phone || "";
-                document.getElementById('c-fb').value = d.data().facebook || "";
-                document.getElementById('c-ig').value = d.data().instagram || "";
-                document.getElementById('c-yt').value = d.data().youtube || "";
-            }});
-            // List Sync
-            onSnapshot(collection(db, "executives"), (snap) => {
-                const list = document.getElementById('ex-list'); list.innerHTML = "";
-                snap.forEach(s => list.innerHTML += `<div class="list-item"><span>${s.data().name}</span><button onclick="delDoc('executives','${s.id}')" class="btn-delete">DELETE</button></div>`);
+        // --- FETCH & SYNC DATA ---
+        function loadExistingData() {
+            onSnapshot(doc(db, "website", "data"), (d) => {
+                if(d.exists()){
+                    document.getElementById('title-input').value = d.data().title || "";
+                    document.getElementById('desc-input').value = d.data().description || "";
+                    document.getElementById('img-input').value = d.data().heroImage || "";
+                    document.getElementById('p-hero').src = d.data().heroImage || "";
+                }
             });
+
+            onSnapshot(doc(db, "website", "contact"), (d) => {
+                if(d.exists()){
+                    document.getElementById('cont-phone').value = d.data().phone || "";
+                    document.getElementById('cont-fb').value = d.data().facebook || "";
+                    document.getElementById('cont-ig').value = d.data().instagram || "";
+                    document.getElementById('cont-yt').value = d.data().youtube || "";
+                }
+            });
+
+            onSnapshot(doc(db, "website", "gallery"), (d) => {
+                if(d.exists()){
+                    document.getElementById('gallery-urls').value = (d.data().images || []).join(', ');
+                }
+            });
+
+            // List Sync for Executives
+            onSnapshot(collection(db, "executives"), (snap) => {
+                const list = document.getElementById('exec-list');
+                list.innerHTML = "";
+                snap.forEach(s => {
+                    list.innerHTML += `<div class="list-item"><span>${s.data().name}</span><button onclick="delDoc('executives', '${s.id}')" class="btn-del">DELETE</button></div>`;
+                });
+            });
+
+            // List Sync for Quiz
             onSnapshot(collection(db, "quiz_questions"), (snap) => {
-                const list = document.getElementById('q-list'); list.innerHTML = "";
-                snap.forEach(s => list.innerHTML += `<div class="list-item"><span class="truncate pr-4">${s.data().text}</span><button onclick="delDoc('quiz_questions','${s.id}')" class="btn-delete">DELETE</button></div>`);
+                const list = document.getElementById('quiz-list');
+                list.innerHTML = "";
+                snap.forEach(s => {
+                    list.innerHTML += `<div class="list-item"><span class="truncate pr-2">${s.data().text}</span><button onclick="delDoc('quiz_questions', '${s.id}')" class="btn-del">DELETE</button></div>`;
+                });
             });
         }
 
-        window.delDoc = async (col, id) => { if(confirm("Permanently delete?")) await deleteDoc(doc(db, col, id)); };
-
-        // --- ACTIONS ---
-        document.getElementById('save-home-btn').onclick = async () => {
-            await setDoc(doc(db, "website", "data"), { title: document.getElementById('h-title').value, description: document.getElementById('h-desc').value, heroImage: document.getElementById('h-img').value }, { merge: true });
-            alert("Header Updated!");
+        // --- GLOBAL DELETE FUNCTION ---
+        window.delDoc = async (col, id) => {
+            if(confirm("Permanently delete this item?")) {
+                await deleteDoc(doc(db, col, id));
+            }
         };
-        document.getElementById('save-gallery-btn').onclick = async () => {
+
+        // --- SAVE ACTIONS ---
+        document.getElementById('save-main-btn').onclick = async () => {
+            await setDoc(doc(db, "website", "data"), {
+                title: document.getElementById('title-input').value,
+                description: document.getElementById('desc-input').value,
+                heroImage: document.getElementById('img-input').value
+            }, { merge: true });
+            alert("Home Content Updated!");
+        };
+
+        document.getElementById('add-exec-btn').onclick = async () => {
+            await addDoc(collection(db, "executives"), {
+                name: document.getElementById('exec-name').value,
+                pos: document.getElementById('exec-pos').value,
+                url: document.getElementById('exec-url').value
+            });
+            document.getElementById('exec-name').value = ""; document.getElementById('exec-pos').value = ""; document.getElementById('exec-url').value = "";
+        };
+
+        document.getElementById('upload-gallery-btn').onclick = async () => {
             const urls = document.getElementById('gallery-urls').value.split(',').map(u => u.trim()).filter(u => u !== "");
             await setDoc(doc(db, "website", "gallery"), { images: urls });
-            alert("Gallery Updated!");
+            alert("Gallery Replaced!");
         };
+
+        document.getElementById('add-quiz-btn').onclick = async () => {
+            await addDoc(collection(db, "quiz_questions"), {
+                text: document.getElementById('quiz-ques').value,
+                image: document.getElementById('quiz-img').value || "",
+                options: [document.getElementById('opt-a').value, document.getElementById('opt-b').value, document.getElementById('opt-c').value, document.getElementById('opt-d').value],
+                correct: document.getElementById('quiz-correct').value
+            });
+            ['quiz-ques','quiz-img','opt-a','opt-b','opt-c','opt-d','quiz-correct'].forEach(id => document.getElementById(id).value = "");
+        };
+
         document.getElementById('save-contact-btn').onclick = async () => {
-            await setDoc(doc(db, "website", "contact"), { phone: document.getElementById('c-phone').value, facebook: document.getElementById('c-fb').value, instagram: document.getElementById('c-ig').value, youtube: document.getElementById('c-yt').value }, { merge: true });
-            alert("Contact Updated!");
-        };
-        document.getElementById('add-ex-btn').onclick = async () => {
-            await addDoc(collection(db, "executives"), { name: document.getElementById('ex-name').value, pos: document.getElementById('ex-pos').value, url: document.getElementById('ex-url').value });
-            ['ex-name','ex-pos','ex-url'].forEach(i => document.getElementById(i).value = "");
-        };
-        document.getElementById('add-q-btn').onclick = async () => {
-            await addDoc(collection(db, "quiz_questions"), { text: document.getElementById('q-text').value, options: [document.getElementById('q-a').value, document.getElementById('q-b').value, document.getElementById('q-c').value, document.getElementById('q-d').value], correct: document.getElementById('q-correct').value });
-            ['q-text','q-a','q-b','q-c','q-d','q-correct'].forEach(i => document.getElementById(i).value = "");
-            document.getElementById('q-text').focus();
+            await setDoc(doc(db, "website", "contact"), {
+                phone: document.getElementById('cont-phone').value,
+                facebook: document.getElementById('cont-fb').value,
+                instagram: document.getElementById('cont-ig').value,
+                youtube: document.getElementById('cont-yt').value
+            }, { merge: true });
+            alert("Contacts Saved!");
         };
     </script>
 </body>
