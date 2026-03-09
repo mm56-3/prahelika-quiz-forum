@@ -214,171 +214,127 @@ SAVE CONTACT
 
 </div>
 
-
-
-<script type="module">
-
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-
-import {
-getFirestore,
-doc,
-setDoc,
-collection,
-addDoc,
-onSnapshot
-}
-from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-const firebaseConfig={
-apiKey:"AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
-authDomain:"prahelika-fbf98.firebaseapp.com",
-projectId:"prahelika-fbf98",
-storageBucket:"prahelika-fbf98.appspot.com",
-messagingSenderId:"21670057223",
-appId:"1:21670057223:web:d20225509d824505cb61a2"
-};
-
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
-
-
-
-document.getElementById("login-btn").onclick=()=>{
-
-const u=document.getElementById("user").value;
-const p=document.getElementById("pass").value;
-
-if(u==="VIKRAM784125" && p==="#UDSB784125781005"){
-
-document.getElementById("login-box").classList.add("hidden");
-document.getElementById("dashboard").classList.remove("hidden");
-
-loadExistingData();
-
-}else{
-
-alert("Unauthorized Access");
-
-}
-
-};
-
-
-
-function loadExistingData(){
-
-onSnapshot(doc(db,"website","data"),d=>{
-
-if(!d.exists()) return
-
-document.getElementById("title-input").value=d.data().title||"";
-document.getElementById("desc-input").value=d.data().description||"";
-document.getElementById("img-input").value=d.data().heroImage||"";
-document.getElementById("p-hero").src=d.data().heroImage||"";
-
-});
-
-}
-
-
-
-document.getElementById("save-main-btn").onclick=async()=>{
-
-await setDoc(doc(db,"website","data"),{
-
-title:document.getElementById("title-input").value,
-description:document.getElementById("desc-input").value,
-heroImage:document.getElementById("img-input").value,
-updated:Date.now()
-
-},{merge:true});
-
-alert("Homepage Updated");
-
-};
-
-
-
-document.getElementById("add-exec-btn").onclick=async()=>{
-
-await addDoc(collection(db,"executives"),{
-
-name:document.getElementById("exec-name").value,
-pos:document.getElementById("exec-pos").value,
-url:document.getElementById("exec-url").value,
-created:Date.now()
-
-});
-
-alert("Executive Added");
-
-};
-
-
-
-document.getElementById("upload-gallery-btn").onclick=async()=>{
-
-const urls=document.getElementById("gallery-urls")
-.value.split(",")
-.map(u=>u.trim());
-
-await setDoc(doc(db,"website","gallery"),{
-
-images:urls,
-updated:Date.now()
-
-});
-
-alert("Gallery Updated");
-
-};
-
-
-
-document.getElementById("add-quiz-btn").onclick=async()=>{
-
-await addDoc(collection(db,"quiz_questions"),{
-
-text:document.getElementById("quiz-ques").value,
-image:document.getElementById("quiz-img").value,
-
-options:[
-document.getElementById("opt-a").value,
-document.getElementById("opt-b").value,
-document.getElementById("opt-c").value,
-document.getElementById("opt-d").value
-],
-
-correct:document.getElementById("quiz-correct").value,
-created:Date.now()
-
-});
-
-alert("Question Published");
-
-};
-
-
-
-document.getElementById("save-contact-btn").onclick=async()=>{
-
-await setDoc(doc(db,"website","contact"),{
-
-phone:document.getElementById("cont-phone").value,
-facebook:document.getElementById("cont-fb").value,
-instagram:document.getElementById("cont-ig").value,
-youtube:document.getElementById("cont-yt").value,
-updated:Date.now()
-
-},{merge:true});
-
-alert("Contact Saved");
-
-};
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, setDoc, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // --- CONFIGURATION ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
+        authDomain: "prahelika-fbf98.firebaseapp.com",
+        projectId: "prahelika-fbf98",
+        storageBucket: "prahelika-fbf98.firebasestorage.app",
+        messagingSenderId: "21670057223",
+        appId: "1:21670057223:web:d20225509d824505cb61a2"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    console.log("Firebase Initialized Successfully");
+
+    // --- LOGIN SYSTEM ---
+    const loginBtn = document.getElementById('login-btn');
+    if(loginBtn) {
+        loginBtn.onclick = () => {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u === 'VIKRAM784125' && p === '#UDSB784125781005') {
+                document.getElementById('login-box').style.display = 'none';
+                document.getElementById('dashboard').classList.remove('hidden');
+                loadExistingData();
+                console.log("Login Successful");
+            } else { 
+                alert("Invalid Credentials"); 
+            }
+        };
+    }
+
+    // --- DATA FETCHER ---
+    function loadExistingData() {
+        onSnapshot(doc(db, "website", "data"), (d) => {
+            if(d.exists()){
+                document.getElementById('title-input').value = d.data().title || "";
+                document.getElementById('desc-input').value = d.data().description || "";
+                document.getElementById('img-input').value = d.data().heroImage || "";
+                document.getElementById('p-hero').src = d.data().heroImage || "";
+            }
+        });
+    }
+
+    // --- BUTTON ACTIONS (The "Response" Logic) ---
+    
+    // 1. Update Home Content
+    document.getElementById('save-main-btn').addEventListener('click', async () => {
+        console.log("Attempting to save home content...");
+        try {
+            await setDoc(doc(db, "website", "data"), {
+                title: document.getElementById('title-input').value,
+                description: document.getElementById('desc-input').value,
+                heroImage: document.getElementById('img-input').value
+            }, { merge: true });
+            alert("✅ Home Content Updated!");
+        } catch (e) { 
+            console.error("Save Error:", e);
+            alert("Error: " + e.message); 
+        }
+    });
+
+    // 2. Add Executive
+    document.getElementById('add-exec-btn').addEventListener('click', async () => {
+        try {
+            await addDoc(collection(db, "executives"), {
+                name: document.getElementById('exec-name').value,
+                pos: document.getElementById('exec-pos').value,
+                url: document.getElementById('exec-url').value
+            });
+            alert("✅ Executive Added!");
+            document.getElementById('exec-name').value = "";
+            document.getElementById('exec-pos').value = "";
+            document.getElementById('exec-url').value = "";
+        } catch (e) { alert("Error: " + e.message); }
+    });
+
+    // 3. Update Gallery
+    document.getElementById('upload-gallery-btn').addEventListener('click', async () => {
+        const urls = document.getElementById('gallery-urls').value.split(',').map(u => u.trim()).filter(u => u !== "");
+        try {
+            await setDoc(doc(db, "website", "gallery"), { images: urls });
+            alert("✅ Gallery Updated!");
+        } catch (e) { alert("Error: " + e.message); }
+    });
+
+    // 4. Add Quiz Question
+    document.getElementById('add-quiz-btn').addEventListener('click', async () => {
+        try {
+            await addDoc(collection(db, "quiz_questions"), {
+                text: document.getElementById('quiz-ques').value,
+                image: document.getElementById('quiz-img').value || "",
+                options: [
+                    document.getElementById('opt-a').value,
+                    document.getElementById('opt-b').value,
+                    document.getElementById('opt-c').value,
+                    document.getElementById('opt-d').value
+                ],
+                correct: document.getElementById('quiz-correct').value
+            });
+            alert("✅ Quiz Question Published!");
+            // Clear inputs
+            ['quiz-ques','quiz-img','opt-a','opt-b','opt-c','opt-d','quiz-correct'].forEach(id => document.getElementById(id).value = "");
+        } catch (e) { alert("Error: " + e.message); }
+    });
+
+    // 5. Save Contacts
+    document.getElementById('save-contact-btn').addEventListener('click', async () => {
+        try {
+            await setDoc(doc(db, "website", "contact"), {
+                phone: document.getElementById('cont-phone').value,
+                facebook: document.getElementById('cont-fb').value,
+                instagram: document.getElementById('cont-ig').value,
+                youtube: document.getElementById('cont-yt').value
+            }, { merge: true });
+            alert("✅ Contacts Saved!");
+        } catch (e) { alert("Error: " + e.message); }
+    });
 
 </script>
-
-</body>
-</html>
