@@ -1,343 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PRAHELIKA - MASTER CONTROL</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-
-body{
-background:#020617;
-color:white;
-min-height:100vh;
-font-family:sans-serif;
-}
-
-.card{
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.1);
-backdrop-filter:blur(10px);
-}
-
-input,textarea{
-background:#000 !important;
-border:1px solid #334155 !important;
-color:white !important;
-}
-
-.section-title{
-border-left:4px solid #22d3ee;
-padding-left:12px;
-margin-bottom:16px;
-font-weight:bold;
-text-transform:uppercase;
-}
-
-.preview-img{
-width:100px;
-height:60px;
-object-fit:cover;
-border-radius:8px;
-margin-top:10px;
-background:#111;
-border:1px dashed #334155;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRAHELIKA - MASTER CONTROL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #020617; color: white; min-height: 100vh; font-family: sans-serif; }
+        .card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 2rem; border-radius: 1.5rem; }
+        input, textarea { background: #000 !important; border: 1px solid #334155 !important; color: white !important; width: 100%; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem; outline: none; }
+        input:focus { border-color: #22d3ee !important; }
+        .btn-delete { background: #ef4444; color: white; padding: 0.25rem 0.75rem; border-radius: 0.4rem; font-size: 0.8rem; font-weight: bold; }
+        .item-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 0.75rem; border-radius: 0.5rem; margin-top: 0.5rem; border: 1px solid rgba(255,255,255,0.05); }
+    </style>
 </head>
-
 <body class="p-6">
 
-<div id="login-box" class="max-w-md mx-auto mt-20 p-8 card rounded-3xl shadow-2xl">
-
-<h1 class="text-2xl font-bold mb-6 text-cyan-400 text-center uppercase tracking-widest">
-Admin Login
-</h1>
-
-<input id="user" placeholder="Admin ID" class="w-full p-3 mb-4 rounded-lg">
-
-<input id="pass" type="password" placeholder="Password" class="w-full p-3 mb-6 rounded-lg">
-
-<button id="login-btn" class="w-full bg-blue-600 p-3 rounded-lg font-bold">
-ENTER DASHBOARD
-</button>
-
-</div>
-
-
-
-<div id="dashboard" class="hidden max-w-6xl mx-auto">
-
-<div class="flex justify-between items-center mb-10 border-b border-white/10 pb-5">
-
-<h1 class="text-3xl font-black text-cyan-400 uppercase">
-Master Control Panel
-</h1>
-
-<button onclick="location.reload()" class="bg-red-900/40 px-4 py-1 rounded-full text-xs">
-Logout
-</button>
-
-</div>
-
-
-
-<div class="grid md:grid-cols-2 gap-8">
-
-<!-- HERO CONTENT -->
-
-<div class="card p-6 rounded-2xl">
-
-<h2 class="section-title text-cyan-400">Website Header</h2>
-
-<input id="title-input" placeholder="Hero Title" class="w-full p-2 mb-2 rounded">
-
-<textarea id="desc-input" placeholder="Description Text" class="w-full p-2 mb-2 rounded h-20"></textarea>
-
-<input id="img-input" placeholder="Hero Image URL" class="w-full p-2 rounded"
-oninput="document.getElementById('p-hero').src=this.value">
-
-<img id="p-hero" class="preview-img">
-
-<button id="save-main-btn" class="w-full mt-4 bg-cyan-600 p-3 rounded-lg font-bold">
-UPDATE HOME CONTENT
-</button>
-
-</div>
-
-
-
-<!-- EXECUTIVE -->
-
-<div class="card p-6 rounded-2xl">
-
-<h2 class="section-title text-green-400">Add Executive</h2>
-
-<input id="exec-name" placeholder="Full Name" class="w-full p-2 mb-2 rounded">
-
-<input id="exec-pos" placeholder="Position" class="w-full p-2 mb-2 rounded">
-
-<input id="exec-url" placeholder="Photo URL" class="w-full p-2 rounded"
-oninput="document.getElementById('p-exec').src=this.value">
-
-<img id="p-exec" class="preview-img rounded-full w-12 h-12">
-
-<button id="add-exec-btn" class="w-full mt-4 bg-green-600 p-3 rounded-lg font-bold">
-ADD MEMBER
-</button>
-
-</div>
-
-
-
-<!-- GALLERY -->
-
-<div class="card p-6 rounded-2xl">
-
-<h2 class="section-title text-purple-400">Gallery</h2>
-
-<textarea id="gallery-urls"
-placeholder="image1.jpg, image2.jpg"
-class="w-full p-2 mb-4 rounded h-32"></textarea>
-
-<button id="upload-gallery-btn"
-class="w-full bg-purple-600 p-3 rounded-lg font-bold">
-
-UPDATE GALLERY
-
-</button>
-
-</div>
-
-
-
-<!-- QUIZ -->
-
-<div class="card p-6 rounded-2xl">
-
-<h2 class="section-title text-yellow-400">Add Quiz Question</h2>
-
-<input id="quiz-ques" placeholder="Question" class="w-full p-2 mb-2 rounded">
-
-<input id="quiz-img" placeholder="Image URL (optional)" class="w-full p-2 mb-2 rounded">
-
-<div class="grid grid-cols-2 gap-2 mb-2">
-
-<input id="opt-a" placeholder="Option A" class="p-2 rounded">
-<input id="opt-b" placeholder="Option B" class="p-2 rounded">
-<input id="opt-c" placeholder="Option C" class="p-2 rounded">
-<input id="opt-d" placeholder="Option D" class="p-2 rounded">
-<button id="add-more-quiz-btn" class="w-full mt-2 bg-gray-800 border border-yellow-600 p-3 rounded-lg font-bold text-yellow-500 hover:bg-yellow-900/20 transition">
-    SAVE & ADD ANOTHER QUESTION
-</button>
-
-</div>
-
-<input id="quiz-correct" placeholder="Correct Answer" class="w-full p-2 mb-4 rounded">
-
-<button id="add-quiz-btn"
-class="w-full bg-yellow-600 p-3 rounded-lg font-bold text-black">
-
-PUBLISH QUESTION
-
-</button>
-
-</div>
-
-
-
-<!-- CONTACT -->
-
-<div class="card p-6 rounded-2xl md:col-span-2">
-
-<h2 class="section-title text-pink-400">Contact Info</h2>
-
-<div class="grid md:grid-cols-2 gap-4">
-
-<input id="cont-phone" placeholder="Phone" class="p-2 rounded">
-<input id="cont-fb" placeholder="Facebook URL" class="p-2 rounded">
-<input id="cont-ig" placeholder="Instagram URL" class="p-2 rounded">
-<input id="cont-yt" placeholder="YouTube URL" class="p-2 rounded">
-
-</div>
-
-<button id="save-contact-btn"
-class="w-full mt-4 bg-pink-600 p-3 rounded-lg font-bold">
-
-SAVE CONTACT
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, setDoc, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    // --- CONFIGURATION ---
-    const firebaseConfig = {
-        apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
-        authDomain: "prahelika-fbf98.firebaseapp.com",
-        projectId: "prahelika-fbf98",
-        storageBucket: "prahelika-fbf98.firebasestorage.app",
-        messagingSenderId: "21670057223",
-        appId: "1:21670057223:web:d20225509d824505cb61a2"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    console.log("Firebase Initialized Successfully");
-
-    // --- LOGIN SYSTEM ---
-    const loginBtn = document.getElementById('login-btn');
-    if(loginBtn) {
-        loginBtn.onclick = () => {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
-            if(u === 'VIKRAM784125' && p === '#UDSB784125781005') {
-                document.getElementById('login-box').style.display = 'none';
+    <div id="login-box" class="max-w-md mx-auto mt-20 card text-center">
+        <h1 class="text-2xl font-bold mb-6 text-cyan-400 uppercase tracking-widest">Admin Login</h1>
+        <input type="password" id="admin-pass" placeholder="Enter Admin Password">
+        <button onclick="checkLogin()" class="w-full bg-cyan-600 p-3 rounded-lg font-bold hover:bg-cyan-500 transition">ENTER DASHBOARD</button>
+    </div>
+
+    <div id="dashboard" class="hidden max-w-5xl mx-auto space-y-8">
+        <div class="flex justify-between items-center border-b border-white/10 pb-5">
+            <h1 class="text-3xl font-black text-cyan-400">MASTER CONTROL</h1>
+            <button onclick="location.reload()" class="text-red-400 text-sm font-bold">LOGOUT</button>
+        </div>
+
+        <div class="card">
+            <h2 class="text-xl font-bold mb-4 text-cyan-400 border-l-4 border-cyan-400 pl-3">HOMEPAGE HEADER</h2>
+            <input type="text" id="h-title" placeholder="Main Title">
+            <textarea id="h-desc" placeholder="Description Text" class="h-24"></textarea>
+            <input type="text" id="h-img" placeholder="Hero Image URL">
+            <button id="save-home-btn" class="w-full bg-cyan-600 p-3 rounded-lg font-bold">UPDATE HOME CONTENT</button>
+        </div>
+
+        <div class="card">
+            <h2 class="text-xl font-bold mb-4 text-green-400 border-l-4 border-green-400 pl-3">MANAGE MEMBERS</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <input type="text" id="ex-name" placeholder="Name">
+                <input type="text" id="ex-pos" placeholder="Position">
+            </div>
+            <input type="text" id="ex-url" placeholder="Photo URL">
+            <button id="add-ex-btn" class="w-full bg-green-600 p-3 rounded-lg font-bold mb-6">ADD MEMBER</button>
+            
+            <div id="ex-list-container">
+                <h3 class="text-sm font-bold text-gray-500 uppercase mb-2">Current Members:</h3>
+                <div id="ex-list"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="text-xl font-bold mb-4 text-yellow-400 border-l-4 border-yellow-400 pl-3">MANAGE QUIZ</h2>
+            <input type="text" id="q-text" placeholder="Question">
+            <div class="grid grid-cols-2 gap-2">
+                <input type="text" id="q-a" placeholder="Option A">
+                <input type="text" id="q-b" placeholder="Option B">
+                <input type="text" id="q-c" placeholder="Option C">
+                <input type="text" id="q-d" placeholder="Option D">
+            </div>
+            <input type="text" id="q-correct" placeholder="Correct Answer (Exact text)">
+            <button id="add-q-btn" class="w-full bg-yellow-600 p-3 rounded-lg font-bold text-black mb-6">PUBLISH QUESTION</button>
+            
+            <div id="q-list-container">
+                <h3 class="text-sm font-bold text-gray-500 uppercase mb-2">Live Questions:</h3>
+                <div id="q-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyALoQVj8SWPI_S5PUJ1f_7dw4uKGLh68Lw",
+            authDomain: "prahelika-fbf98.firebaseapp.com",
+            projectId: "prahelika-fbf98",
+            storageBucket: "prahelika-fbf98.firebasestorage.app",
+            messagingSenderId: "21670057223",
+            appId: "1:21670057223:web:d20225509d824505cb61a2"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // --- LOGIN ---
+        window.checkLogin = () => {
+            const pass = document.getElementById('admin-pass').value;
+            if(pass === '#UDSB784125781005') {
+                document.getElementById('login-box').classList.add('hidden');
                 document.getElementById('dashboard').classList.remove('hidden');
-                loadExistingData();
-                console.log("Login Successful");
-            } else { 
-                alert("Invalid Credentials"); 
+                startSync();
+            } else { alert("Wrong Password!"); }
+        };
+
+        function startSync() {
+            // 1. Sync Header
+            onSnapshot(doc(db, "website", "data"), (d) => {
+                if(d.exists()) {
+                    document.getElementById('h-title').value = d.data().title || "";
+                    document.getElementById('h-desc').value = d.data().description || "";
+                    document.getElementById('h-img').value = d.data().heroImage || "";
+                }
+            });
+
+            // 2. Sync Members List
+            onSnapshot(collection(db, "executives"), (snap) => {
+                const list = document.getElementById('ex-list');
+                list.innerHTML = "";
+                snap.forEach(docSnap => {
+                    const data = docSnap.data();
+                    list.innerHTML += `
+                        <div class="item-row">
+                            <span>${data.name} (${data.pos})</span>
+                            <button onclick="deleteItem('executives', '${docSnap.id}')" class="btn-delete">DELETE</button>
+                        </div>
+                    `;
+                });
+            });
+
+            // 3. Sync Quiz List
+            onSnapshot(collection(db, "quiz_questions"), (snap) => {
+                const list = document.getElementById('q-list');
+                list.innerHTML = "";
+                snap.forEach(docSnap => {
+                    list.innerHTML += `
+                        <div class="item-row">
+                            <span class="truncate pr-4">${docSnap.data().text}</span>
+                            <button onclick="deleteItem('quiz_questions', '${docSnap.id}')" class="btn-delete">DELETE</button>
+                        </div>
+                    `;
+                });
+            });
+        }
+
+        // --- DELETE FUNCTION ---
+        window.deleteItem = async (col, id) => {
+            if(confirm("Are you sure you want to delete this?")) {
+                try {
+                    await deleteDoc(doc(db, col, id));
+                    alert("Deleted successfully!");
+                } catch (e) { alert(e.message); }
             }
         };
-    }
 
-    // --- DATA FETCHER ---
-    function loadExistingData() {
-        onSnapshot(doc(db, "website", "data"), (d) => {
-            if(d.exists()){
-                document.getElementById('title-input').value = d.data().title || "";
-                document.getElementById('desc-input').value = d.data().description || "";
-                document.getElementById('img-input').value = d.data().heroImage || "";
-                document.getElementById('p-hero').src = d.data().heroImage || "";
-            }
-        });
-    }
-
-    // --- BUTTON ACTIONS (The "Response" Logic) ---
-    
-    // 1. Update Home Content
-    document.getElementById('save-main-btn').addEventListener('click', async () => {
-        console.log("Attempting to save home content...");
-        try {
+        // --- SAVE FUNCTIONS ---
+        document.getElementById('save-home-btn').onclick = async () => {
             await setDoc(doc(db, "website", "data"), {
-                title: document.getElementById('title-input').value,
-                description: document.getElementById('desc-input').value,
-                heroImage: document.getElementById('img-input').value
+                title: document.getElementById('h-title').value,
+                description: document.getElementById('h-desc').value,
+                heroImage: document.getElementById('h-img').value
             }, { merge: true });
-            alert("✅ Home Content Updated!");
-        } catch (e) { 
-            console.error("Save Error:", e);
-            alert("Error: " + e.message); 
-        }
-    });
+            alert("Homepage updated!");
+        };
 
-    // 2. Add Executive
-    document.getElementById('add-exec-btn').addEventListener('click', async () => {
-        try {
+        document.getElementById('add-ex-btn').onclick = async () => {
             await addDoc(collection(db, "executives"), {
-                name: document.getElementById('exec-name').value,
-                pos: document.getElementById('exec-pos').value,
-                url: document.getElementById('exec-url').value
+                name: document.getElementById('ex-name').value,
+                pos: document.getElementById('ex-pos').value,
+                url: document.getElementById('ex-url').value
             });
-            alert("✅ Executive Added!");
-            document.getElementById('exec-name').value = "";
-            document.getElementById('exec-pos').value = "";
-            document.getElementById('exec-url').value = "";
-        } catch (e) { alert("Error: " + e.message); }
-    });
+            alert("Member added!");
+        };
 
-    // 3. Update Gallery
-    document.getElementById('upload-gallery-btn').addEventListener('click', async () => {
-        const urls = document.getElementById('gallery-urls').value.split(',').map(u => u.trim()).filter(u => u !== "");
-        try {
-            await setDoc(doc(db, "website", "gallery"), { images: urls });
-            alert("✅ Gallery Updated!");
-        } catch (e) { alert("Error: " + e.message); }
-    });
-
-    // 4. Add Quiz Question
-    document.getElementById('add-quiz-btn').addEventListener('click', async () => {
-        try {
+        document.getElementById('add-q-btn').onclick = async () => {
             await addDoc(collection(db, "quiz_questions"), {
-                text: document.getElementById('quiz-ques').value,
-                image: document.getElementById('quiz-img').value || "",
+                text: document.getElementById('q-text').value,
                 options: [
-                    document.getElementById('opt-a').value,
-                    document.getElementById('opt-b').value,
-                    document.getElementById('opt-c').value,
-                    document.getElementById('opt-d').value
+                    document.getElementById('q-a').value,
+                    document.getElementById('q-b').value,
+                    document.getElementById('q-c').value,
+                    document.getElementById('q-d').value
                 ],
-                correct: document.getElementById('quiz-correct').value
+                correct: document.getElementById('q-correct').value
             });
-            alert("✅ Quiz Question Published!");
-            // Clear inputs
-            ['quiz-ques','quiz-img','opt-a','opt-b','opt-c','opt-d','quiz-correct'].forEach(id => document.getElementById(id).value = "");
-        } catch (e) { alert("Error: " + e.message); }
-    });
-
-    // 5. Save Contacts
-    document.getElementById('save-contact-btn').addEventListener('click', async () => {
-        try {
-            await setDoc(doc(db, "website", "contact"), {
-                phone: document.getElementById('cont-phone').value,
-                facebook: document.getElementById('cont-fb').value,
-                instagram: document.getElementById('cont-ig').value,
-                youtube: document.getElementById('cont-yt').value
-            }, { merge: true });
-            alert("✅ Contacts Saved!");
-        } catch (e) { alert("Error: " + e.message); }
-    });
-
-</script>
+            alert("Question added!");
+        };
+    </script>
+</body>
+</html>
